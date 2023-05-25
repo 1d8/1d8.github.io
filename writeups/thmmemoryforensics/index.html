@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Windows Memory Forensics ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Memory Forensics - https://tryhackme.com/room/memoryforensics
+In this challenge, we&amp;rsquo;re given 3 memory dump files totaling 3.2 GB in size:
+ Snapshot6.vmem Snapshot14.vmem Snapshot19.vmem  I will be using remnux&amp;rsquo;s virtual machine to solve these tasks along with the volatility memory analysis tool!
+Task 2 #  In our second task, we&amp;rsquo;re given Snapshot6.vmem and asked to find John&amp;rsquo;s password.
+The first step from all these tasks that I took is identifying the correct memory profile to use with volatility which can be done via:"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/thmmemoryforensics/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Windows Memory Forensics"/>
+<meta name="twitter:description" content="Performing memory forensics on Windows machine images using Volatility."/>
+
+
+
+<meta property="og:title" content="Windows Memory Forensics" />
+<meta property="og:description" content="Performing memory forensics on Windows machine images using Volatility." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/thmmemoryforensics/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Windows Memory Forensics</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 4 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/OcbLcOG.png" alt="Windows Memory Forensics"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>Memory Forensics - <a href="https://tryhackme.com/room/memoryforensics">https://tryhackme.com/room/memoryforensics</a></p>
+<p>In this challenge, we&rsquo;re given 3 memory dump files totaling 3.2 GB in size:</p>
+<ul>
+<li>Snapshot6.vmem</li>
+<li>Snapshot14.vmem</li>
+<li>Snapshot19.vmem</li>
+</ul>
+<p>I will be using <code>remnux</code>&rsquo;s virtual machine to solve these tasks along with the volatility memory analysis tool!</p>
+<h2 id="task-2">
+  Task 2
+  <a href="#task-2" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>In our second task, we&rsquo;re given <code>Snapshot6.vmem</code> and asked to find John&rsquo;s password.</p>
+<p>The first step from all these tasks that I took is identifying the correct memory profile to use with volatility which can be done via:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; imageinfo</code></li>
+</ul>
+<p>which outputs:</p>
+<p><img src="https://i.imgur.com/01gYbQJ.png" alt=""></p>
+<p>Usually the first suggested profile is the profile of choice, so in this case it&rsquo;d be <code>Win7SP1x64</code></p>
+<p>Now that we have the correct profile, we must determine the volatility plugin to use. The volatilty plugin used to output the password hashes from a memory dump is <code>hashdump</code></p>
+<p>So we run:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; --profile=Win7SP1x64 hashdump</code></li>
+</ul>
+<p>which outputs:</p>
+<p><img src="https://i.imgur.com/p0bK9Ql.png" alt=""></p>
+<p>We&rsquo;re only interested in the John user&rsquo;s password, so now we can use <a href="https://crackstation.net/">crackstation</a> to crack the password!</p>
+<p><img src="https://i.imgur.com/kbdw5gK.png" alt=""></p>
+<p>Success!</p>
+<h2 id="task-3">
+  Task 3
+  <a href="#task-3" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>For task 3, we&rsquo;re given the <code>Snapshot19.vmem</code> file and asked two questions:</p>
+<ol>
+<li>When was the last shutdown time?</li>
+<li>What did John type into the command line?</li>
+</ol>
+<p>Let&rsquo;s determine the profile of this memory dump:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; imageinfo</code></li>
+</ul>
+<p><img src="https://i.imgur.com/ISOTTPd.png" alt=""></p>
+<p>We&rsquo;ll be using the Win7SP1x64 profile!</p>
+<p>In October 2015, <a href="https://www.volatilityfoundation.org/25">volatility added a new plugin</a> which will tell us the last shutdown time of a machine, it&rsquo;s called <code>shutdowntime</code></p>
+<p>So we would run:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; --profile=Win7SP1x64 shutdowntime</code></li>
+</ul>
+<p>which outputs</p>
+<p><img src="https://i.imgur.com/83z6Nmo.png" alt=""></p>
+<p>And for the second question, there&rsquo;s various plugins we can use to view past commands ran by a computer, including:</p>
+<ul>
+<li><code>cmdline</code></li>
+<li><code>consoles</code></li>
+<li><code>cmdscan</code></li>
+</ul>
+<p>Let&rsquo;s first try the <code>cmdline</code> plugin:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; --profile=Win7SP1x64 cmdline</code></li>
+</ul>
+<p>The <code>cmdline</code> plugin will output what was/what would&rsquo;ve been entered into the command-line in order to run a process with certain flags:</p>
+<p><img src="https://i.imgur.com/2EoPj4y.png" alt=""></p>
+<p><img src="https://i.imgur.com/fT6jrJd.png" alt=""></p>
+<p>This doesn&rsquo;t help us determine the exact thing that was typed by John unfortunately, but the other two plugins will!</p>
+<p>Let&rsquo;s now try <code>consoles</code>:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; --profile=Win7SP1x64 consoles</code></li>
+</ul>
+<p><img src="https://i.imgur.com/mqvpn6v.png" alt=""></p>
+<p><img src="https://i.imgur.com/pivKIXl.png" alt=""></p>
+<p>The <code>consoles</code> plugin outputs exactly what we need!</p>
+<p>Lastly, let&rsquo;s try the <code>cmdscan</code> plugin:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; --profile=Win7SP1x64 cmdscan</code></li>
+</ul>
+<p><img src="https://i.imgur.com/Y0ukD3V.png" alt=""></p>
+<p>The <code>cmdscan</code> plugin also outputs what we need!</p>
+<h1 id="task-4">
+  Task 4
+  <a href="#task-4" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p>For the last task, we&rsquo;re given <code>Snapshot14.vmem</code> and told that TrueCrypt was found on the suspect&rsquo;s machine and that the suspect also had an encrypted partition, our job is try to find the passphrase that&rsquo;ll decrypt that partition from the memory dump!</p>
+<p>Let&rsquo;s first determine the profile we&rsquo;ll be using:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; imageinfo</code></li>
+</ul>
+<p><img src="https://i.imgur.com/G27GBkZ.png" alt=""></p>
+<p>It seems that this is an optional feature of TrueCrypt and is called <em>passphrase caching</em>, it&rsquo;s disabled by default according to this forum post:</p>
+<ul>
+<li><a href="https://www.forensicfocus.com/forums/forensic-software/find-data-from-truecrypt-with-volatility/">https://www.forensicfocus.com/forums/forensic-software/find-data-from-truecrypt-with-volatility/</a></li>
+</ul>
+<p>There&rsquo;s also some plugins in that post which are meant to uncover the passphrase from TrueCrypt!</p>
+<p>The user in the forum post stated that they had found the process TrueCrypt.exe running, so we should first confirm that this condition is also met from our memory dump by listing the running processes. This can be done via the <code>pstree</code> plugin:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file path&gt; --profiile=Win7SP1x64 pstree</code></li>
+</ul>
+<p>which outputs:</p>
+<p><img src="https://i.imgur.com/Tc1YGQQ.png" alt=""></p>
+<p><img src="https://i.imgur.com/gXr5fh9.png" alt=""></p>
+<p>We find that <code>TrueCrypt.exe</code> was running at the time the memory dump was captured, and it has a PID of 1904!</p>
+<p>Now let&rsquo;s try using the plugins listed in the forum post:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file location&gt; --profile=Win7SP1x64 truecryptmaster</code></li>
+</ul>
+<p>outputs:</p>
+<p><img src="https://i.imgur.com/ftqkgaS.png" alt=""></p>
+<p>There doesn&rsquo;t appear to be any useful information to us here, let&rsquo;s move onto the <code>truecryptsummary</code> plugin:</p>
+<ul>
+<li><code>vol.py -f &lt;memory dump file location&gt; --profile=WinSP1x64 truecryptsummary</code></li>
+</ul>
+<p>outputs:</p>
+<p><img src="https://i.imgur.com/u2YzmfZ.png" alt=""></p>
+<p>And we got the passphrase! It was located at the memory offset <code>0xfffff8800512bee4</code>!</p>
+<p>And we could&rsquo;ve also retrieved the TrueCrypt passphrase by using the <code>truecryptpassphrase</code> plugin mentioned in the forum post:</p>
+<p><img src="https://i.imgur.com/tfajAOZ.png" alt=""></p>
+<p>I also believe that the only reason that this method worked to retrieve the passphrase from memory is because <em>Passphrase caching</em> was enabled.</p>
+<h3 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<ul>
+<li><a href="https://www.forensicfocus.com/forums/forensic-software/find-data-from-truecrypt-with-volatility/">https://www.forensicfocus.com/forums/forensic-software/find-data-from-truecrypt-with-volatility/</a></li>
+<li><a href="https://andreafortuna.org/2017/11/15/how-to-retrieve-users-passwords-from-a-windows-memory-dump-using-volatility/">https://andreafortuna.org/2017/11/15/how-to-retrieve-users-passwords-from-a-windows-memory-dump-using-volatility/</a></li>
+<li><a href="https://cookiess.medium.com/volatility-cheatsheet-6e08deb85afb">https://cookiess.medium.com/volatility-cheatsheet-6e08deb85afb</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

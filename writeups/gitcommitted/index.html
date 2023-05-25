@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Committed Sensitive Data ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="TryHackMe&amp;rsquo;s Committed - https://tryhackme.com/room/committed
+For this challenge, we&amp;rsquo;re given an Ubuntu machine and told that sensitive data, aka our flag, has been committed to a Github repository, but it is unknown where the exact file location that the data was committed to. Our task is to find this sensitive data using git!
+With git, every commit is logged and gets a commit ID which is a long hash-like string. We can view a summary of the commit history by running git log:"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/gitcommitted/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Committed Sensitive Data"/>
+<meta name="twitter:description" content="Investigating Git commits for sensitive data."/>
+
+
+
+<meta property="og:title" content="Committed Sensitive Data" />
+<meta property="og:description" content="Investigating Git commits for sensitive data." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/gitcommitted/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Committed Sensitive Data</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 1 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/2nT9E9e.png" alt="Committed Sensitive Data"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>TryHackMe&rsquo;s Committed - <a href="https://tryhackme.com/room/committed">https://tryhackme.com/room/committed</a></p>
+<p>For this challenge, we&rsquo;re given an Ubuntu machine and told that sensitive data, aka our flag, has been committed to a Github repository, but it is unknown where the exact file location that the data was committed to. Our task is to find this sensitive data using <code>git</code>!</p>
+<p>With <code>git</code>, every commit is logged and gets a commit ID which is a long hash-like string. We can view a summary of the commit history by running <code>git log</code>:</p>
+<p><img src="https://i.imgur.com/Ei2piSM.png" alt=""></p>
+<p>And to view the full commit history, we add in the flag <code>--all</code>:</p>
+<p><img src="https://i.imgur.com/3BSegOK.png" alt=""></p>
+<p>Notice that all the commits seem to have notes regarding progress made towards the project, then there&rsquo;s the &ldquo;Oops&rdquo; commit. We can assume this is where the mistake occurred!</p>
+<p>To view the data that was committed, all we need to do is run <code>git show c56c470a2a9dfb5cfbd54cd614a9fdb1644412b5</code>:</p>
+<p><img src="https://i.imgur.com/ZsxXlUn.png" alt=""></p>
+<p>The green text is what was added while the red text is what was removed. And as you can see, there is a plaintext password that was removed, this is our flag!</p>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

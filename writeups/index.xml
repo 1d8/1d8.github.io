@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Writeups on 1d8 blog</title>
+    
+    
+    
+    <link>https://1d8.github.io/writeups/</link>
+    <description>Recent content in Writeups on 1d8 blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://1d8.github.io/writeups/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Committed Sensitive Data</title>
+      <link>https://1d8.github.io/writeups/gitcommitted/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/gitcommitted/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/2nT9E9e.png&#34;/&gt;
+          
+        
+        
+        
+          Investigating Git commits for sensitive data.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Compromised Wordpress Log Investigation</title>
+      <link>https://1d8.github.io/writeups/wordpressloganalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/wordpressloganalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://wpbyte.com/wp-content/uploads/2021/03/best-wordpress-malware-removal-plugins-services-featured-image-final.jpg&#34;/&gt;
+          
+        
+        
+        
+          Analyzing the logs of a compromised Wordpress site.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Detecting Port Scanning</title>
+      <link>https://1d8.github.io/writeups/portscandetection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/portscandetection/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/W6uDN16.png&#34;/&gt;
+          
+        
+        
+        
+          Using Wireshark to detect a malicious user performing a port scan on a network.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Disclose The Agent Packet Analysis</title>
+      <link>https://1d8.github.io/writeups/disclosetheagent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/disclosetheagent/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/kjrx9oS.png&#34;/&gt;
+          
+        
+        
+        
+          Analyzing a pcap file with Wireshark to find the secret agent.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Epoch Web App Code Execution</title>
+      <link>https://1d8.github.io/writeups/epochrce/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/epochrce/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/i2NO6B5.png&#34;/&gt;
+          
+        
+        
+        
+          Hacking an epoch time converter web application.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Grab the phisher</title>
+      <link>https://1d8.github.io/writeups/grabthephisher/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/grabthephisher/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/2ZbM7NQ.png&#34;/&gt;
+          
+        
+        
+        
+          Investigating a phishing page to learn more about the phisher.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>IceID Malicious Doc Analysis</title>
+      <link>https://1d8.github.io/writeups/iceiddocanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/iceiddocanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/wpkiUaw.png&#34;/&gt;
+          
+        
+        
+        
+          Performing malware analysis on a malicious document from the IceID malware family.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Insider Disk Analysis With FTK</title>
+      <link>https://1d8.github.io/writeups/insider/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/insider/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/mUJJzdK.png&#34;/&gt;
+          
+        
+        
+        
+          Using FTK disk analysis tool to analyze a Linux disk image.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>L&#39;espion OSINT</title>
+      <link>https://1d8.github.io/writeups/lespionosint/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/lespionosint/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/Q2rzEb3.png&#34;/&gt;
+          
+        
+        
+        
+          Using Open Source Intelligence (OSINT) techniques to solve a CyberDefender&#39;s challenge.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Mr. Phisher Macros</title>
+      <link>https://1d8.github.io/writeups/mrphisher/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/mrphisher/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/B6o7UpJ.png&#34;/&gt;
+          
+        
+        
+        
+          Deobfuscating maldoc macros to find a flag.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Neighbor</title>
+      <link>https://1d8.github.io/writeups/neighbor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/neighbor/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/4K7W5YA.png&#34;/&gt;
+          
+        
+        
+        
+          Hacking a web application by manipulating URL parameters.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Ransomware Memory Analysis With Volatility</title>
+      <link>https://1d8.github.io/writeups/ransomwarememoryanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/ransomwarememoryanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://image.freepik.com/free-vector/ransomware-attack-scam-cartoon-malware-showing-alert-sign-laptop-screen-with-hacker-threatening-money-payment-unlock_184560-87.jpg&#34;/&gt;
+          
+        
+        
+        
+          Performing memory analysis on a Windows machine infected with ransomware
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Ransomware Memory Dump Analysis With Redline</title>
+      <link>https://1d8.github.io/writeups/ransomwareattackredline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/ransomwareattackredline/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/eIYVhHV.png&#34;/&gt;
+          
+        
+        
+        
+          Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>REvil Memory Dump Analysis With Redline</title>
+      <link>https://1d8.github.io/writeups/thmrevilcorp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/thmrevilcorp/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/eIYVhHV.png&#34;/&gt;
+          
+        
+        
+        
+          Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>REvil Ransomware Memory Dump Analysis With Redline</title>
+      <link>https://1d8.github.io/writeups/revilransomwareanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/revilransomwareanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/eIYVhHV.png&#34;/&gt;
+          
+        
+        
+        
+          Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye&#39;s Redline memory analysis tool.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Sakura OSINT</title>
+      <link>https://1d8.github.io/writeups/sakurathmosint/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/sakurathmosint/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/F8SEgjb.png&#34;/&gt;
+          
+        
+        
+        
+          Using Open Source Intelligence (OSINT) techniques to solve a TryHackMe Sakura challenge.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Seized Linux Memory Analysis With Volatility</title>
+      <link>https://1d8.github.io/writeups/seizedlinuxmemanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/seizedlinuxmemanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/rbbS68F.png&#34;/&gt;
+          
+        
+        
+        
+          Using Volatility to perform memory analysis on a memory dump of a CentOS Linux machine.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Suspicious Browser Extension Analysis</title>
+      <link>https://1d8.github.io/writeups/extensionanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/extensionanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/CXCKqdG.png&#34;/&gt;
+          
+        
+        
+        
+          Analyzing a malicious browser extension.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Windows Memory Forensics</title>
+      <link>https://1d8.github.io/writeups/thmmemoryforensics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/thmmemoryforensics/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/OcbLcOG.png&#34;/&gt;
+          
+        
+        
+        
+          Performing memory forensics on Windows machine images using Volatility.
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>

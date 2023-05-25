@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Mr. Phisher Macros ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="TryHackMe&amp;rsquo;s Mr. Phisher - https://tryhackme.com/room/mrphisher
+This challenge involves deobfuscating macros in a Microsoft Office Document to discover our flag!
+We&amp;rsquo;re given an Ubuntu machine which has a document named MrPhisher.docm. Since it has the .docm extension, we can assume that it does indeed contain macros. I chose to download this file to my Remnux machine so that way I have access to the analysis tools that Remnux offers such as olevba which will help us extract the macros without having to open the document."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/mrphisher/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mr. Phisher Macros"/>
+<meta name="twitter:description" content="Deobfuscating maldoc macros to find a flag."/>
+
+
+
+<meta property="og:title" content="Mr. Phisher Macros" />
+<meta property="og:description" content="Deobfuscating maldoc macros to find a flag." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/mrphisher/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Mr. Phisher Macros</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 3 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/B6o7UpJ.png" alt="Mr. Phisher Macros"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>TryHackMe&rsquo;s Mr. Phisher - <a href="https://tryhackme.com/room/mrphisher">https://tryhackme.com/room/mrphisher</a></p>
+<p>This challenge involves deobfuscating macros in a Microsoft Office Document to discover our flag!</p>
+<p>We&rsquo;re given an Ubuntu machine which has a document named <code>MrPhisher.docm</code>. Since it has the <code>.docm</code> extension, we can assume that it does indeed contain macros. I chose to download this file to my Remnux machine so that way I have access to the analysis tools that Remnux offers such as <strong>olevba</strong> which will help us extract the macros without having to open the document.</p>
+<p>To extract the macros using <strong>olevba</strong>, run: <code>olevba MrPhisher.docm</code> which outputs:</p>
+<p><img src="https://i.imgur.com/EatTLqw.png" alt=""></p>
+<p>Macros in text form:</p>
+<pre tabindex="0"><code class="language-visual-basic" data-lang="visual-basic">Sub Format()
+    Dim a()
+    Dim b As String
+    a = Array(102, 109, 99, 100, 127, 100, 53, 62, 105, 57, 61, 106, 62, 62, 55, 110, 113, 114, 118, 39, 36, 118, 47, 35, 32, 125, 34, 46, 46, 124, 43, 124, 25, 71, 26, 71, 21, 88)
+    For i = 0 To UBound(a)
+        b = b &amp; Chr(a(i) Xor i)
+        Next
+End Sub
+</code></pre><p>Let&rsquo;s perform some code analysis!</p>
+<pre tabindex="0"><code class="language-visual-basic" data-lang="visual-basic">Sub Format()
+    Dim a()
+    Dim b As String
+</code></pre><p>First off, the function is started as indicated by the <code>Sub</code> keyword, then two variables are defined: <code>a</code> which is an array and <code>b</code> which is a string.</p>
+<pre tabindex="0"><code class="language-visual-basic" data-lang="visual-basic">a = Array(102, 109, 99, 100, 127, 100, 53, 62, 105, 57, 61, 106, 62, 62, 55, 110, 113, 114, 118, 39, 36, 118, 47, 35, 32, 125, 34, 46, 46, 124, 43, 124, 25, 71, 26, 71, 21, 88)
+For i = 0 To UBound(a)
+    b = b &amp; Chr(a(i) Xor i)
+    Next
+</code></pre><p>Now we fill that array with a sequence of numbers that we can assume are ASCII character codes! But this isn&rsquo;t as simple as a quick conversion from the character code to its string equivalent.</p>
+<p>Then we loop through each item in the array, defining the variable <code>i</code> as our counter. And for each iteration, we xor the array item at the <code>i</code> index with the integer value of <code>i</code>, then we run <code>Chr()</code> on the result which turns it into its string equivalent, then we add that deobfuscated string value to the variable <code>b</code>. This continues for each item in the array until all items have been deobfuscated!</p>
+<p>We can run this using Word and simply add in <code>MsgBox b</code> in order to display the final output after it&rsquo;s all deobfuscated, but I chose to recreate this in Python!</p>
+<p>The xor operation in Python is indicated by the <code>^</code> symbol.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">obfData <span style="color:#f92672">=</span> [<span style="color:#ae81ff">102</span>, <span style="color:#ae81ff">109</span>, <span style="color:#ae81ff">99</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">53</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">105</span>, <span style="color:#ae81ff">57</span>, <span style="color:#ae81ff">61</span>, <span style="color:#ae81ff">106</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">110</span>, <span style="color:#ae81ff">113</span>, <span style="color:#ae81ff">114</span>, <span style="color:#ae81ff">118</span>, <span style="color:#ae81ff">39</span>, <span style="color:#ae81ff">36</span>, <span style="color:#ae81ff">118</span>, <span style="color:#ae81ff">47</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">125</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">124</span>, <span style="color:#ae81ff">43</span>, <span style="color:#ae81ff">124</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">71</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">71</span>, <span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">88</span>]
+
+deobfStr <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(obfData)):
+    deobfStr <span style="color:#f92672">+=</span> chr(obfData[i] <span style="color:#f92672">^</span> i)
+
+print(deobfStr)
+</code></pre></div><p>As you can see, we&rsquo;re doing the exact same thing as the VBA script. We&rsquo;re looping through each item in the list, then xor&rsquo;ing the item by the <code>i</code> value which is what iteration we are currently on. Then we&rsquo;re turning that back into a string character using <code>chr()</code>, then adding that value to <code>deobfStr</code>.</p>
+<p>Running this will output our flag!</p>
+<h2 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li><a href="https://zeltser.com/analyzing-malicious-documents/">https://zeltser.com/analyzing-malicious-documents/</a></li>
+<li><a href="https://codesource.io/how-to-use-the-xor-operator-in-python/">https://codesource.io/how-to-use-the-xor-operator-in-python/</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

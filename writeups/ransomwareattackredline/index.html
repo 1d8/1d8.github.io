@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Ransomware Memory Dump Analysis With Redline ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Let&amp;rsquo;s Defend Ransomware Attack - https://app.letsdefend.io/challenge/ransomware-attack/
+For this challenge, we&amp;rsquo;re given a Redline memory analysis file named AnalysisSession1.mans. This challenge does require FireEye&amp;rsquo;s Redline software to solve.
+The 6 tasks we&amp;rsquo;re given include:
+ Finding the full path of the dropped DLL Finding the MD5 hash of the dropped DLL Finding the ransomware note file name Finding the URL that the initial payload was downloaded from The ransomware dropped a copy of the legitimate application into the Temp folder, so we must find the filename of the legitimate application the ransomware also dropped Finding the name of the ransomware  After opening up the analysis file in Redline and going to the Processes tab, I noticed that there is a notepad."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/ransomwareattackredline/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ransomware Memory Dump Analysis With Redline"/>
+<meta name="twitter:description" content="Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool."/>
+
+
+
+<meta property="og:title" content="Ransomware Memory Dump Analysis With Redline" />
+<meta property="og:description" content="Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/ransomwareattackredline/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Ransomware Memory Dump Analysis With Redline</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 5 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/eIYVhHV.png" alt="Ransomware Memory Dump Analysis With Redline"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>Let&rsquo;s Defend Ransomware Attack - <a href="https://app.letsdefend.io/challenge/ransomware-attack/">https://app.letsdefend.io/challenge/ransomware-attack/</a></p>
+<p>For this challenge, we&rsquo;re given a Redline memory analysis file named <code>AnalysisSession1.mans</code>. This challenge does require <a href="https://www.fireeye.com/services/freeware/redline.html">FireEye&rsquo;s Redline software</a> to solve.</p>
+<p>The 6 tasks we&rsquo;re given include:</p>
+<ol>
+<li>Finding the full path of the dropped DLL</li>
+<li>Finding the MD5 hash of the dropped DLL</li>
+<li>Finding the ransomware note file name</li>
+<li>Finding the URL that the initial payload was downloaded from</li>
+<li>The ransomware dropped a copy of the legitimate application into the Temp folder, so we must find the filename of the legitimate application the ransomware also dropped</li>
+<li>Finding the name of the ransomware</li>
+</ol>
+<p>After opening up the analysis file in Redline and going to the <em>Processes</em> tab, I noticed that there is a <code>notepad.exe</code> process:</p>
+<p><img src="https://i.imgur.com/viwcQ6v.png" alt=""></p>
+<p>This caught my attention as I was curious what file was opened with the notepad application. We can find this out by looking at the <em>Arguments</em> column:</p>
+<p><img src="https://i.imgur.com/sGKfQHG.png" alt=""></p>
+<p>So there is a file at <code>C:\Users\charles\Desktop\2s6lc-readme.txt</code> that&rsquo;s being read.</p>
+<p>If we search for this filename in the <em>File System</em> category, it appears in multiple directories throughout the filesystem:</p>
+<p><img src="https://i.imgur.com/a00cnTs.png" alt=""></p>
+<p>This appears to be our ransom note! The task was to find the filename of the ransom note, so it&rsquo;d be <code>2s6lc-readme</code>!</p>
+<p>Finding the URL that the inital payload was downloaded from is quite simple with Redline, we can use the <em>File Download History</em> section, and then select the <em>Manual Downloads</em> filter, and we only have 1 option which looks quite suspicious:</p>
+<p><img src="https://i.imgur.com/t45eqgp.png" alt=""></p>
+<p><img src="https://i.imgur.com/m2Vk7Dh.png" alt=""></p>
+<p><code>lsass.exe</code> is a system file, so it&rsquo;s quite odd that the a user would manually be downloading it from a local IP address on port 8111.</p>
+<p>We also see that the file was downloaded to <code>C:\Users\charles\Downloads</code>, so we can go to this location in the file system to get more information about this file, such as the MD5 hash!</p>
+<p>The MD5 hash of this suspicious file is <code>bd3c693ecd17dcd9e60b08ab963121de</code>:</p>
+<p><img src="https://i.imgur.com/V6kwbrs.png" alt=""></p>
+<p>Throwing the hash at VirusTotal gives us this result:</p>
+<p><img src="https://i.imgur.com/q5GDfS4.png" alt=""></p>
+<p><img src="https://i.imgur.com/6jTnA5U.png" alt=""></p>
+<p><img src="https://i.imgur.com/7AMvLet.png" alt=""></p>
+<p>Now we have confirmation that the downloaded <code>lsass.exe</code> is indeed malicious, and it appears to be the Sodinokibi ransomware variant!</p>
+<p>Recall that one of the questions mentions that the ransomware (<code>C:\Users\charles\Downloads\lsass.exe</code>) drops a legitimate application into the Temp folder.</p>
+<p>Well if we check the <em>Processes</em> section and search for the keyword <em>Temp</em>, we find two processes:</p>
+<ul>
+<li><code>cmd.exe</code> which executes <code>C:\Users\charles\AppData\Local\Temp\MsMpEng.exe</code>:</li>
+</ul>
+<p><img src="https://i.imgur.com/ZBcPd0v.png" alt=""></p>
+<ul>
+<li>The <code>MsMpEng.exe</code> process itself running</li>
+</ul>
+<p>I&rsquo;m not very knowledgeable in Windows system processes, so I decided to check whether or not <code>MsMpEng.exe</code> is a legitimate Microsoft process, which it is, and it&rsquo;s apparently a vital part of Microsoft&rsquo;s Defender, it scans downloaded files for malware and will quarantine or remove them if the file is deemed malicious.</p>
+<p>To be 100% sure, we should check the MD5 hash of the executable, which is: <code>8cc83221870dd07144e63df594c391d9</code>:</p>
+<p><img src="https://i.imgur.com/kOSe6Va.png" alt=""></p>
+<p>This is indeed a legitimate executable which the ransomware drops for some reason.</p>
+<p>Now for the last task, we must find the DLL which the ransomware dropped.</p>
+<p>I decided to check the <em>Imports</em> section of the <em>File System</em> to check to see if there&rsquo;s any odd DLL files which the <code>lssas.exe</code> file was importing functions from, but they were standard system DLL files:</p>
+<ul>
+<li>My thought process here is that if the malware drops a DLL file, it&rsquo;s likely that it&rsquo;ll also import functions from the DLL file.</li>
+</ul>
+<p><img src="https://i.imgur.com/l9GMgDM.png" alt=""></p>
+<p>Let&rsquo;s step back for a second and think about this. A user downloads an executable named <code>lsass.exe</code> from a random IP address, then this executable drops a legitimate Microsoft executable, and a DLL file (which we&rsquo;ve yet to find). <code>lsass.exe</code> then runs the legitimate Microsoft executable. It sounds like the legitimate Microsoft executable may be vulnerable to <a href="https://resources.infosecinstitute.com/topic/dll-hijacking/">DLL Hijacking</a>.</p>
+<p>The legitimate Microsoft executable would then execute the malicious DLL that the ransomware dropped. If this is the case, then we should be able to check the DLL imports for the legitimate dropped executable (<code>MsMpEng.exe</code>) and see if there&rsquo;s any DLL modules which are placed in a suspicious/uncommon location:</p>
+<p><img src="https://i.imgur.com/8g7iSkS.png" alt=""></p>
+<p>So the DLL modules used by this executable are:</p>
+<ul>
+<li><code>kernel32.dll</code></li>
+<li><code>mpsvc.dll</code></li>
+</ul>
+<p>The location of <code>kernel32.dll</code> should be <code>C:\Windows\System32</code> and the location of <code>mpsvc.dll</code> should also be <code>C:\Windows\System32</code>.</p>
+<ul>
+<li><em>NOTE: If you search online for the function ServiceCrtMain which is what is being imported from the mpsvc.dll module, you&rsquo;ll find that this function isn&rsquo;t standard in the Windows mpsvc.dll which should also give away that this is the malicious DLL being sideloaded</em></li>
+</ul>
+<p>Now we can search the filesystem for both <code>kernel32.dll</code> &amp; <code>mpsvc.dll</code> and attempt to find these DLL modules in any non-standard locations.</p>
+<p>Searching for <code>kernel32.dll</code> reveals that it&rsquo;s located in standard locations, including <code>C:\Windows\System32</code>.</p>
+<p>But searching for <code>mpsvc.dll</code> reveals that it&rsquo;s located in 2 locations:</p>
+<p><img src="https://i.imgur.com/qStJVpr.png" alt=""></p>
+<p><img src="https://i.imgur.com/JVNQXCQ.png" alt=""></p>
+<p>The DLL is located in both a location which likely requires elevated privileges to write files to (<code>C:\Program Files\Windows Defender\MpSvc.dll</code>) and a standard user&rsquo;s temporary directory (<code>C:\Users\charles\AppData\Local\Temp\MpsVc.dll</code>).</p>
+<p>I don&rsquo;t believe that it would be normal for a system DLL to be placed in a user&rsquo;s Temp directory.</p>
+<p>If we browse to the user&rsquo;s temporary directory, we&rsquo;ll find both the legitimate Microsoft Defender executable, <code>MsMpEng.exe</code>, &amp; the suspicious DLL, <code>MpsVc.dll</code>:</p>
+<p><img src="https://i.imgur.com/KvOEtRz.png" alt=""></p>
+<p>The hash of the suspicious DLL in charles' Temp directory is <code>040818b1b3c9b1bf8245f5bcb4eebbbc</code>, and if we throw it at VirusTotal&hellip;</p>
+<p><img src="https://i.imgur.com/J0HxKbD.png" alt=""></p>
+<p>It is indeed malicious as we suspected!</p>
+<p>Another way we could&rsquo;ve found the dropped DLL would&rsquo;ve been to search the same directory that the <code>MsMpEng.exe</code> was downloaded into since I believe that in order for a DLL hijacking attack to be successful, the targeted DLL and the executable that uses the DLL must be within the same directory.</p>
+<p>To summarize:</p>
+<ul>
+<li>
+<p><code>lsass.exe</code> is downloaded from a local IP address, then ran</p>
+</li>
+<li>
+<p><code>lsass.exe</code> drops a <code>MsMpEng.exe</code>, a legitimate Windows Defender component, into the Temp directory as well as <code>MpsVc.dll</code>, the malicious DLL.</p>
+</li>
+<li>
+<p><code>lsass.exe</code> then runs <code>MsMpEng.exe</code> which then will execute functions from the malicious DLL due to DLL hijacking.</p>
+</li>
+</ul>
+<h2 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li><a href="https://www.virustotal.com/gui/file/8bd2067d088dad4df24e11244f5b72ce1fd22b686e2ce9ba6ee8711f8f6a836d">https://www.virustotal.com/gui/file/8bd2067d088dad4df24e11244f5b72ce1fd22b686e2ce9ba6ee8711f8f6a836d</a></li>
+<li><a href="https://www.virustotal.com/gui/file/0496ca57e387b10dfdac809de8a4e039f68e8d66535d5d19ec76d39f7d0a4402">https://www.virustotal.com/gui/file/0496ca57e387b10dfdac809de8a4e039f68e8d66535d5d19ec76d39f7d0a4402</a></li>
+<li><a href="https://answers.microsoft.com/en-us/windows/forum/all/msmpengexe/7ca3dd64-a85c-465d-bcca-78aabfe05797">https://answers.microsoft.com/en-us/windows/forum/all/msmpengexe/7ca3dd64-a85c-465d-bcca-78aabfe05797</a></li>
+<li><a href="https://www.processlibrary.com/en/directory/files/mpssvc/413466/">https://www.processlibrary.com/en/directory/files/mpssvc/413466/</a></li>
+<li><a href="https://www.processlibrary.com/en/directory/files/kernel32/23314/">https://www.processlibrary.com/en/directory/files/kernel32/23314/</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

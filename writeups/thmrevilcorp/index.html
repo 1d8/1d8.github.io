@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        REvil Memory Dump Analysis With Redline ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="TryHackMe&amp;rsquo;s REvil Corp - https://tryhackme.com/room/revilcorp
+Q: What is the compromised employee&amp;rsquo;s full name?
+Q: What is the operating system of the compromised host?
+By searching in the System Information section of Analysis data, we can find the answer to these 2 questions:
+Q: What is the name of the malicious executable that the user opened?
+Q: What is the full URL that the user visited to download the malicious binary? (include the binary as well)"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/thmrevilcorp/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="REvil Memory Dump Analysis With Redline"/>
+<meta name="twitter:description" content="Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool."/>
+
+
+
+<meta property="og:title" content="REvil Memory Dump Analysis With Redline" />
+<meta property="og:description" content="Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/thmrevilcorp/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">REvil Memory Dump Analysis With Redline</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 5 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/eIYVhHV.png" alt="REvil Memory Dump Analysis With Redline"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>TryHackMe&rsquo;s REvil Corp - <a href="https://tryhackme.com/room/revilcorp">https://tryhackme.com/room/revilcorp</a></p>
+<p><strong>Q: What is the compromised employee&rsquo;s full name?</strong></p>
+<p><strong>Q: What is the operating system of the compromised host?</strong></p>
+<p>By searching in the <em>System Information</em> section of Analysis data, we can find the answer to these 2 questions:</p>
+<p><img src="https://i.imgur.com/8ByCBBN.png" alt=""></p>
+<p><strong>Q: What is the name of the malicious executable that the user opened?</strong></p>
+<p><strong>Q: What is the full URL that the user visited to download the malicious binary? (include the binary as well)</strong></p>
+<p>If we find the URL of the malicious binary that the user downloaded, we&rsquo;ll also find the malicious executable that the user opened! And we can find the full URL that the user downloaded the ransomware from by looking at the <em>File Download History</em> section which will show us two files:</p>
+<p><img src="https://i.imgur.com/QJjsK3K.png" alt=""></p>
+<ul>
+<li>The malicious executable</li>
+<li>The Tor browser</li>
+</ul>
+<p><strong>Q: What is the MD5 hash of the binary?</strong></p>
+<p><strong>Q: What is the size of the binary in kilobytes?</strong></p>
+<p>Since we&rsquo;ve found the full path of the malicious executable, all that&rsquo;s needed to find the MD5 hash &amp; size of the binary is to go to the <em>File System</em> &amp; then locate the malicious exectable, then click <em>Show Details</em> in the lower right corner of Redline which will give us many details of the executable including the MD5 hash and file size:</p>
+<p><img src="https://i.imgur.com/UEVa398.png" alt=""></p>
+<p><strong>Q: What is the extension to which the user&rsquo;s files got renamed?</strong></p>
+<p>The file extension which was added to the files after they were encrypted is easy to find, we simply need to search any directory in the <em>File System</em> &amp; we&rsquo;re bound to find it, I chose to search the Desktop:</p>
+<p><img src="https://i.imgur.com/y3bk3Bu.png" alt=""></p>
+<p><strong>Q: What is the number of files that got renamed and changed to that extension?</strong></p>
+<p>For this question, we must go to Redline&rsquo;s timeline which will show us different events which have occurred, including files being modified which occurs when ransomware encrypts files!</p>
+<p>All we must do is select only <em>Modified, Changed</em> as our filters under the <em>Files</em> category, then search for the file extension that&rsquo;s being added to encrypted files:</p>
+<p><img src="https://i.imgur.com/OKc32uV.png" alt=""></p>
+<p>Then we&rsquo;ll get a count of how many files were renamed and had their extensions changed!</p>
+<p><strong>Q: What is the full path to the wallpaper that got changed by an attacker, including the image name?</strong></p>
+<p>Continuing in the timeline section, this can be found by searching for files that were <em>Accessed</em> &amp; filtering for the extension <code>.bmp</code>:</p>
+<p><img src="https://i.imgur.com/j8TkWR2.png" alt=""></p>
+<p>And the first result is our answer!</p>
+<p><strong>Q: The attacker left a note for the user on the Desktop; provide the name of the note with the extension.</strong></p>
+<p>All we must do for this challenge is go to the <em>File System</em> and search the Desktop for a file which appears to be a ransomware note! <em>Hint: It contains the words readme</em></p>
+<p><strong>Q: The attacker created a folder &ldquo;Links for United States&rdquo; under C:\Users\John Coleman\Favorites\ and left a file there. Provide the name of the file.</strong></p>
+<p>We must look through the <em>File System</em> section to solve this question, we can also search only through the <em>Favorites</em> directory &amp; filter for the name <em>Links for United States</em>:</p>
+<p><img src="https://i.imgur.com/SDMps2a.png" alt=""></p>
+<p>And we find 5 files inside of that directory! But 2 of those files are files which we&rsquo;ve discovered already and 1 other file is a standard file found in many Windows directories, so those cannot be the answers!</p>
+<p>That leaves us with 2 other files! TryHackMe&rsquo;s hint tells us that the filename includes a Spanish term, and of those 2 files, only 1 of them has a Spanish term in the filename!</p>
+<p><strong>Q: There is a hidden file that was created on the user&rsquo;s Desktop that has 0 bytes. Provide the name of the hidden file.</strong></p>
+<p>To solve this question, we continue to search through the file system, specifically the Desktop, and we can also search for the <em>hidden</em> attribute:</p>
+<p><img src="https://i.imgur.com/eG04qm9.png" alt=""></p>
+<p>And we also know that the size of the file must be 0 bytes and there&rsquo;s only file which matches all these conditions!</p>
+<p><strong>Q: The user downloaded a decryptor hoping to decrypt all the files, but he failed. Provide the MD5 hash of the decryptor file.</strong></p>
+<p>Searching through the Desktop, we&rsquo;ll find an aptly named file which is our decryptor, all we must do is select it in order to get the MD5 hash:</p>
+<p><img src="https://i.imgur.com/O4OrM9i.png" alt=""></p>
+<p><strong>Q: In the ransomware note, the attacker provided a URL that is accessible through the normal browser in order to decrypt one of the encrypted files for free. The user attempted to visit it. Provide the full URL path.</strong></p>
+<p>I assume this is the same URL that the user downloaded the decryptor file from the previous question, and we can find the full URL in the <em>Browser URL History</em> section!</p>
+<p>After skimming through the URLs for some time, we&rsquo;ll find an aptly named URL that the user visits in order to download a sample decryptor:</p>
+<p><img src="https://i.imgur.com/ernxOXq.png" alt=""></p>
+<p><strong>Q: What are some three names associated with the malware which infected this host? (enter the names in alphabetical order)</strong></p>
+<p>Recall that MD5 hash that we acquired earlier for the malicious binary that the user ran? We can use that MD5 hash in order to search VirusTotal &amp; online (Google dork: &ldquo;<!-- raw HTML omitted -->&quot;) to find the names that the ransomware is known as! And of course, the name of the TryHackMe Room is also a major hint!</p>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

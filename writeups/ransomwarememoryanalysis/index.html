@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Ransomware Memory Analysis With Volatility ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Blue Team Labs Online Memory Analysis Ransomware - https://blueteamlabs.online/home/challenge/1
+In this challenge, we&amp;rsquo;re given a memory dump and told that the computer the memory dump was captured from, is the victim of a ransomware attack.
+There&amp;rsquo;s 7 tasks in this challenge:
+ Run vol.py -f infected.vmem --profile=Win7SP1x86 psscan that will list all processes. What is the name of the suspicious process What is the parent process ID for the suspicious process?"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/ransomwarememoryanalysis/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ransomware Memory Analysis With Volatility"/>
+<meta name="twitter:description" content="Performing memory analysis on a Windows machine infected with ransomware"/>
+
+
+
+<meta property="og:title" content="Ransomware Memory Analysis With Volatility" />
+<meta property="og:description" content="Performing memory analysis on a Windows machine infected with ransomware" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/ransomwarememoryanalysis/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Ransomware Memory Analysis With Volatility</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 4 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://image.freepik.com/free-vector/ransomware-attack-scam-cartoon-malware-showing-alert-sign-laptop-screen-with-hacker-threatening-money-payment-unlock_184560-87.jpg" alt="Ransomware Memory Analysis With Volatility"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>Blue Team Labs Online Memory Analysis Ransomware - <a href="https://blueteamlabs.online/home/challenge/1">https://blueteamlabs.online/home/challenge/1</a></p>
+<p>In this challenge, we&rsquo;re given a memory dump and told that the computer the memory dump was captured from, is the victim of a ransomware attack.</p>
+<p>There&rsquo;s 7 tasks in this challenge:</p>
+<ol>
+<li>Run <code>vol.py -f infected.vmem --profile=Win7SP1x86 psscan</code> that will list all processes. What is the name of the suspicious process</li>
+<li>What is the parent process ID for the suspicious process?</li>
+<li>What is the initial malicious executable that created this process?</li>
+<li>If you drill down on the suspicious PID (vol.py -f infected.vmem &ndash;profile=Win7SP1x86 psscan | grep (PIDhere)), find the process used to delete files</li>
+<li>Find the path where the malicious file was first executed</li>
+<li>Can you identify what ransomware it is? (Do your research!)</li>
+<li>What is the filename for the file with the ransomware public key that was used to encrypt the private key? (.eky extension)</li>
+</ol>
+<p>I would usually say to begin this by running volatility&rsquo;s <code>imageinfo</code> plugin to determine the profile we&rsquo;ll be using, but the first task gives that away, <code>Win7SP1x86</code>.</p>
+<p>So we run:</p>
+<p><code>vol.py -f infected.vmem --profile=Win7SP1x86 psscan</code></p>
+<p>which outputs:</p>
+<p><img src="https://i.imgur.com/QooWwlQ.png" alt=""></p>
+<p>There&rsquo;s several <em>normal</em> looking processes running, but there are also a few that stand out, including:</p>
+<ul>
+<li><code>@WanaDecryptor</code> - PID: 3968</li>
+<li><code>or4qtckT.exe</code> - PID: 2732</li>
+</ul>
+<p>The PID of <code>@WanaDecryptor</code> is 3968 and its <em>Parent Process ID (PPID)</em> is 2732, meaning <code>or4qtckT.exe</code> started <code>@WanaDecryptor</code>, but the PPID of <code>or4qtckT.exe</code> is 1456 which belongs to <code>explorer.exe</code>, this is likely because whoever ran the <code>or4qtckT.exe</code> executable double-clicked it from Windows File Explorer.</p>
+<p>Here is a better visualization of this which was outputted by using the <code>pstree</code> plugin:</p>
+<p><img src="https://i.imgur.com/9dBdLwp.png" alt=""></p>
+<p>So now we know the names of 2 suspicious processes:</p>
+<ol>
+<li><code>@WanaDecryptor</code></li>
+<li><code>or4qtckT.exe</code></li>
+</ol>
+<p>But the answer that BTLO is looking for is <code>@WanaDecryptor</code>!</p>
+<p>And the PPID of the suspicious process (<code>@WanaDecryptor</code>) is 2732, and the initial malicious executable which created the suspicious process (<code>@WanaDecryptor</code>) is <code>or4qtckT.exe</code>, which can be seen by using the <code>pstree</code> plugin:</p>
+<p><img src="https://i.imgur.com/uOVVGjh.png" alt=""></p>
+<p>Now we&rsquo;re asked to look for any other processes that has a PPID that belongs to the <code>or4qtckT.exe</code> process. We can do this by running:</p>
+<p><code>vol.py -f infected.vmem --profile=Win7SP1x86 psscan | grep 2732</code></p>
+<p>Which outputs:</p>
+<p><img src="https://i.imgur.com/q5IBLe9.png" alt=""></p>
+<ul>
+<li>The first column of 4-digit numbers is the PID while the second column of 4-digit numbers is the PPID</li>
+</ul>
+<p>And we have a new suspicious process! <code>taskdl.exe</code> which was also started by <code>or4qtckT.exe</code>! <code>taskdl.exe</code> was the process which was responsible for deleting files on the victim&rsquo;s system!</p>
+<p>For the next task, we&rsquo;re asked to find the path where the malicious file was first executed. A hint here is within the question, <em>first executed</em>, meaning the file that started this entire ransomware process, so we&rsquo;re looking for the parent process of <code>@WanaDecryptor</code>, which is <code>or4qtckT.exe</code>.</p>
+<p>My first thought was to scan for past executed commands via <code>cmdline</code>:</p>
+<p><code>vol.py -f infected.vmem --profile=Win7SP1x86 cmdline</code></p>
+<p><img src="https://i.imgur.com/8TqmMnZ.png" alt=""></p>
+<p>And now we have the full path of where the executable was located: <code>C:\Users\hacker\Desktop\or4qtckT.exe</code>!</p>
+<p>Now we have to identify what ransomware variant this is. Judging by the executable named <code>@WanaDecryptor@.exe</code>, I&rsquo;m going to take a wild guess that this is the WannaCry ransomware variant, but I want to be 100% sure, so we can extract the ransomware executable from memory and upload it to Virus Total to confirm our theory:</p>
+<p><code>vol.py -f infected.vmem --profile=Win7SP1x86 procdump -p 3968 --dump-dir Dumped-Executables</code></p>
+<p><img src="https://i.imgur.com/WshFWTj.png" alt=""></p>
+<p>You could&rsquo;ve also extracted the <code>or4qtckT.exe</code> (PID 2732) executable and uploaded it to VirusTotal to confirm the ransomware variant:</p>
+<p><img src="https://i.imgur.com/6kXOom6.png" alt=""></p>
+<p>Now onto the last task!</p>
+<p>We have to identify the filename of the public key that was used to encrypt the private key, and we&rsquo;re given the hint that this file will have a <code>.eky</code> extension!</p>
+<p>This can be solved by using the <code>memdump</code> plugin to dump the region of memory of the running malicious process <code>or4qtckT.exe</code> (PID 2732):</p>
+<p><code>vol.py -f infected.vmem --profile=Win7SP1x86 memdump -p 2732 --dump-dir Dumped-MemRegions</code></p>
+<ul>
+<li><em>NOTE: I believe that the reason we wouldn&rsquo;t be able to use the same method of searching through the strings of the executables we extracted earlier is because any mention of the filename string in the executable is likely to be encrypted. But if we dump the region of memory where the executable was already running, it&rsquo;s likely that the filename string is going to be decrypted in memory which we can then dump &amp; read.</em></li>
+</ul>
+<p>Then we can use the <code>strings</code> utility to look for anything that contains the <code>.eky</code> file extension:</p>
+<p><code>strings 2732.dmp | grep .eky</code></p>
+<p><img src="https://i.imgur.com/jUtZo4l.png" alt=""></p>
+<p>Our filename is: <code>00000000.eky</code>!</p>
+<ul>
+<li>You can also acquire the filename by dumping the <code>explorer.exe</code> (PID: 1456) process. I believe this is because the <code>00000000.eky</code> file was being interacted with, so its filename was stored in the memory of the <code>explorer.exe</code> process for easy future access.</li>
+</ul>
+<h2 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li><a href="https://cookiess.medium.com/volatility-cheatsheet-6e08deb85afb">https://cookiess.medium.com/volatility-cheatsheet-6e08deb85afb</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

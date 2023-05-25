@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        REvil Ransomware Memory Dump Analysis With Redline ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Let&amp;rsquo;s Defend - Revil Ransomware
+For this challenge, we&amp;rsquo;re presented with 3 files:
+ 993ixjlb-readme.txt bad day.PNG AnalysisSession1.mans  The .mans file is a memory dump which can be analyzed with FireEye&amp;rsquo;s Redline security tool.
+We&amp;rsquo;re also presented with 10 challenge questions:
+ What is the Operating System which the Redline image is being collected on? What is the Logged in User while the Redline image is being collected? What is the location of the ransomware on the filesystem?"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/revilransomwareanalysis/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="REvil Ransomware Memory Dump Analysis With Redline"/>
+<meta name="twitter:description" content="Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye&#39;s Redline memory analysis tool."/>
+
+
+
+<meta property="og:title" content="REvil Ransomware Memory Dump Analysis With Redline" />
+<meta property="og:description" content="Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye&#39;s Redline memory analysis tool." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/revilransomwareanalysis/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">REvil Ransomware Memory Dump Analysis With Redline</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 4 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/eIYVhHV.png" alt="REvil Ransomware Memory Dump Analysis With Redline"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>Let&rsquo;s Defend - Revil Ransomware</p>
+<p>For this challenge, we&rsquo;re presented with 3 files:</p>
+<ol>
+<li>993ixjlb-readme.txt</li>
+<li>bad day.PNG</li>
+<li>AnalysisSession1.mans</li>
+</ol>
+<p>The <code>.mans</code> file is a memory dump which can be analyzed with <a href="https://www.fireeye.com/services/freeware/redline.html">FireEye&rsquo;s Redline security tool</a>.</p>
+<p>We&rsquo;re also presented with 10 challenge questions:</p>
+<ol>
+<li>What is the Operating System which the Redline image is being collected on?</li>
+<li>What is the Logged in User while the Redline image is being collected?</li>
+<li>What is the location of the ransomware on the filesystem?</li>
+<li>What is the MD5 of the ransomware?</li>
+<li>What is the extension for the encrypted file on the filesystem?</li>
+<li>What is the onion website for paying the ransom?</li>
+<li>What is the secondary website for paying the ransom?</li>
+<li>What is the Child Command Line Process being executed after the ransomware being executed?</li>
+<li>What is the Mitre ATT&amp;CK Technique ID of this ransomware impact stage?</li>
+<li>What is the name of the Ransomware?</li>
+</ol>
+<p>Many of these questions can actually be answered quite quickly without even opening Redline to analyze the memory dump yet.</p>
+<p>Questions 5, 6, 7, and 10 could be answered by looking through the <code>.txt</code> &amp; <code>.png</code> file which were packaged in the challenge&rsquo;s <code>.zip</code> file:</p>
+<p><img src="https://i.imgur.com/kmjUkvp.jpg" alt=""></p>
+<p>The image tells us that <code>993ixjlb-readme.txt</code> contains instructions, so it&rsquo;s likely the ransomware note.</p>
+<p>If we <code>cat</code> this file, we&rsquo;re able to read its contents and determine that:</p>
+<ul>
+<li>The file extension of the encrypted files is <code>993ixjlb.</code></li>
+</ul>
+<p><img src="https://i.imgur.com/JwC4BEo.png" alt=""></p>
+<ul>
+<li>The Tor onion website to pay the ransom is: <code>hxxp aplebzu47wgazapdqks6vrcv6zcnjppkbxbr6wketf56nf6aq2nmyoyd.onion/4FE49B3286F992CB</code></li>
+<li>The secondary website to pay the ransom is: <code>hxxp decoder.re/4FE49B3286F992CB</code></li>
+</ul>
+<p><img src="https://i.imgur.com/rV2TBGK.png" alt=""></p>
+<p>Question 10 asks for the name of the ransomware which can be determined by the challenge name, <code>revil</code>. This can also be determined by acquiring the hash of the ransomware and inputting it into Virus Total, then looking through the <em>Community</em> tab.</p>
+<p>Question 2 asks for the username of the user that was logged in while the Redline image was collected. This can be determined by opening up the image in Redline &gt; System Information &gt; User Information &gt; Logged in User:</p>
+<p><img src="https://i.imgur.com/7lawJc0.png" alt=""></p>
+<ul>
+<li>More information on Redline usage <a href="https://resources.infosecinstitute.com/topic/memory-analysis-using-redline/">here</a></li>
+</ul>
+<p>Another way we could determine the username of the logged in user is using Linux&rsquo;s <code>strings</code> command on the memory image!</p>
+<p>We could run:</p>
+<p><code>strings AnalysisSession1.mans | grep Desktop | more</code> find the instances of the string <code>Desktop</code> in the dump. The reason I chose <code>Desktop</code> is since it&rsquo;s a common Windows directory and it contains the username of the user in the file path (EX: <code>C:\Users\&lt;username&gt;\Desktop</code>):</p>
+<p><img src="https://i.imgur.com/Fzr2HDS.png" alt=""></p>
+<p>We were lucky in this output since the answer is on the first line!</p>
+<p>To find the OS that the Redline image was collected from, System Information &gt; Operating System Information &gt; Operating System:</p>
+<p><img src="https://i.imgur.com/K71jzmD.png" alt=""></p>
+<p>Now let&rsquo;s determine the MD5 hash of the ransomware executable!</p>
+<p>I began by looking through the <em>processes</em> tab in Redline, but nothing stood out of the ordinary to me so I transitioned into the <em>File System</em> section which is where I found this in the <em>Downloads</em> folder:</p>
+<ul>
+<li>I realize now that since this memory dump was taken after the ransomware was executed &amp; the ransom note was dropped onto the system, there would likely be no use in looking for evidence in the <em>processes</em> tab since it would&rsquo;ve been done running.</li>
+</ul>
+<p><img src="https://i.imgur.com/aWuWdSC.png" alt=""></p>
+<p>This is quite a suspicious executable to me.</p>
+<p>The <em>Signature Description</em> states this is not a signed binary.</p>
+<p>I assume that the <em>Accessed</em> column is referring to when the binary was executed:</p>
+<p><img src="https://i.imgur.com/ZXzEBw5.png" alt=""></p>
+<p>We can also determine the time that the ransom note was dropped onto the victim&rsquo;s system in hopes to match that up with the time that the potential ransomware binary was executed. We can do so by searching through the <em>Event Logs</em> of Redline.</p>
+<p>Search for the string <code>readme</code> within the event logs since we know from the file <code>bad day.png</code> that the ransom note contained this string in the filename:</p>
+<p><img src="https://i.imgur.com/5d52JRE.png" alt=""></p>
+<p>There&rsquo;s 3 instances of it found!</p>
+<p>Showing more details about this event reveals that the ransom note was dropped at <code>20:06:44 on 2021-07-31</code>, recall that the ransomware binary was executed at <code>20:06:31 on 2021-07-31</code>:</p>
+<p><img src="https://i.imgur.com/zxzR4bW.png" alt=""></p>
+<p>The hash of the suspicious file is: <code>94d087166651c0020a9e6cc2fdacdc0c</code></p>
+<p><img src="https://i.imgur.com/SsJQqLS.png" alt=""></p>
+<p>And if we input this hash into Virus Total, we can confirm that this is indeed Revil Ransomware:</p>
+<p><img src="https://i.imgur.com/y7o70no.png" alt=""></p>
+<p>So the ransomware executable was located at: <code>C:\Users\SecurityNinja\Downloads\bad day.exe</code></p>
+<p>And if we visit <a href="https://www.joesandbox.com/analysis/443860/0/html">Joe&rsquo;s Sandbox&rsquo;s full report</a>, we can confirm the Child Command-Line Process that was ran after the ransomware binary was executed is:</p>
+<p><code>netsh advfirewall firewall set rule group='Network Discovery' new enable=Yes</code></p>
+<p>which will make the victim&rsquo;s machine visible to other machines on the same network (it enables Network Discovery).</p>
+<p>We can also confirm that the Mitre ATT&amp;CK Technique ID at the impact stage is <code>T1486</code> which involves encrypting victim data in an effort to disrupt availability to system &amp; network resources as well as requesting compensation for the decryption ke as well as requesting compensation for the decryption key.</p>
+<h2 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li><a href="https://app.letsdefend.io/challenge/revil-ransomware/">https://app.letsdefend.io/challenge/revil-ransomware/</a></li>
+<li><a href="https://www.virustotal.com/gui/file/9b11711efed24b3c6723521a7d7eb4a52e4914db7420e278aa36e727459d59dd/community">https://www.virustotal.com/gui/file/9b11711efed24b3c6723521a7d7eb4a52e4914db7420e278aa36e727459d59dd/community</a></li>
+<li><a href="https://www.joesandbox.com/analysis/443860/0/html">https://www.joesandbox.com/analysis/443860/0/html</a></li>
+<li><a href="https://attack.mitre.org/techniques/T1486/">https://attack.mitre.org/techniques/T1486/</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

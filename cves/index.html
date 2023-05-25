@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Cves ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content=""
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/cves/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cves"/>
+<meta name="twitter:description" content=""/>
+
+
+
+<meta property="og:title" content="Cves" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://1d8.github.io/cves/" /><meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+<link rel="alternate" type="application/rss+xml" href="/cves/index.xml" title="1d8 blog" />
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  <div class="posts">
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/cves/cve_2021_29011/">CVE-2021-29011 - XSS</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 7 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              CVE-2021-29011 (XSS)
+There are several features of the radius manager software that are vulnerable to cross-site scripting (xss). Successful exploitation requires that you have access to the Radius Management software web interface and be logged in or have an account with sufficient privileges for adding/editing certain items (such as adding users, access points, etc).
+This may be used as a means to elevate privileges when chained together with CVE-2021-29012 since a low-privilege account is required.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/cves/cve_2021_29011/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/cves/cve_2021_29012/">CVE-2021-29012 - Broken Session Management</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 4 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              CVE-2021-29012 (Broken Session Management)
+When an admin user logs in, their session cookie is given &amp; doesn&rsquo;t expire upon logging out. Instead the session cookie is temporarily disabled until the admin logs in again. The session cookie doesn&rsquo;t change so if an attacker manages to steal a session cookie, then they can simply reuse it when the admin is logged in again and impersonate them. And if they aren&rsquo;t successful at logging in the first time due to the admin being logged out, they can simply keep trying until the admin is logged in again and get a successful login.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/cves/cve_2021_29012/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/cves/cve_2021_30147/">CVE-2021-30147 - CSRF</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 4 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              CVE-2021-30147 (DMA RADIUS Manager 4.4.0)
+CSRF - Creating Access Points #  This exploit requires an attacker to have access to the web interface of the RADIUS Manager but an account isn&rsquo;t required (instead, this CSRF can be exploited in order to create an account for the attacker.). It also requires the victim to browse to our custom crafted webpage &amp; be already logged in as a RADIUS user with the appropriate privileges for the certain action we want them to execute (EX: If we want the victim&rsquo;s account to create a new user account for us, the victim must be logged in as someone with sufficient privileges that allows them to create an account).
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/cves/cve_2021_30147/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/cves/cve_2021_4177/">CVE-2021-4177 - Generation of Error Message Containing Sensitive Information LiveHelperChat</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 2 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              Description #  When updating the geolocation detection configuration, we&rsquo;re given the option to specify a file location of a city database file, this can be used to determine if files exist or not. We are not able to see the contents of the file, but we are indeed able to determine if the file exists based on the server&rsquo;s response.
+If the file location is highlighted green, we know that the file exists.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/cves/cve_2021_4177/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/cves/cve_2022_0083/">CVE-2022-0083 - Generation of Error Message Containing Sensitive Information LiveHelperChat</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 2 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              Description #  When resetting your password, you&rsquo;re able to enumerate users based on the way that the server responds to your request. If you enter an email that doesn&rsquo;t exist (for example: test@gmail.com), then the server will respond with an HTTP 302 FOUND status response code (indicated by line 97 of the occurrence link)
+But if you attempt to reset the password for an account that you know exists (for example: remdex@gmail.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/cves/cve_2022_0083/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/cves/cve_2022_0372/">CVE-2022-0372 - XSS Crater-Invoice</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 1 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              Description #  There is a vulnerability in the upload avatar functionality of crater invoice which would allow an attacker to upload malicious .SVG files in order to execute Javascript. All that is required is that the victim browse to the link location of the .SVG file Proof of Concept
+Proof of Concept #  xss.svg:
+&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt; &lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt; &lt;svg version=&#34;1.1&#34; baseProfile=&#34;full&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt; &lt;polygon id=&#34;triangle&#34; points=&#34;0,0 0,50 50,0&#34; fill=&#34;#009900&#34; stroke=&#34;#004400&#34;/&gt; &lt;script type=&#34;text/javascript&#34;&gt; alert(&#34;svg xss&#34;); &lt;/script&gt; &lt;/svg&gt; Request:
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/cves/cve_2022_0372/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/cves/cve_2022_4804/">CVE-2022-4804 - Unauthorized Attacker Can Change Visibility Status of Victim&rsquo;s Memos</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 1 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              Description #  An attacker can make a private memo into a public memo in order to view it. All the attacker needs to know is the memo ID and they can make a PATCH request to /api/memo/&lt;memo ID&gt; with the following request data:
+{&quot;id&quot;:&lt;MEMO ID&gt;,&quot;visibility&quot;:&quot;PUBLIC&quot;,&quot;resourceIdList&quot;:[]}
+Then the attacker can visit the memo URL &amp; view the memo data of the victim. The memo URL format is similar to this: https://demo.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/cves/cve_2022_4804/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/cves/cve_2023_1541/">CVE-2023-1541 - Admin Able To Perform Operations On Themselves By Interacting With API Answer</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 2 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              Description #  When setting a password through /admin/users URI, the admin is not allowed to set their own new password through this URI. If they attempt to do so, they receive an error stating Forbidden to operate on yourself. But this is easily bypassable by interacting with the API: if you set a new password for another user, then change the user_id parameter within the request to the admin user ID.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/cves/cve_2023_1541/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+    
+      <span class="button next">
+        <a href="/cves/page/2/">
+          <span class="button__text">Older posts</span>
+          <span class="button__icon">→</span>
+        </a>
+      </span>
+    
+  </div>
+</div>
+
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

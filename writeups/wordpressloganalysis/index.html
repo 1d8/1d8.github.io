@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Compromised Wordpress Log Investigation ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Log Analysis Compromised Wordpress - https://blueteamlabs.online/home/challenge/9
+In this challenge, we&amp;rsquo;re given a log file and told that it belongs to a Wordpress site which was compromised. The way in which the site was compromised is unknown, but it&amp;rsquo;s suspected that an installed plugin was vulnerable to Remote Code Execution (RCE) and an attacker exploited this to gain access.
+The task questions are:
+ Identify the URI of the admin login panel that the attacker gained access to (include the token)."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/wordpressloganalysis/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Compromised Wordpress Log Investigation"/>
+<meta name="twitter:description" content="Analyzing the logs of a compromised Wordpress site."/>
+
+
+
+<meta property="og:title" content="Compromised Wordpress Log Investigation" />
+<meta property="og:description" content="Analyzing the logs of a compromised Wordpress site." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/wordpressloganalysis/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Compromised Wordpress Log Investigation</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 7 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://wpbyte.com/wp-content/uploads/2021/03/best-wordpress-malware-removal-plugins-services-featured-image-final.jpg" alt="Compromised Wordpress Log Investigation"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>Log Analysis Compromised Wordpress - <a href="https://blueteamlabs.online/home/challenge/9">https://blueteamlabs.online/home/challenge/9</a></p>
+<p>In this challenge, we&rsquo;re given a log file and told that it belongs to a Wordpress site which was compromised. The way in which the site was compromised is unknown, but it&rsquo;s suspected that an installed plugin was vulnerable to Remote Code Execution (RCE) and an attacker exploited this to gain access.</p>
+<p>The task questions are:</p>
+<ol>
+<li>Identify the URI of the admin login panel that the attacker gained access to (include the token).</li>
+<li>Can you find the two tools the attacker used?</li>
+<li>The attacker tried to exploit a vulnerability in <em>Contact Form 7</em>. What CVE was the plugin vulnerable to? (Do some research!)</li>
+<li>What plugin was exploited to gain access?</li>
+<li>What is the name of the PHP web shell file?</li>
+<li>What was the HTTP response code provided when the web shell was accessed the final time?</li>
+</ol>
+<p>For the first task which asks us to find the URI of the admin login panel that the attacker gained access to, we can find this by simply searching for the keyword <em>login</em> which would bring us to <code>/wp-login.php</code>:</p>
+<p><img src="https://i.imgur.com/ZSjuIrW.png" alt=""></p>
+<p>but the question asks that we include the token so this wouldn&rsquo;t be the answer, but we&rsquo;re on the right path!</p>
+<p>If we instead search for <code>/wp-login.php</code>, we cut down the number of results to 278 from 630 so this will make it quicker to find the URI which includes the token.</p>
+<p>After some scrolling, I came across some URIs which included the <code>itsec-hb-token</code> value that was set to <code>adminlogin</code> and also had a 200 response code:</p>
+<p><img src="https://i.imgur.com/hBQ89K2.png" alt=""></p>
+<p>This looks like it could be the full URI, token included. And if you search the rest of the log file to find any other values that this token may be set to, it is almost always set to <code>adminlogin</code>, confirming that this is our token value, since it&rsquo;s the only value that the token is set to!</p>
+<ul>
+<li><em>NOTE: There is one other value that I noticed the <code>itsec-hb-token</code> to be set to which is: p@y&lt;&quot;&lsquo;p@y, but I believe that either this is simply a malformed value</em></li>
+</ul>
+<p>Q: Identify the URI of the admin login panel that the attacker gained access to (include the token)
+A: <code>/wp-login.php?itsec-hb-token=adminlogin</code></p>
+<p>Onto the next task of identifying the two tools that the attacker employed!</p>
+<p>The user-agent field of a request is what will allow a server to identify what application or OS (along with the application&rsquo;s version &amp; OS&rsquo;s version) is making the request!</p>
+<p>For example, I noticed in this particular log file, there was a request made using Python&rsquo;s <code>requests</code> library. This can be identified by the user-agent being set to <code>python-requests/2.24.0</code>:</p>
+<p><img src="https://i.imgur.com/WU7O5ey.png" alt=""></p>
+<p>So when software makes web requests, it isn&rsquo;t unusual for it to embed the name of the software along with the version into the user-agent field, this is also true of penetration testing tools, so we should be able to tell what tools the attacker used by viewing the User-Agent field!</p>
+<ul>
+<li><em>NOTE: It&rsquo;s also common for the user-agent field to be spoofed and many tools include this functionality (EX: <a href="https://www.infosecmatter.com/nmap-nse-library/?nse=http-useragent-tester">nmap</a></em></li>
+</ul>
+<p>But there&rsquo;s a little over 2k lines of text in this file and combing through each user-agent would consume too much time, so I chose to write this quick python script to parse the log file, scrape the user-agent, then output only the unique user-agents:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3">f <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;access.log&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>)
+data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+f<span style="color:#f92672">.</span>close()
+
+
+uniqueUserAgents <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> data:
+    userAgent <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;-&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    <span style="color:#66d9ef">if</span> userAgent <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> uniqueUserAgents:
+        uniqueUserAgents<span style="color:#f92672">.</span>append(userAgent)
+
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> uniqueUserAgents:
+    print(i)
+</code></pre></div><p>It doesn&rsquo;t work perfectly, in fact, it strips out parts which it should be including, such as the Python user agent:</p>
+<p><img src="https://i.imgur.com/G7ZDGGe.png" alt=""></p>
+<p>But the script cuts down the amount of lines we must read through to 600 from 2k so that&rsquo;s beneficial, and it also doesn&rsquo;t cut out the name of the tools!</p>
+<p>If we scroll through the list of user agents, at line 267, we&rsquo;ll see a user-agent for <em>WPScan</em> which is a tool used to enumerate the plugins installed on a Wordpress site:</p>
+<p><img src="https://i.imgur.com/FRdIBXH.png" alt=""></p>
+<p>And if we scroll a bit further to line 483, we find a user-agent for <em>SQLmap</em> which is a tool used to find &amp; exploit SQL injection vulnerabilities:</p>
+<p><img src="https://i.imgur.com/BA4VOV4.png" alt=""></p>
+<p>Q: Can you find two tools the attacker used?
+A: WPScan sqlmap</p>
+<p>Onto the next question which is asking for the CVE of a Contact Form 7 vulnerability which the attacker tried to exploit!</p>
+<p>I wasn&rsquo;t quite sure what a Contact Form 7 was, so after doing some research, I discovered that it&rsquo;s a Wordpress plugin used to create contact forms so a user could contact an organization! The contact forms could also include a file upload functionality.</p>
+<p>When I searched online for vulnerabilities relating to Contact Form 7, the results mainly involved CVE-2020-35489 which is a vulnerability that allowed an attacker to upload any file they&rsquo;d like, leading to remote code execution.</p>
+<p>What seemed to lead to this vulnerability is the fact that special characters aren&rsquo;t removed from the filename, so an attacker could add double extensions into the filename (EX: <code>.php.png</code>) and it would accept the upload, and remove the last extension! Then the attacker simply needed to visit the uploaded file to execute the code embedded in it.</p>
+<p>Now that I know CVE-2020-35489 was quite a widespread vulnerability, I decided to take a shot in the dark and try that as an answer, and it was correct!</p>
+<p>Now onto the last 3 questions:</p>
+<ol start="4">
+<li>What plugin was exploited to get access?</li>
+<li>What is the name of the PHP web shell file?</li>
+<li>What was the HTTP response code provided when the web shell was accessed for the final time?</li>
+</ol>
+<p>Question 5 gives away the partial solution to question 4, we now know that there was a PHP web shell that was uploaded, and this is likely how the attacker gained access.</p>
+<p>Since it&rsquo;s a PHP file, it&rsquo;ll likely end in or include <code>.php</code> and since it involves a web shell being uploaded, it&rsquo;s going to be a POST request, so we can <code>grep</code> for these two characteristics:</p>
+<p><code>cat access.log | grep -i .php | grep -i POST</code></p>
+<p>which results in 389 lines!</p>
+<p><img src="https://i.imgur.com/CqRpNl6.png" alt=""></p>
+<p>But the first thing I noticed is that many of these POST requests are being sent to URIs which do not appear to be related to uploading files (EX: <code>/wp-cron.php</code>, <code>/wp-admin/admin-ajax.php</code>), so we can add the keyword <em>upload</em> into our <code>cat</code> command to further cut this down:</p>
+<p><code>cat access.log | grep -i .php | grep -i POST | grep -i upload</code></p>
+<p>which now results in 16 lines:</p>
+<p><img src="https://i.imgur.com/ggCqDGh.png" alt=""></p>
+<ul>
+<li><em>NOTE: You could&rsquo;ve also just opened up the file in a text editor and searched for the word &lsquo;upload&rsquo; and you would only have ~103 results to look through</em></li>
+</ul>
+<p>One thing that I noticed were POST requests made to <code>/wp-content/uploads/simple-file-list/</code>, all of which resulted in 200 responses, meaning they were successful. One of the files which was uploaded was <code>fr34k.php</code> and another was <code>ee-upload-engine.php</code>.</p>
+<p>To me, <code>ee-upload-engine.php</code> seems like a normal file, but <code>fr34k.php</code> does not, and the fact that <code>fr34k.php</code> was uploaded multiple times is also quite suspicious, it seems as if the attacker may have been modifying their code, and re-uploading their web shell.</p>
+<p>Q: What is the name of the PHP web shell file?
+A: <code>fr34k.php</code></p>
+<p>Now we know that the attacker&rsquo;s web shell is named <code>fr34k.php</code>, and we know that they uploaded it to the <code>/wp-content/uploads/simple-file-list/</code> directory, we must determine what plugin was exploited to upload this file. We can determine from the upload URI that the plugin is <a href="https://wordpress.org/plugins/simple-file-list/">Simple File List</a> which allows users to upload, download, and edit files on Wordpress. The question also requests the version of the plugin, so we must search online for vulnerabilities in Simple File List.</p>
+<p><a href="https://wpscan.com/vulnerability/10192">Wpscan</a> has an exploit and quick explanation regarding a Simple File List vulnerability in which an unauthenticated attacker could upload a file which would lead to remote code execution which is what appears to be happening in our log file. It also details that a fix for this vulnerability was published in version 4.2.3 so the vulnerable version would be 4.2.2!</p>
+<p>Q: What plugin was exploited to get access?
+A: Simple File List 4.2.2</p>
+<p>Onto the final task, finding the HTTP response code when the web shell (<code>fr34k.php</code>) was accessed for the final time. All we have to do here is look for the last GET request to <code>fr34k.php</code> &amp; find the corresponding HTTP response code.</p>
+<p><code>cat access.log | grep -i fr34k.php | grep -i GET</code></p>
+<p><img src="https://i.imgur.com/WM3mmlz.png" alt=""></p>
+<ul>
+<li>We can also just open up the <code>access.log</code> file in a text editor &amp; look for the last instance of <code>fr34k.php</code></li>
+</ul>
+<p><img src="https://i.imgur.com/kXylq73.png" alt=""></p>
+<h2 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2020-35489">https://nvd.nist.gov/vuln/detail/CVE-2020-35489</a></li>
+<li><a href="https://www.acunetix.com/vulnerabilities/web/wordpress-plugin-simple-file-list-arbitrary-file-upload-4-2-2/">https://www.acunetix.com/vulnerabilities/web/wordpress-plugin-simple-file-list-arbitrary-file-upload-4-2-2/</a></li>
+<li><a href="https://blog.wpsec.com/contact-form-7-vulnerability/">https://blog.wpsec.com/contact-form-7-vulnerability/</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

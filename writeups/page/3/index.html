@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Writeups ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content=""
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Writeups"/>
+<meta name="twitter:description" content=""/>
+
+
+
+<meta property="og:title" content="Writeups" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://1d8.github.io/writeups/" /><meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+<link rel="alternate" type="application/rss+xml" href="/writeups/index.xml" title="1d8 blog" />
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  <div class="posts">
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/gitcommitted/">Committed Sensitive Data</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 1 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/2nT9E9e.png" alt="Committed Sensitive Data"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Investigating Git commits for sensitive data.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/gitcommitted/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/wordpressloganalysis/">Compromised Wordpress Log Investigation</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 7 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://wpbyte.com/wp-content/uploads/2021/03/best-wordpress-malware-removal-plugins-services-featured-image-final.jpg" alt="Compromised Wordpress Log Investigation"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Analyzing the logs of a compromised Wordpress site.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/wordpressloganalysis/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/portscandetection/">Detecting Port Scanning</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 3 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/W6uDN16.png" alt="Detecting Port Scanning"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Using Wireshark to detect a malicious user performing a port scan on a network.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/portscandetection/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/disclosetheagent/">Disclose The Agent Packet Analysis</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 3 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/kjrx9oS.png" alt="Disclose The Agent Packet Analysis"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Analyzing a pcap file with Wireshark to find the secret agent.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/disclosetheagent/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/epochrce/">Epoch Web App Code Execution</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 1 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/i2NO6B5.png" alt="Epoch Web App Code Execution"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Hacking an epoch time converter web application.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/epochrce/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/grabthephisher/">Grab the phisher</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 2 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/2ZbM7NQ.png" alt="Grab the phisher"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Investigating a phishing page to learn more about the phisher.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/grabthephisher/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/iceiddocanalysis/">IceID Malicious Doc Analysis</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 8 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/wpkiUaw.png" alt="IceID Malicious Doc Analysis"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Performing malware analysis on a malicious document from the IceID malware family.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/iceiddocanalysis/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/insider/">Insider Disk Analysis With FTK</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 7 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/mUJJzdK.png" alt="Insider Disk Analysis With FTK"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Using FTK disk analysis tool to analyze a Linux disk image.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/insider/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/lespionosint/">L&rsquo;espion OSINT</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 7 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/Q2rzEb3.png" alt="L&#39;espion OSINT"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Using Open Source Intelligence (OSINT) techniques to solve a CyberDefender&rsquo;s challenge.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/lespionosint/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/mrphisher/">Mr. Phisher Macros</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 3 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/B6o7UpJ.png" alt="Mr. Phisher Macros"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Deobfuscating maldoc macros to find a flag.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/mrphisher/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/neighbor/">Neighbor</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 1 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/4K7W5YA.png" alt="Neighbor"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Hacking a web application by manipulating URL parameters.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/neighbor/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/ransomwarememoryanalysis/">Ransomware Memory Analysis With Volatility</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 4 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://image.freepik.com/free-vector/ransomware-attack-scam-cartoon-malware-showing-alert-sign-laptop-screen-with-hacker-threatening-money-payment-unlock_184560-87.jpg" alt="Ransomware Memory Analysis With Volatility"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Performing memory analysis on a Windows machine infected with ransomware
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/ransomwarememoryanalysis/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/ransomwareattackredline/">Ransomware Memory Dump Analysis With Redline</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 5 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/eIYVhHV.png" alt="Ransomware Memory Dump Analysis With Redline"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/ransomwareattackredline/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/thmrevilcorp/">REvil Memory Dump Analysis With Redline</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 5 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/eIYVhHV.png" alt="REvil Memory Dump Analysis With Redline"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/thmrevilcorp/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/revilransomwareanalysis/">REvil Ransomware Memory Dump Analysis With Redline</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 4 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/eIYVhHV.png" alt="REvil Ransomware Memory Dump Analysis With Redline"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye&rsquo;s Redline memory analysis tool.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/revilransomwareanalysis/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/sakurathmosint/">Sakura OSINT</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 7 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/F8SEgjb.png" alt="Sakura OSINT"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Using Open Source Intelligence (OSINT) techniques to solve a TryHackMe Sakura challenge.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/sakurathmosint/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/seizedlinuxmemanalysis/">Seized Linux Memory Analysis With Volatility</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 14 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/rbbS68F.png" alt="Seized Linux Memory Analysis With Volatility"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Using Volatility to perform memory analysis on a memory dump of a CentOS Linux machine.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/seizedlinuxmemanalysis/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/extensionanalysis/">Suspicious Browser Extension Analysis</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 5 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/CXCKqdG.png" alt="Suspicious Browser Extension Analysis"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Analyzing a malicious browser extension.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/extensionanalysis/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+      <article class="post on-list">
+        <h1 class="post-title"><a href="https://1d8.github.io/writeups/thmmemoryforensics/">Windows Memory Forensics</a></h1>
+        <div class="post-meta">
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 4 min read</span
+            >
+          
+        </div>
+
+        
+
+        
+          <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/OcbLcOG.png" alt="Windows Memory Forensics"/>
+  
+
+  
+</figure>
+
+        
+
+        <div class="post-content">
+          
+            Performing memory forensics on Windows machine images using Volatility.
+            
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/writeups/thmmemoryforensics/"
+              >more... →</a
+            >
+          </div>
+        
+      </article>
+    
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+      <span class="button previous">
+        <a href="/writeups/page/2/">
+          <span class="button__icon">←</span>
+          <span class="button__text">Newer posts</span>
+        </a>
+      </span>
+    
+    
+      <span class="button next">
+        <a href="/writeups/page/4/">
+          <span class="button__text">Older posts</span>
+          <span class="button__icon">→</span>
+        </a>
+      </span>
+    
+  </div>
+</div>
+
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

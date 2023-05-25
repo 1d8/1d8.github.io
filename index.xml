@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>1d8 blog</title>
+    
+    
+    
+    <link>https://1d8.github.io/</link>
+    <description>Recent content on 1d8 blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://1d8.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>https://1d8.github.io/about/</link>
+      <pubDate>Tue, 24 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/about/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Hi there #  Socials:
+ Github: 1d8  
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://1d8.github.io/post/example/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/post/example/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/PtXWRPX.png&#34;/&gt;
+          
+        
+        
+        
+          I do cyber stuff and this is my blog.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Committed Sensitive Data</title>
+      <link>https://1d8.github.io/writeups/gitcommitted/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/gitcommitted/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/2nT9E9e.png&#34;/&gt;
+          
+        
+        
+        
+          Investigating Git commits for sensitive data.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Compromised Wordpress Log Investigation</title>
+      <link>https://1d8.github.io/writeups/wordpressloganalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/wordpressloganalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://wpbyte.com/wp-content/uploads/2021/03/best-wordpress-malware-removal-plugins-services-featured-image-final.jpg&#34;/&gt;
+          
+        
+        
+        
+          Analyzing the logs of a compromised Wordpress site.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>CVE-2021-29011 - XSS</title>
+      <link>https://1d8.github.io/cves/cve_2021_29011/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2021_29011/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          CVE-2021-29011 (XSS)
+There are several features of the radius manager software that are vulnerable to cross-site scripting (xss). Successful exploitation requires that you have access to the Radius Management software web interface and be logged in or have an account with sufficient privileges for adding/editing certain items (such as adding users, access points, etc).
+This may be used as a means to elevate privileges when chained together with CVE-2021-29012 since a low-privilege account is required.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>CVE-2021-29012 - Broken Session Management</title>
+      <link>https://1d8.github.io/cves/cve_2021_29012/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2021_29012/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          CVE-2021-29012 (Broken Session Management)
+When an admin user logs in, their session cookie is given &amp;amp; doesn&amp;rsquo;t expire upon logging out. Instead the session cookie is temporarily disabled until the admin logs in again. The session cookie doesn&amp;rsquo;t change so if an attacker manages to steal a session cookie, then they can simply reuse it when the admin is logged in again and impersonate them. And if they aren&amp;rsquo;t successful at logging in the first time due to the admin being logged out, they can simply keep trying until the admin is logged in again and get a successful login.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>CVE-2021-30147 - CSRF</title>
+      <link>https://1d8.github.io/cves/cve_2021_30147/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2021_30147/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          CVE-2021-30147 (DMA RADIUS Manager 4.4.0)
+CSRF - Creating Access Points #  This exploit requires an attacker to have access to the web interface of the RADIUS Manager but an account isn&amp;rsquo;t required (instead, this CSRF can be exploited in order to create an account for the attacker.). It also requires the victim to browse to our custom crafted webpage &amp;amp; be already logged in as a RADIUS user with the appropriate privileges for the certain action we want them to execute (EX: If we want the victim&amp;rsquo;s account to create a new user account for us, the victim must be logged in as someone with sufficient privileges that allows them to create an account).
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>CVE-2021-4177 - Generation of Error Message Containing Sensitive Information LiveHelperChat</title>
+      <link>https://1d8.github.io/cves/cve_2021_4177/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2021_4177/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Description #  When updating the geolocation detection configuration, we&amp;rsquo;re given the option to specify a file location of a city database file, this can be used to determine if files exist or not. We are not able to see the contents of the file, but we are indeed able to determine if the file exists based on the server&amp;rsquo;s response.
+If the file location is highlighted green, we know that the file exists.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>CVE-2022-0083 - Generation of Error Message Containing Sensitive Information LiveHelperChat</title>
+      <link>https://1d8.github.io/cves/cve_2022_0083/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2022_0083/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Description #  When resetting your password, you&amp;rsquo;re able to enumerate users based on the way that the server responds to your request. If you enter an email that doesn&amp;rsquo;t exist (for example: test@gmail.com), then the server will respond with an HTTP 302 FOUND status response code (indicated by line 97 of the occurrence link)
+But if you attempt to reset the password for an account that you know exists (for example: remdex@gmail.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>CVE-2022-0372 - XSS Crater-Invoice</title>
+      <link>https://1d8.github.io/cves/cve_2022_0372/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2022_0372/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Description #  There is a vulnerability in the upload avatar functionality of crater invoice which would allow an attacker to upload malicious .SVG files in order to execute Javascript. All that is required is that the victim browse to the link location of the .SVG file Proof of Concept
+Proof of Concept #  xss.svg:
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; standalone=&amp;#34;no&amp;#34;?&amp;gt; &amp;lt;!DOCTYPE svg PUBLIC &amp;#34;-//W3C//DTD SVG 1.1//EN&amp;#34; &amp;#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&amp;#34;&amp;gt; &amp;lt;svg version=&amp;#34;1.1&amp;#34; baseProfile=&amp;#34;full&amp;#34; xmlns=&amp;#34;http://www.w3.org/2000/svg&amp;#34;&amp;gt; &amp;lt;polygon id=&amp;#34;triangle&amp;#34; points=&amp;#34;0,0 0,50 50,0&amp;#34; fill=&amp;#34;#009900&amp;#34; stroke=&amp;#34;#004400&amp;#34;/&amp;gt; &amp;lt;script type=&amp;#34;text/javascript&amp;#34;&amp;gt; alert(&amp;#34;svg xss&amp;#34;); &amp;lt;/script&amp;gt; &amp;lt;/svg&amp;gt; Request:
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>CVE-2022-4804 - Unauthorized Attacker Can Change Visibility Status of Victim&#39;s Memos</title>
+      <link>https://1d8.github.io/cves/cve_2022_4804/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2022_4804/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Description #  An attacker can make a private memo into a public memo in order to view it. All the attacker needs to know is the memo ID and they can make a PATCH request to /api/memo/&amp;lt;memo ID&amp;gt; with the following request data:
+{&amp;quot;id&amp;quot;:&amp;lt;MEMO ID&amp;gt;,&amp;quot;visibility&amp;quot;:&amp;quot;PUBLIC&amp;quot;,&amp;quot;resourceIdList&amp;quot;:[]}
+Then the attacker can visit the memo URL &amp;amp; view the memo data of the victim. The memo URL format is similar to this: https://demo.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>CVE-2023-1541 - Admin Able To Perform Operations On Themselves By Interacting With API Answer</title>
+      <link>https://1d8.github.io/cves/cve_2023_1541/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2023_1541/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Description #  When setting a password through /admin/users URI, the admin is not allowed to set their own new password through this URI. If they attempt to do so, they receive an error stating Forbidden to operate on yourself. But this is easily bypassable by interacting with the API: if you set a new password for another user, then change the user_id parameter within the request to the admin user ID.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Detecting Port Scanning</title>
+      <link>https://1d8.github.io/writeups/portscandetection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/portscandetection/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/W6uDN16.png&#34;/&gt;
+          
+        
+        
+        
+          Using Wireshark to detect a malicious user performing a port scan on a network.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Disclose The Agent Packet Analysis</title>
+      <link>https://1d8.github.io/writeups/disclosetheagent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/disclosetheagent/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/kjrx9oS.png&#34;/&gt;
+          
+        
+        
+        
+          Analyzing a pcap file with Wireshark to find the secret agent.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Dmasoft PrivEsc Exploit</title>
+      <link>https://1d8.github.io/publications/dmasoft_cookiestealer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/publications/dmasoft_cookiestealer/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/neC1Bs8.png&#34;/&gt;
+          
+        
+        
+        
+          Chains CVE-2021-29011 and CVE-2021-29012 together to inject Javascript and steal cookies.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Epoch Web App Code Execution</title>
+      <link>https://1d8.github.io/writeups/epochrce/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/epochrce/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/i2NO6B5.png&#34;/&gt;
+          
+        
+        
+        
+          Hacking an epoch time converter web application.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Grab the phisher</title>
+      <link>https://1d8.github.io/writeups/grabthephisher/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/grabthephisher/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/2ZbM7NQ.png&#34;/&gt;
+          
+        
+        
+        
+          Investigating a phishing page to learn more about the phisher.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>IceID Malicious Doc Analysis</title>
+      <link>https://1d8.github.io/writeups/iceiddocanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/iceiddocanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/wpkiUaw.png&#34;/&gt;
+          
+        
+        
+        
+          Performing malware analysis on a malicious document from the IceID malware family.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Insider Disk Analysis With FTK</title>
+      <link>https://1d8.github.io/writeups/insider/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/insider/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/mUJJzdK.png&#34;/&gt;
+          
+        
+        
+        
+          Using FTK disk analysis tool to analyze a Linux disk image.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>L&#39;espion OSINT</title>
+      <link>https://1d8.github.io/writeups/lespionosint/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/lespionosint/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/Q2rzEb3.png&#34;/&gt;
+          
+        
+        
+        
+          Using Open Source Intelligence (OSINT) techniques to solve a CyberDefender&#39;s challenge.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Mr. Phisher Macros</title>
+      <link>https://1d8.github.io/writeups/mrphisher/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/mrphisher/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/B6o7UpJ.png&#34;/&gt;
+          
+        
+        
+        
+          Deobfuscating maldoc macros to find a flag.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Neighbor</title>
+      <link>https://1d8.github.io/writeups/neighbor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/neighbor/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/4K7W5YA.png&#34;/&gt;
+          
+        
+        
+        
+          Hacking a web application by manipulating URL parameters.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Ransomware Memory Analysis With Volatility</title>
+      <link>https://1d8.github.io/writeups/ransomwarememoryanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/ransomwarememoryanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://image.freepik.com/free-vector/ransomware-attack-scam-cartoon-malware-showing-alert-sign-laptop-screen-with-hacker-threatening-money-payment-unlock_184560-87.jpg&#34;/&gt;
+          
+        
+        
+        
+          Performing memory analysis on a Windows machine infected with ransomware
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Ransomware Memory Dump Analysis With Redline</title>
+      <link>https://1d8.github.io/writeups/ransomwareattackredline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/ransomwareattackredline/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/eIYVhHV.png&#34;/&gt;
+          
+        
+        
+        
+          Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>REvil Memory Dump Analysis With Redline</title>
+      <link>https://1d8.github.io/writeups/thmrevilcorp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/thmrevilcorp/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/eIYVhHV.png&#34;/&gt;
+          
+        
+        
+        
+          Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye’s Redline memory analysis tool.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>REvil Ransomware Memory Dump Analysis With Redline</title>
+      <link>https://1d8.github.io/writeups/revilransomwareanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/revilransomwareanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/eIYVhHV.png&#34;/&gt;
+          
+        
+        
+        
+          Performing analysis on a memory dump file of a Windows machine infected with Revil ransomware using FireEye&#39;s Redline memory analysis tool.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Sakura OSINT</title>
+      <link>https://1d8.github.io/writeups/sakurathmosint/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/sakurathmosint/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/F8SEgjb.png&#34;/&gt;
+          
+        
+        
+        
+          Using Open Source Intelligence (OSINT) techniques to solve a TryHackMe Sakura challenge.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Seized Linux Memory Analysis With Volatility</title>
+      <link>https://1d8.github.io/writeups/seizedlinuxmemanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/seizedlinuxmemanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/rbbS68F.png&#34;/&gt;
+          
+        
+        
+        
+          Using Volatility to perform memory analysis on a memory dump of a CentOS Linux machine.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Suspicious Browser Extension Analysis</title>
+      <link>https://1d8.github.io/writeups/extensionanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/extensionanalysis/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/CXCKqdG.png&#34;/&gt;
+          
+        
+        
+        
+          Analyzing a malicious browser extension.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Windows Memory Forensics</title>
+      <link>https://1d8.github.io/writeups/thmmemoryforensics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/thmmemoryforensics/</guid>
+      <description>
+        
+          &lt;img src=&#34;https://i.imgur.com/OcbLcOG.png&#34;/&gt;
+          
+        
+        
+        
+          Performing memory forensics on Windows machine images using Volatility.
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>

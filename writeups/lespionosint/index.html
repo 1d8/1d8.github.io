@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        L&#39;espion OSINT ::
+        1d8 blog — A simple theme for Hugo
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="CyberDefenders L&amp;rsquo;espion - https://cyberdefenders.org/blueteam-ctf-challenges/73
+This challenge centers around OSINT.
+File -&amp;gt; Github.txt #  For task #1, we&amp;rsquo;re asked:
+What is the API key the insider added to his GitHub repositories?
+And the only thing inside the Github.txt file is a Github profile: https://github.com/EMarseille99
+Scrolling through the profile, there&amp;rsquo;s only one repository which isn&amp;rsquo;t a fork of another Github repository: https://github.com/EMarseille99/Project-Build---Custom-Login-Page
+This is the first place I decided to search since it&amp;rsquo;s more likely to contain original content from the insider than a forked repository is."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://1d8.github.io/writeups/lespionosint/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="https://1d8.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://1d8.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="https://1d8.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="L&#39;espion OSINT"/>
+<meta name="twitter:description" content="Using Open Source Intelligence (OSINT) techniques to solve a CyberDefender&#39;s challenge."/>
+
+
+
+<meta property="og:title" content="L&#39;espion OSINT" />
+<meta property="og:description" content="Using Open Source Intelligence (OSINT) techniques to solve a CyberDefender&#39;s challenge." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1d8.github.io/writeups/lespionosint/" /><meta property="article:section" content="writeups" />
+
+<meta property="og:site_name" content="1d8 blog" />
+
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/cves">CVEs</a></li>
+        
+      
+        
+          <li><a href="/publications">Publications</a></li>
+        
+      
+        
+          <li><a href="/writeups">Writeups</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/cves">CVEs</a></li>
+      
+    
+      
+        <li><a href="/publications">Publications</a></li>
+      
+    
+      
+        <li><a href="/writeups">Writeups</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">L&rsquo;espion OSINT</h1>
+    <div class="post-meta">
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 7 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+  
+    <img src="https://i.imgur.com/Q2rzEb3.png" alt="L&#39;espion OSINT"/>
+  
+
+  
+</figure>
+
+    
+
+    <div class="post-content">
+      
+      <p>CyberDefenders L&rsquo;espion - <a href="https://cyberdefenders.org/blueteam-ctf-challenges/73">https://cyberdefenders.org/blueteam-ctf-challenges/73</a></p>
+<p>This challenge centers around OSINT.</p>
+<h1 id="file---githubtxt">
+  File -&gt; Github.txt
+  <a href="#file---githubtxt" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p>For task #1, we&rsquo;re asked:</p>
+<p><em>What is the API key the insider added to his GitHub repositories?</em></p>
+<p>And the only thing inside the <code>Github.txt</code> file is a Github profile: <a href="https://github.com/EMarseille99">https://github.com/EMarseille99</a></p>
+<p>Scrolling through the profile, there&rsquo;s only one repository which isn&rsquo;t a fork of another Github repository: <a href="https://github.com/EMarseille99/Project-Build---Custom-Login-Page">https://github.com/EMarseille99/Project-Build---Custom-Login-Page</a></p>
+<p>This is the first place I decided to search since it&rsquo;s more likely to contain original content from the insider than a forked repository is.</p>
+<ul>
+<li>It&rsquo;s likely that the insider forked the repository and didn&rsquo;t add any original content to it, so there&rsquo;s no point in searching through those.</li>
+</ul>
+<p>We can see that there&rsquo;s only <a href="https://github.com/EMarseille99/Project-Build---Custom-Login-Page/commits/master">four commits</a></p>
+<p>The second commit named <em>Update Login Page.js</em> contains an API key:</p>
+<p><img src="https://i.imgur.com/2sUGTVS.png" alt=""></p>
+<p>And if we continue searching through the commits, we&rsquo;ll find <em>Create Login Page</em> which contains hardcoded credentials:</p>
+<p><img src="https://i.imgur.com/uyarqi8.png" alt=""></p>
+<p>Base64 Decoding the password returns: <strong>PicassoBaguette99</strong> which is the answer to task #2!</p>
+<p>Task #3 asks:</p>
+<p><em>What cryptocurrency mining tool did the insider use?</em></p>
+<p>If we search through the insider&rsquo;s forked repositories, we&rsquo;ll find <strong>xmrig</strong> which is a cryptocurrency miner for the coin Monero (XMR):</p>
+<p><img src="https://i.imgur.com/uDJL1O2.png" alt=""></p>
+<p>For task #4, we&rsquo;re asked:</p>
+<p><em>What university did the insider go to?</em></p>
+<p>Since we already have the insider&rsquo;s job title, the company that they work for, and their full name, which was gathered from their Instagram profile:</p>
+<p><img src="https://i.imgur.com/5kdvm78.png" alt=""></p>
+<p>We can take this data to LinkedIn and see if the insider has a profile which details their educational background. If we simply search &ldquo;Émilie Marseille LinkedIn&rdquo;, we get many results, but only one result is for a backend developer:</p>
+<p><img src="https://i.imgur.com/uHiX34S.png" alt=""></p>
+<p>And as you can see from the text preview, it states the insider went to <strong>Sorbonne Universite</strong>!</p>
+<p>For task #5, we&rsquo;re asked:</p>
+<p><em>What gaming website the insider had an account on?</em></p>
+<p>This can be found by using a username checking tool that will check multiple websites to see if the user has an account on that particular site, <a href="https://github.com/sherlock-project/sherlock">Sherlock</a> is a great example! For this particular task though, we&rsquo;re specifically interested in <em>gaming websites</em>, and the task states that it ends in an <em>m</em> and we can safely assume that the name of the website is 5 letters long:</p>
+<p><img src="https://i.imgur.com/1iv4DAa.png" alt=""></p>
+<p>There&rsquo;s one site that comes to mind with these clues: <strong>Steam</strong>. We can confirm this by searching for the username <em>emarseille99</em> on the <strong>Steam</strong> platform. The URL for searching for particular usernames is:</p>
+<p><em><a href="https://steamcommunity.com/id/">https://steamcommunity.com/id/</a><!-- raw HTML omitted --></em></p>
+<p><img src="https://i.imgur.com/p6ZYRpC.png" alt=""></p>
+<p>And as you can see, this profile has the same profile image as the Instagram account from earlier, so we can confirm this is indeed our insider&rsquo;s <strong>Steam</strong> profile!</p>
+<h2 id="misc-questions">
+  Misc Questions
+  <a href="#misc-questions" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>For task #6, we&rsquo;re asked:</p>
+<p><em>What is the link to the insider Instagram profile?</em></p>
+<p>This can be found by Google Dorking the same username as the Github profile from earlier:</p>
+<p><img src="https://i.imgur.com/tpJLobU.png" alt=""></p>
+<p>So our insider&rsquo;s Instagram profile is located at: <strong><a href="https://www.instagram.com/emarseille99/">https://www.instagram.com/emarseille99/</a></strong>!</p>
+<p>For task #7, we&rsquo;re asked:</p>
+<p><em>Where did the insider go on the holiday? (Country only)</em></p>
+<p>If we search through the insider&rsquo;s Instagram profile, we&rsquo;ll come across this image with the caption: <em>Once in a lifetime holiday here, love me some slings x</em>:</p>
+<p><img src="https://i.imgur.com/gzUJAdJ.png" alt=""></p>
+<p>This is where the insider went on vacation. And if we reverse image search the image, the results tell us that it is a nature park, named <strong>Gardens by the Bay</strong>, located in the Central Region of <strong>Singapore</strong>:</p>
+<p><img src="https://i.imgur.com/3An48l5.png" alt=""></p>
+<p>For tasks #8, we&rsquo;re asked;</p>
+<p><em>Where is the insider&rsquo;s family live? (City only)</em></p>
+<p>If we scroll further down the insider&rsquo;s Instagram page, we&rsquo;ll find that they posted 2 photos:</p>
+<p><img src="https://i.imgur.com/liwZ4oB.png" alt=""></p>
+<p><img src="https://i.imgur.com/IaM8PIF.png" alt=""></p>
+<p>With the accompanying caption: <em>Nice to meet friends &amp; family</em></p>
+<p>Now we have 2 photos which we can assume were taken while the insider was visiting their family. Just by looking at these photos, I assume that they were taken somewhere in the Middle East due to the environment looking quite sandy and due to the buildings' architectures. The flag in the 2nd photo can help us greatly now that we&rsquo;ve narrowed down the region:</p>
+<p><img src="https://i.imgur.com/fygaQZj.png" alt=""></p>
+<p>If we search online for a list of Middle Eastern flags, we&rsquo;ll come across this:</p>
+<p><img src="https://st4.depositphotos.com/9212956/27184/v/950/depositphotos_271840980-stock-illustration-middle-east-vector-flag-set.jpg" alt=""></p>
+<p>The flag in the image that the insider posted appears to be the flag of the UAE if we compare the color blocking as well as the colors.</p>
+<p>Now the first photo has a cityscape view which we can utilize. We can search online for landmark sky scrapers located in the UAE and compare them to this one which we see on the insider&rsquo;s Instagram:</p>
+<p><img src="https://i.imgur.com/LOhVzKb.png" alt=""></p>
+<p>I came across this image of the Burj Khalifa:</p>
+<p><img src="https://imagevars.gulfnews.com/2019/01/28/Burj_Khalifa_10_resources1_16a31079302_original-ratio.jpg" alt=""></p>
+<p>And the structure of the two buildings looks extremely similar (Notice the building&rsquo;s edges), so we can safely assume that this building on the insider&rsquo;s profile is indeed the Burj Khalifa, located in <strong>Dubai</strong>!</p>
+<h2 id="file---officejpg">
+  File -&gt; Office.jpg
+  <a href="#file---officejpg" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>For task #9, we&rsquo;re given a photo of what appears to be quite a busy area and the task states:</p>
+<p><em>You have been provided with a picture of the building in which the company has an office. Which city is the company located in?</em></p>
+<p><img src="https://i.imgur.com/91iSJ2B.jpg" alt=""></p>
+<p>The first thing that sticks out to me is the large uniquely designed building with the large sign that states <em>GRAND CENTRAL</em>. What comes to mind is Grand Central Station which is a well known train terminal located in New York City. But the buidling&rsquo;s architecture looks nothing like the train terminal in NYC, for reference, here are two photos of NYC Grand Central:</p>
+<p><img src="https://www.grandcentralterminal.com/wp-content/uploads/2017/09/Grand-By-Design-Square-508x508.jpg" alt=""></p>
+<p><img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fthesoulofseoul.net%2Fwp-content%2Fuploads%2F2013%2F12%2Fimg_8653.jpg&amp;f=1&amp;nofb=1" alt=""></p>
+<p>Another thing that stood out to me is the brick building named <em>ODEON</em>, so I decided to combine these two landmarks and search online for <strong>Odeon Grand Central</strong>, and I came across this image:</p>
+<p><img src="https://i2-prod.business-live.co.uk/incoming/article8342463.ece/ALTERNATES/s1227b/odeonquinton.jpg" alt=""></p>
+<p>It is made of the same brick and has the same color as the Odeon building in the task photo we were given, but we should further confirm this!</p>
+<p>This particular photo is from Odeon in Birmingham, England. In the <code>Office.jpg</code> photo, there&rsquo;s also a few street signs which give us the name of two theaters:</p>
+<ul>
+<li>Hippodrome Theatre</li>
+<li>Alexandra Theatre</li>
+</ul>
+<p>And if we search for the locations of these theaters, specifically if there&rsquo;s any locations in Birmingham, England&hellip;</p>
+<p><img src="https://i.imgur.com/B1XbG5a.png" alt=""></p>
+<p><img src="https://i.imgur.com/AXxWSbB.png" alt=""></p>
+<p>It is confirmed! These two theaters have locations in Birmingham, England. In fact, The Hippodrome Theatre is even located in the Chinese Quarter of Birmingham, which is another location that appears on the street signs of the <code>Office.jpg</code> photo!</p>
+<ul>
+<li>Another way we could&rsquo;ve confirmed that these buildings are in Europe is the spelling of <em>theatre</em>. <em>Theatre</em> is the preferred spelling in Europe while <em>Theater</em> is the preferred spelling in the US.'</li>
+</ul>
+<p>And if we look online for photos of Grand Central in Birmingham, England, we can quickly confirm that these two buildings are the same:</p>
+<p><img src="http://1.bp.blogspot.com/-PSzzOAEr0Hg/VhlhP3BoIQI/AAAAAAAANyg/01_xwEVHzSg/s1600/Grand%2BCentral%2BBirmingham%2BV.jpg" alt=""></p>
+<p>versus the task photo we were given:</p>
+<p><img src="https://i.imgur.com/91iSJ2B.jpg" alt=""></p>
+<p>We can compare the architecture from the inside and the outside of the two buildings, and it is clear that the two buildings are indeed the same!</p>
+<p>Now we know that the city that the company is located in is Birmingham!</p>
+<h1 id="file---webcampng">
+  File -&gt; WebCam.png
+  <a href="#file---webcampng" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<p>For our final task, we&rsquo;re asked:</p>
+<p><em>With the intel, you have provided, our ground surveillance unit is now overlooking the person of interest&rsquo;s suspected address. They saw them leaving their apartment and followed them to the airport. Their plane took off and has landed in another country. Our intelligence team spotted the target with this IP camera. Which state is this camera in?</em></p>
+<p>And the webcam image that is being referenced is:</p>
+<p><img src="https://i.imgur.com/qXy2BaO.jpg" alt=""></p>
+<p>At first glance, this appears to be a university campus. Notice that there&rsquo;s also the caption: <em>A View from the Dome</em>, <em>Dome</em> is capitalized as if it is some sort of landmark.</p>
+<p>My first thought was to search online for the phrase <em>A View from the Dome</em>, and I came across the exact live webcam this image was captured from:</p>
+<p><img src="https://i.imgur.com/q0M1a7K.png" alt=""></p>
+<p>And University of Notre Dome is located in Indiana, United States!</p>
+<p>Now let&rsquo;s say that the University of Notre Dome took down this live camera view for some reason and we couldn&rsquo;t find it by searching for the phrase: <em>A View from the Dome</em> online. We could&rsquo;ve resorted to reverse image searching and this would&rsquo;ve also gave us the answer:</p>
+<p><img src="https://i.imgur.com/TPvXgdl.jpg" alt=""></p>
+<p>One particular image that we find as a result which stood out to me is the Twitter image posted by <code>@NDadmissions</code> 4 years ago from the same angle as the Live View camera:</p>
+<p><img src="https://th.bing.com/th/id/OIP.E4QgaB_KFpGjIrb0h6iHVgHaD2?pid=ImgDet&amp;rs=1" alt=""></p>
+<p>To add one last thing, if we would&rsquo;ve searched online for: &ldquo;The Dome University&rdquo;, we would&rsquo;ve came across the university&rsquo;s website too, which may have led us to the answer:</p>
+<p><img src="https://i.imgur.com/cTo1bxy.png" alt=""></p>
+<h2 id="references">
+  References
+  <a href="#references" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li><a href="https://www.grammar.com/theater_vs._theatre">https://www.grammar.com/theater_vs._theatre</a></li>
+<li><a href="https://www.atgtickets.com/venues/the-alexandra-theatre-birmingham/info/">https://www.atgtickets.com/venues/the-alexandra-theatre-birmingham/info/</a></li>
+<li><a href="https://www.business-live.co.uk/economic-development/gallery/birmingham-cinemas-through-the-ages-8342538">https://www.business-live.co.uk/economic-development/gallery/birmingham-cinemas-through-the-ages-8342538</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >1d8 blog</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
