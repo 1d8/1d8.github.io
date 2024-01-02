@@ -56,6 +56,10 @@ nmap -sV -sC &lt;ip address&gt;
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -251,7 +255,7 @@ Neighbor - <a href="https://tryhackme.com/room/neighbour">https://tryhackme.com/
 <li><code>-sV</code> - probe open ports and determine service/version info of any running services</li>
 <li><code>-sC</code> - run default scripts on those discovered services</li>
 </ul>
-<pre tabindex="0"><code>Starting Nmap 7.80 ( https://nmap.org ) at 2022-11-26 10:40 PST
+<pre><code>Starting Nmap 7.80 ( https://nmap.org ) at 2022-11-26 10:40 PST
 Nmap scan report for 10.10.228.136
 Host is up (0.15s latency).
 Not shown: 998 closed ports
@@ -268,7 +272,8 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 20.33 seconds
-</code></pre><p>And we discover 2 accessible services: a web server and SSH.</p>
+</code></pre>
+<p>And we discover 2 accessible services: a web server and SSH.</p>
 <p>Visitng the webserver:</p>
 <p><img src="https://i.imgur.com/3xsWPe3.png" alt=""></p>
 <p>We do not have any credentials, so we&rsquo;ll use the guest credentials we get from viewing the source code:</p>
@@ -314,6 +319,10 @@ Nmap done: 1 IP address (1 host up) scanned in 20.33 seconds
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

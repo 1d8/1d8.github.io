@@ -55,6 +55,10 @@ This challenge centers around using FTKImager to analyze a Linux disk image.
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -301,7 +305,7 @@ CyberDefenders Insider - <a href="https://cyberdefenders.org/blueteam-ctf-challe
 <p>One of the questions asks for the name of a file which proves that the machine we are analyzing was used to attack another machine, this image could be evidence of that. To add onto that, there is a hidden directory called <code>.ms4</code> within the <code>root</code> directory, this is a directory for metasploit and there&rsquo;s a <code>history</code> file within that hidden directory:</p>
 <p><img src="https://i.imgur.com/0QX387B.png" alt=""></p>
 <p>The full contents of the <code>history</code> file are:</p>
-<pre tabindex="0"><code>hosts
+<pre><code>hosts
 exit
 hosts
 exit
@@ -369,9 +373,10 @@ use exploit/windows/http/rejetto_hfs_exec
 show info
 hosts
 set RhOST 10.0.0.101
-</code></pre><p>I believe that this file is another piece of evidence that this machine was used to attack another machine, though the CTF challenge prefers the image file, <code>irZLAohL.jpeg</code>, as the answer.</p>
+</code></pre>
+<p>I believe that this file is another piece of evidence that this machine was used to attack another machine, though the CTF challenge prefers the image file, <code>irZLAohL.jpeg</code>, as the answer.</p>
 <p>One of the task questions is regarding the bash history file, this is a file that usually resides in <code>/home/&lt;username&gt;/.bash_history</code> so let&rsquo;s dive into that:</p>
-<pre tabindex="0"><code>msfconsole
+<pre><code>msfconsole
 systemctl status postgresql
 systemctl enable postgresql
 systemctl start postgresql
@@ -466,7 +471,8 @@ history
 exit
 touch keys.txt
 pwd
-</code></pre><p>The task question asks what the current working directory is, so the key is to focus on the <code>cd</code> or change directory commands. The last <code>cd</code> command is <code>cd ../Documents/myfirsthack</code> so we can assume that the current directory is <code>/root/Documents/myfirsthack</code></p>
+</code></pre>
+<p>The task question asks what the current working directory is, so the key is to focus on the <code>cd</code> or change directory commands. The last <code>cd</code> command is <code>cd ../Documents/myfirsthack</code> so we can assume that the current directory is <code>/root/Documents/myfirsthack</code></p>
 <p>If we look further at the bash history, we&rsquo;ll see that the user executed <code>binwalk didyouthinkwedmakeiteasy.jpg</code> and there&rsquo;s a task question which asks what program used <code>didyouthinkwedmakeiteasy.jpg</code> as an argument during execution, so the answer is <code>binwalk</code>!</p>
 <p>Question #4 also states that a &ldquo;super-secret&rdquo; file was created &amp; asks for the absolute/full path of the file. Examining the bash history, we find this command:</p>
 <p><code>cat snky snky &gt; /root/Desktop/SuperSecretFile.txt</code></p>
@@ -531,6 +537,10 @@ pwd
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

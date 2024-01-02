@@ -54,6 +54,10 @@ But if you attempt to reset the password for an account that you know exists (fo
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -254,7 +258,7 @@ But if you attempt to reset the password for an account that you know exists (fo
 </ol>
 <h1 id="proof-of-concept">Proof of Concept</h1>
 <p><strong>Request when email address doesn&rsquo;t exist:</strong></p>
-<pre tabindex="0"><code>POST /site_admin/user/forgotpassword HTTP/1.1
+<pre><code>POST /site_admin/user/forgotpassword HTTP/1.1
 Host: demo.livehelperchat.com
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
@@ -273,8 +277,9 @@ Sec-GPC: 1
 Email=test@gmail.com
 csfr_token=0604a0365f43ca1e52f3ee26f802a300
 Forgotpassword=Restore password
-</code></pre><p><strong>Response when email address doesn&rsquo;t exist:</strong></p>
-<pre tabindex="0"><code>HTTP/1.1 302 Found
+</code></pre>
+<p><strong>Response when email address doesn&rsquo;t exist:</strong></p>
+<pre><code>HTTP/1.1 302 Found
 Server: nginx
 Date: Mon, 03 Jan 2022 02:34:14 GMT
 Content-Type: text/html; charset=UTF-8
@@ -287,8 +292,9 @@ Cache-Control: no-store, no-cache, must-revalidate
 Pragma: no-cache
 X-Frame-Options: DENY
 Location: /site_admin/user/forgotpassword
-</code></pre><p><strong>Request when email address does exist:</strong></p>
-<pre tabindex="0"><code>POST /site_admin/user/forgotpassword HTTP/1.1
+</code></pre>
+<p><strong>Request when email address does exist:</strong></p>
+<pre><code>POST /site_admin/user/forgotpassword HTTP/1.1
 Host: demo.livehelperchat.com
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
@@ -307,8 +313,9 @@ Sec-GPC: 1
 Email=remdex@gmail.com
 csfr_token=0604a0365f43ca1e52f3ee26f802a300
 Forgotpassword=Restore password
-</code></pre><p><strong>Response when email address does exist:</strong></p>
-<pre tabindex="0"><code>HTTP/1.1 200 OK
+</code></pre>
+<p><strong>Response when email address does exist:</strong></p>
+<pre><code>HTTP/1.1 200 OK
 Server: nginx
 Date: Mon, 03 Jan 2022 02:34:36 GMT
 Content-Type: text/html; charset=UTF-8
@@ -322,7 +329,8 @@ Cache-Control: no-store, no-cache, must-revalidate
 Pragma: no-cache
 X-Frame-Options: DENY
 Content-Encoding: gzip
-</code></pre><h1 id="reference---httpshuntrdevbounties4c477440-3b03-42eb-a6e2-a31b55090736">Reference - <a href="https://huntr.dev/bounties/4c477440-3b03-42eb-a6e2-a31b55090736/">https://huntr.dev/bounties/4c477440-3b03-42eb-a6e2-a31b55090736/</a></h1>
+</code></pre>
+<h1 id="reference---httpshuntrdevbounties4c477440-3b03-42eb-a6e2-a31b55090736">Reference - <a href="https://huntr.dev/bounties/4c477440-3b03-42eb-a6e2-a31b55090736/">https://huntr.dev/bounties/4c477440-3b03-42eb-a6e2-a31b55090736/</a></h1>
 
   </main>
 
@@ -359,6 +367,10 @@ Content-Encoding: gzip
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

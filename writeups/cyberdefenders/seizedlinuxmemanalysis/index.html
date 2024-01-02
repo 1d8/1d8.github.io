@@ -56,6 +56,10 @@ The challenge description states:
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -299,7 +303,7 @@ a <a href="https://github.com/tw0phi/PythonBackup">Github repository named <code
 <p>This is the solution to question #4!</p>
 <p>Question #3 asks us to identify the Process ID (PID) of a suspicious process. We could use volatility&rsquo;s <code>linux_pstree</code> plugin to display a tree view of the parent processes &amp; child processes:</p>
 <p><code>vol.py --profile=LinuxCentos7_3_10_1062x64 -f dump.mem linux_pstree</code></p>
-<pre tabindex="0"><code>Name                 Pid             Uid            
+<pre><code>Name                 Pid             Uid            
 systemd              1               -1             
 .systemd-journal     502                            
 .lvmetad             519                            
@@ -519,25 +523,28 @@ systemd              1               -1
 .[rpciod]            700                            
 .[xprtiod]           701                            
 .[krfcommd]          1998  
-</code></pre><p>Combing through this list, we see that there is a <code>ncat</code> or <code>netcat</code> process which has a PID of 2854. The <code>netcat</code> process also has a <code>bash</code> child process. To me, this appears that a <code>netcat</code> shell was active with an attacker running commands on the other end:</p>
-<pre tabindex="0"><code>.ncat                2854                           
+</code></pre>
+<p>Combing through this list, we see that there is a <code>ncat</code> or <code>netcat</code> process which has a PID of 2854. The <code>netcat</code> process also has a <code>bash</code> child process. To me, this appears that a <code>netcat</code> shell was active with an attacker running commands on the other end:</p>
+<pre><code>.ncat                2854                           
 ..bash               2876                           
 ...python            2886                           
 ....bash             2887                           
 .....vim             3196
-</code></pre><p>The <code>linux_pstree</code> command doesn&rsquo;t give us a very deep view of the processes, such as the commands which were executed along with the arguments to launch the processes. Luckily, there&rsquo;s the <code>linux_psaux</code> volatility plugin which does exactly that!</p>
+</code></pre>
+<p>The <code>linux_pstree</code> command doesn&rsquo;t give us a very deep view of the processes, such as the commands which were executed along with the arguments to launch the processes. Luckily, there&rsquo;s the <code>linux_psaux</code> volatility plugin which does exactly that!</p>
 <p>We can even focus on a single process by passing the PID into the <code>-p</code> command-line flag:</p>
 <p><code>vol.py --profile=LinuxCentos7_3_10_1062x64 -f dump.mem linux_psaux -p 2854</code></p>
 <p><img src="https://i.imgur.com/kalk0vD.png" alt=""></p>
 <p>This is the same command we seen in the pastebin script that was downloaded by the malicious <code>PythonBackup</code> repository from earlier. It&rsquo;s simply a <code>netcat</code> listener which listens on port 12345. This is our suspicious process which provided the backdoor to the attacker.</p>
 <p>Let&rsquo;s dive a bit further into the <code>psaux</code> output of our malicious process tree. We&rsquo;ll run the <code>linux_psaux</code> plugin with no other arguments:</p>
 <p><code>vol.py --profile=LinuxCentos7_3_10_1062x64 -f dump.mem linux_psaux</code></p>
-<pre tabindex="0"><code>2854   0      0      ncat -lvp 12345 -4 -e /bin/bash                                 
+<pre><code>2854   0      0      ncat -lvp 12345 -4 -e /bin/bash                                 
 2876   0      0      /bin/bash                                                       
 2886   0      0      python -c import pty; pty.spawn(&quot;/bin/bash&quot;)                    
 2887   0      0      /bin/bash                                                       
 3196   0      0      vim /etc/rc.local                            
-</code></pre><p>So the reverse shell was started, then when after the attacker connects, the <code>/bin/bash</code> file is executed (this is specified by <code>netcat</code>&rsquo;s <code>-e</code> flag) which gives them a shell. Then the attacker executed <code>python -c import pty; pty.spawn(&quot;/bin/bash&quot;)</code> in order to improve their shell (I believe that this is used to acquire shell luxuries such as tab completion), then the attacker accessed and likely modified <code>/etc/rc.local</code> which, to my knowledge, is a Linux script which runs at startup. It&rsquo;s likely it was modified to gain persistence on the Linux machine.</p>
+</code></pre>
+<p>So the reverse shell was started, then when after the attacker connects, the <code>/bin/bash</code> file is executed (this is specified by <code>netcat</code>&rsquo;s <code>-e</code> flag) which gives them a shell. Then the attacker executed <code>python -c import pty; pty.spawn(&quot;/bin/bash&quot;)</code> in order to improve their shell (I believe that this is used to acquire shell luxuries such as tab completion), then the attacker accessed and likely modified <code>/etc/rc.local</code> which, to my knowledge, is a Linux script which runs at startup. It&rsquo;s likely it was modified to gain persistence on the Linux machine.</p>
 <p>Now we know that the attacker has full remote access to this machine, so we can scan the network connections to find the attacker&rsquo;s IP address and port</p>
 <ul>
 <li><em>hint: We already know that the port the attacker uses for the backdoor is 12345 so we just need to search for the IP address connected to this port).</em></li>
@@ -570,7 +577,7 @@ systemd              1               -1
 <p>I am not too familiar with Linux system calls, but to my untrained eye, <code>syscall_callback</code> appears normal so that leaves us with <code>sysemptyrect</code>.</p>
 <p>We can then take this string and search the entire memory dump for it to see any other reference to it:</p>
 <p><code>strings dump.mem | grep -i sysemptyrect</code></p>
-<pre tabindex="0"><code>MESSAGE= [&lt;ffffffffc0a1263d&gt;] syscall_callback+0x1cd/0x310 [sysemptyrect]
+<pre><code>MESSAGE= [&lt;ffffffffc0a1263d&gt;] syscall_callback+0x1cd/0x310 [sysemptyrect]
 sysemptyrect
 DEVPATH=/module/sysemptyrect
 DEVPATH=/module/sysemptyrect
@@ -610,7 +617,8 @@ sysemptyrect: module verification failed: signature and/or required key missing 
 Modules linked in: sysemptyrect(OE) tcp_lp nls_utf8 isofs rfcomm fuse xt_CHECKSUM iptable_mangle ipt_MASQUERADE nf_nat_masquerade_ipv4 iptable_nat nf_nat_ipv4 nf_nat nf_conntrack_ipv4 nf_defrag_ipv4 xt_conntrack nf_conntrack ipt_REJECT nf_reject_ipv4 tun bridge stp llc ebtable_filter ebtables devlink ip6table_filter ip6_tables iptable_filter vmw_vsock_vmci_transport vsock bnep sunrpc snd_seq_midi snd_seq_midi_event iosf_mbi crc32_pclmul ghash_clmulni_intel ppdev snd_ens1371 btusb snd_rawmidi aesni_intel snd_ac97_codec btrtl btbcm ac97_bus btintel vmw_balloon lrw snd_seq gf128mul bluetooth glue_helper ablk_helper cryptd snd_seq_device snd_pcm joydev pcspkr snd_timer rfkill snd sg soundcore vmw_vmci i2c_piix4 parport_pc parport pcc_cpufreq ip_tables xfs libcrc32c sr_mod cdrom ata_generic
  [&lt;ffffffffc0a1263d&gt;] syscall_callback+0x1cd/0x310 [sysemptyrect]
 DEVPATH=/module/sysemptyrect
-</code></pre><p>As you can see, there&rsquo;s references to <code>sysemptyrect.c</code> &amp; <code>sysemptyrect.mod</code> as well as <code>insmod</code> which is a command used to add modules to the Linux kernel, a common way to install rootkits.</p>
+</code></pre>
+<p>As you can see, there&rsquo;s references to <code>sysemptyrect.c</code> &amp; <code>sysemptyrect.mod</code> as well as <code>insmod</code> which is a command used to add modules to the Linux kernel, a common way to install rootkits.</p>
 <p>We also see a reference to a <code>crc65_key</code> in relation to the <code>sysemptyrect</code> kernel module:</p>
 <ul>
 <li><code>insmod sysemptyrect.ko crc65_key=&quot;1337tibbartibbar&quot;</code></li>
@@ -619,7 +627,7 @@ DEVPATH=/module/sysemptyrect
 <p>Onto the last question, question #7 (I skipped around a bit!). The attacker still has access, despite the compromised user&rsquo;s password being changed.</p>
 <p>Recall that earlier, I mentioned how the attacker edited the <code>/etc/rc.local</code> file which is a Linux startup script. I suspect that this is how the attacker is maintaining access, so let&rsquo;s search the memory dump using the <code>strings</code> utility and try to find anything related to <code>/etc/rc.local</code>:</p>
 <p><code>strings dump.mem | grep -i /etc/rc.local</code></p>
-<pre tabindex="0"><code>vim /etc/rc.local
+<pre><code>vim /etc/rc.local
 vim /etc/rc.local
 vim /etc/rc.local
 vim /etc/rc.local
@@ -661,11 +669,12 @@ vim /etc/rc.local
 vim /etc/rc.local
 /etc/rc.local
 vim /etc/rc.local
-</code></pre><p>Besides the many references to <code>/etc/rc.local</code> &amp; <code>vim</code> being used to read/edit the file, we also see a reference to the <code>authorized_keys</code> file and <code>zed_keys</code>. I am unsure what <code>zed_keys</code> is but I do know that <code>authorized_keys</code> is used for SSH to avoid having to login with a password. Instead, a public key is placed inside the <code>authorized_keys</code> file and when a user logs in, SSH will check if the user has the corresponding private key. If they do, they&rsquo;re allowed to login. If not, they&rsquo;re denied access.</p>
+</code></pre>
+<p>Besides the many references to <code>/etc/rc.local</code> &amp; <code>vim</code> being used to read/edit the file, we also see a reference to the <code>authorized_keys</code> file and <code>zed_keys</code>. I am unsure what <code>zed_keys</code> is but I do know that <code>authorized_keys</code> is used for SSH to avoid having to login with a password. Instead, a public key is placed inside the <code>authorized_keys</code> file and when a user logs in, SSH will check if the user has the corresponding private key. If they do, they&rsquo;re allowed to login. If not, they&rsquo;re denied access.</p>
 <p>An attacker may use this in order to maintain access to a machine. The user can change their password all they want, but that won&rsquo;t affect the attacker&rsquo;s access since the attacker is logging in with no password via SSH. The solution is deleting the attacker&rsquo;s public key from the <code>authorized_keys</code> file.</p>
 <p>So now we know that it&rsquo;s likely that the attacker modified the victim&rsquo;s <code>authorized_keys</code> file, let&rsquo;s search the strings of the memory dump for anything relating to the <code>authorized_keys</code> file to find more evidence:</p>
 <p><code>strings dump.mem | grep -i authorized_keys</code></p>
-<pre tabindex="0"><code>vin/.ssh/authorized_keys
+<pre><code>vin/.ssh/authorized_keys
 [m /home/k3vin/.ssh/authorized_keys &amp;&amp; 
 `authorized_keys
 vin/.ssh/authorized_keys
@@ -694,7 +703,8 @@ RcXacqicjzuad2jH7JQdIaqVW4jfEt8h7w+Rei1kZL/xqikGS/AGb2ZLqVSUKWF9afaeE850On4+c1A0
 [m /home/k3vin/.ssh/authorized_keys &amp;&amp; 
 authorized_keys
 [m /home/k3vin/.ssh/authorized_keys &amp;&amp; 
-</code></pre><p>Notice the <code># Well played</code> comment as well as the shebang (<code>#!/bin/sh</code>) just above that comment. This appears to be a bash script in which the attacker&rsquo;s public key is being put inside the victim&rsquo;s <code>authorized_keys</code> file. This is likely the script which was added to <code>/etc/rc.local</code> in order to maintain persistence on the machine, so even if the victim deleted the attacker&rsquo;s public key from the <code>authorized_keys</code> file, then once the victim rebooted their machine, the attacker&rsquo;s public key would be added again to the file, allowing them to maintain access since the <code>/etc/rc.local</code> script runs at startup.</p>
+</code></pre>
+<p>Notice the <code># Well played</code> comment as well as the shebang (<code>#!/bin/sh</code>) just above that comment. This appears to be a bash script in which the attacker&rsquo;s public key is being put inside the victim&rsquo;s <code>authorized_keys</code> file. This is likely the script which was added to <code>/etc/rc.local</code> in order to maintain persistence on the machine, so even if the victim deleted the attacker&rsquo;s public key from the <code>authorized_keys</code> file, then once the victim rebooted their machine, the attacker&rsquo;s public key would be added again to the file, allowing them to maintain access since the <code>/etc/rc.local</code> script runs at startup.</p>
 <p>So the real solution would be removing the malicious code added to <code>/etc/rc.local</code> and removing the attacker&rsquo;s public key from the <code>authorized_keys</code> file, and of course, removing the rootkit.</p>
 <p>The <code># Well played</code> comment also has a base64 encoded string:</p>
 <p><code>c2hrQ1RGe3JjLmwwYzRsXzFzX2Z1bm55X2JlMjQ3MmNmYWVlZDQ2N2VjOWNhYjViNWEzOGU1ZmEwfQo=</code></p>
@@ -768,6 +778,10 @@ authorized_keys
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

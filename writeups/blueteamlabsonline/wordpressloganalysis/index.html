@@ -55,6 +55,10 @@ The task questions are:">
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -275,21 +279,22 @@ A: <code>/wp-login.php?itsec-hb-token=adminlogin</code></p>
 <li><em>NOTE: It&rsquo;s also common for the user-agent field to be spoofed and many tools include this functionality (EX: <a href="https://www.infosecmatter.com/nmap-nse-library/?nse=http-useragent-tester">nmap</a></em></li>
 </ul>
 <p>But there&rsquo;s a little over 2k lines of text in this file and combing through each user-agent would consume too much time, so I chose to write this quick python script to parse the log file, scrape the user-agent, then output only the unique user-agents:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3">f <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;access.log&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>)
-data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
-f<span style="color:#f92672">.</span>close()
+<pre><code class="language-python3">f = open(&quot;access.log&quot;, &quot;r&quot;)
+data = f.readlines()
+f.close()
 
 
-uniqueUserAgents <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> data:
-    userAgent <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;-&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
-    <span style="color:#66d9ef">if</span> userAgent <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> uniqueUserAgents:
-        uniqueUserAgents<span style="color:#f92672">.</span>append(userAgent)
+uniqueUserAgents = []
+for line in data:
+    userAgent = line.split(&quot;-&quot;)[-1]
+    if userAgent not in uniqueUserAgents:
+        uniqueUserAgents.append(userAgent)
 
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> uniqueUserAgents:
+for i in uniqueUserAgents:
     print(i)
-</code></pre></div><p>It doesn&rsquo;t work perfectly, in fact, it strips out parts which it should be including, such as the Python user agent:</p>
+</code></pre>
+<p>It doesn&rsquo;t work perfectly, in fact, it strips out parts which it should be including, such as the Python user agent:</p>
 <p><img src="https://i.imgur.com/G7ZDGGe.png" alt=""></p>
 <p>But the script cuts down the amount of lines we must read through to 600 from 2k so that&rsquo;s beneficial, and it also doesn&rsquo;t cut out the name of the tools!</p>
 <p>If we scroll through the list of user agents, at line 267, we&rsquo;ll see a user-agent for <em>WPScan</em> which is a tool used to enumerate the plugins installed on a Wordpress site:</p>
@@ -378,6 +383,10 @@ A: Simple File List 4.2.2</p>
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

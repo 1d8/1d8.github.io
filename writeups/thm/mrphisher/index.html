@@ -56,6 +56,10 @@ We’re given an Ubuntu machine which has a document named MrPhisher.docm. Since
   <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
   
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
 
   
   
@@ -250,7 +254,7 @@ We’re given an Ubuntu machine which has a document named MrPhisher.docm. Since
 <p>To extract the macros using <strong>olevba</strong>, run: <code>olevba MrPhisher.docm</code> which outputs:</p>
 <p><img src="https://i.imgur.com/EatTLqw.png" alt=""></p>
 <p>Macros in text form:</p>
-<pre tabindex="0"><code class="language-visual-basic" data-lang="visual-basic">Sub Format()
+<pre><code class="language-visual-basic">Sub Format()
     Dim a()
     Dim b As String
     a = Array(102, 109, 99, 100, 127, 100, 53, 62, 105, 57, 61, 106, 62, 62, 55, 110, 113, 114, 118, 39, 36, 118, 47, 35, 32, 125, 34, 46, 46, 124, 43, 124, 25, 71, 26, 71, 21, 88)
@@ -258,27 +262,31 @@ We’re given an Ubuntu machine which has a document named MrPhisher.docm. Since
         b = b &amp; Chr(a(i) Xor i)
         Next
 End Sub
-</code></pre><p>Let&rsquo;s perform some code analysis!</p>
-<pre tabindex="0"><code class="language-visual-basic" data-lang="visual-basic">Sub Format()
+</code></pre>
+<p>Let&rsquo;s perform some code analysis!</p>
+<pre><code class="language-visual-basic">Sub Format()
     Dim a()
     Dim b As String
-</code></pre><p>First off, the function is started as indicated by the <code>Sub</code> keyword, then two variables are defined: <code>a</code> which is an array and <code>b</code> which is a string.</p>
-<pre tabindex="0"><code class="language-visual-basic" data-lang="visual-basic">a = Array(102, 109, 99, 100, 127, 100, 53, 62, 105, 57, 61, 106, 62, 62, 55, 110, 113, 114, 118, 39, 36, 118, 47, 35, 32, 125, 34, 46, 46, 124, 43, 124, 25, 71, 26, 71, 21, 88)
+</code></pre>
+<p>First off, the function is started as indicated by the <code>Sub</code> keyword, then two variables are defined: <code>a</code> which is an array and <code>b</code> which is a string.</p>
+<pre><code class="language-visual-basic">a = Array(102, 109, 99, 100, 127, 100, 53, 62, 105, 57, 61, 106, 62, 62, 55, 110, 113, 114, 118, 39, 36, 118, 47, 35, 32, 125, 34, 46, 46, 124, 43, 124, 25, 71, 26, 71, 21, 88)
 For i = 0 To UBound(a)
     b = b &amp; Chr(a(i) Xor i)
     Next
-</code></pre><p>Now we fill that array with a sequence of numbers that we can assume are ASCII character codes! But this isn&rsquo;t as simple as a quick conversion from the character code to its string equivalent.</p>
+</code></pre>
+<p>Now we fill that array with a sequence of numbers that we can assume are ASCII character codes! But this isn&rsquo;t as simple as a quick conversion from the character code to its string equivalent.</p>
 <p>Then we loop through each item in the array, defining the variable <code>i</code> as our counter. And for each iteration, we xor the array item at the <code>i</code> index with the integer value of <code>i</code>, then we run <code>Chr()</code> on the result which turns it into its string equivalent, then we add that deobfuscated string value to the variable <code>b</code>. This continues for each item in the array until all items have been deobfuscated!</p>
 <p>We can run this using Word and simply add in <code>MsgBox b</code> in order to display the final output after it&rsquo;s all deobfuscated, but I chose to recreate this in Python!</p>
 <p>The xor operation in Python is indicated by the <code>^</code> symbol.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">obfData <span style="color:#f92672">=</span> [<span style="color:#ae81ff">102</span>, <span style="color:#ae81ff">109</span>, <span style="color:#ae81ff">99</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">53</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">105</span>, <span style="color:#ae81ff">57</span>, <span style="color:#ae81ff">61</span>, <span style="color:#ae81ff">106</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">110</span>, <span style="color:#ae81ff">113</span>, <span style="color:#ae81ff">114</span>, <span style="color:#ae81ff">118</span>, <span style="color:#ae81ff">39</span>, <span style="color:#ae81ff">36</span>, <span style="color:#ae81ff">118</span>, <span style="color:#ae81ff">47</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">125</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">124</span>, <span style="color:#ae81ff">43</span>, <span style="color:#ae81ff">124</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">71</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">71</span>, <span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">88</span>]
+<pre><code class="language-python">obfData = [102, 109, 99, 100, 127, 100, 53, 62, 105, 57, 61, 106, 62, 62, 55, 110, 113, 114, 118, 39, 36, 118, 47, 35, 32, 125, 34, 46, 46, 124, 43, 124, 25, 71, 26, 71, 21, 88]
 
-deobfStr <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(obfData)):
-    deobfStr <span style="color:#f92672">+=</span> chr(obfData[i] <span style="color:#f92672">^</span> i)
+deobfStr = &quot;&quot;
+for i in range(len(obfData)):
+    deobfStr += chr(obfData[i] ^ i)
 
 print(deobfStr)
-</code></pre></div><p>As you can see, we&rsquo;re doing the exact same thing as the VBA script. We&rsquo;re looping through each item in the list, then xor&rsquo;ing the item by the <code>i</code> value which is what iteration we are currently on. Then we&rsquo;re turning that back into a string character using <code>chr()</code>, then adding that value to <code>deobfStr</code>.</p>
+</code></pre>
+<p>As you can see, we&rsquo;re doing the exact same thing as the VBA script. We&rsquo;re looping through each item in the list, then xor&rsquo;ing the item by the <code>i</code> value which is what iteration we are currently on. Then we&rsquo;re turning that back into a string character using <code>chr()</code>, then adding that value to <code>deobfStr</code>.</p>
 <p>Running this will output our flag!</p>
 <h2 id="references">References</h2>
 <ul>
@@ -321,6 +329,10 @@ print(deobfStr)
 <link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
 
 
     
