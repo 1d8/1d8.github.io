@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cheatsheets on </title>
+    <link>https://1d8.github.io/cheatsheets/</link>
+    <description>Recent content in Cheatsheets on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://1d8.github.io/cheatsheets/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Active Directory (AD) Basics</title>
+      <link>https://1d8.github.io/cheatsheets/adbasics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cheatsheets/adbasics/</guid>
+      <description>Description: Notes taken from the TryHackMe room AD Basics. Will likely add to this as I progress in my AD adventure
+Overview  What AD is? What an AD domain is? What components go into an AD domain Forests &amp;amp; Domain trusts etc  Windows Domains Windows Domains is a group of users &amp;amp; computers under the administration of a given business
+ The main idea/goal is centralizing the administration of those components of a Windows network into a single repository called Active Directory (AD)  The server running the AD services is called the Domain Controller (DC)</description>
+    </item>
+    
+  </channel>
+</rss>

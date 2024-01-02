@@ -7,6 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://1d8.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Active Directory (AD) Basics</title>
+      <link>https://1d8.github.io/cheatsheets/adbasics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cheatsheets/adbasics/</guid>
+      <description>Description: Notes taken from the TryHackMe room AD Basics. Will likely add to this as I progress in my AD adventure
+Overview  What AD is? What an AD domain is? What components go into an AD domain Forests &amp;amp; Domain trusts etc  Windows Domains Windows Domains is a group of users &amp;amp; computers under the administration of a given business
+ The main idea/goal is centralizing the administration of those components of a Windows network into a single repository called Active Directory (AD)  The server running the AD services is called the Domain Controller (DC)</description>
+    </item>
+    
+    <item>
+      <title>Attacktive Directory Room Walkthroug/</title>
+      <link>https://1d8.github.io/writeups/thm/attacktivedirectory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/thm/attacktivedirectory/</guid>
+      <description>Description: Attacktive Directory Tryhackme Room Walkthrough
+Room link: https://tryhackme.com/room/attacktivedirectory
+Enumeration: Welcome To Attacktive Directory Performing an initial nmap scan on the target IP address:
+nmap -sV -sC -Pn &amp;lt;INSERT IP ADDRESS&amp;gt;
+We see various ports open! We also see a domain name which is spookysec.local. We can also run crackmapexec on the target to confirm this domain name:
+crackmapexec smb &amp;lt;INSERT IP ADDRESS&amp;gt;
+We now know that the TLD being used is .</description>
+    </item>
+    
+    <item>
       <title>Committed Sensitive Data</title>
       <link>https://1d8.github.io/writeups/thm/gitcommitted/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -147,6 +173,17 @@ For this challenge, we&amp;rsquo;re given a pcap along with a series of question
   What is Ann&amp;rsquo;s email password?
   What is the name of the file that Ann sent to his secret lover?
   In what country will Ann meet with her secret lover?</description>
+    </item>
+    
+    <item>
+      <title>Diving Into LLMNR Poisoning</title>
+      <link>https://1d8.github.io/publications/llmnrpoisoning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/publications/llmnrpoisoning/</guid>
+      <description>Description: This post will dive into the topic of LLMNR poisoning, specifically what the LLMNR protocol is, how we could poison it, and diving into what it looks like in a packet capture
+Lab Setup In my lab setup, I have 3 machines:
+ Kali Linux machine representing the threat actor  IP address - 192.168.56.107   Windows workstation representing the victim  IP address - 192.168.56.118   Windows server representing the Domain Controller (DC)  IP address - 192.</description>
     </item>
     
     <item>
@@ -371,6 +408,16 @@ Browser extensions are typically .zip files that contain the elements that make 
       
       <guid>https://1d8.github.io/about/about/</guid>
       <description>This is an about post</description>
+    </item>
+    
+    <item>
+      <title>Windows API Programming with Python</title>
+      <link>https://1d8.github.io/publications/pyapi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/publications/pyapi/</guid>
+      <description>Description: Programming with the Windows API in Python, utilizing the ctypes library
+NOTE: When you&amp;rsquo;re interacting with the WinAPI, you&amp;rsquo;ll notice that some functions end in a W (EX: CreateFileW) while there are also the equivalent which end in an A (EX:CreateFileA). The difference is that functions ending in an A are ANSI functions while those that end in W are Unicode functions. In my experience, Python works best with the Unicode (W) functions.</description>
     </item>
     
     <item>

@@ -7,6 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://1d8.github.io/writeups/thm/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Attacktive Directory Room Walkthroug/</title>
+      <link>https://1d8.github.io/writeups/thm/attacktivedirectory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/writeups/thm/attacktivedirectory/</guid>
+      <description>Description: Attacktive Directory Tryhackme Room Walkthrough
+Room link: https://tryhackme.com/room/attacktivedirectory
+Enumeration: Welcome To Attacktive Directory Performing an initial nmap scan on the target IP address:
+nmap -sV -sC -Pn &amp;lt;INSERT IP ADDRESS&amp;gt;
+We see various ports open! We also see a domain name which is spookysec.local. We can also run crackmapexec on the target to confirm this domain name:
+crackmapexec smb &amp;lt;INSERT IP ADDRESS&amp;gt;
+We now know that the TLD being used is .</description>
+    </item>
+    
+    <item>
       <title>Committed Sensitive Data</title>
       <link>https://1d8.github.io/writeups/thm/gitcommitted/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

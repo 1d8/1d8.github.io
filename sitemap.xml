@@ -6,9 +6,15 @@
   </url><url>
     <loc>https://1d8.github.io/about/</loc>
   </url><url>
+    <loc>https://1d8.github.io/cheatsheets/adbasics/</loc>
+  </url><url>
+    <loc>https://1d8.github.io/writeups/thm/attacktivedirectory/</loc>
+  </url><url>
     <loc>https://1d8.github.io/writeups/blueteamlabsonline/</loc>
   </url><url>
     <loc>https://1d8.github.io/categories/</loc>
+  </url><url>
+    <loc>https://1d8.github.io/cheatsheets/</loc>
   </url><url>
     <loc>https://1d8.github.io/writeups/thm/gitcommitted/</loc>
   </url><url>
@@ -39,6 +45,8 @@
     <loc>https://1d8.github.io/writeups/letsdefend/portscandetection/</loc>
   </url><url>
     <loc>https://1d8.github.io/writeups/letsdefend/disclosetheagent/</loc>
+  </url><url>
+    <loc>https://1d8.github.io/publications/llmnrpoisoning/</loc>
   </url><url>
     <loc>https://1d8.github.io/publications/dmasoft_cookiestealer/</loc>
   </url><url>
@@ -89,6 +97,8 @@
     <loc>https://1d8.github.io/about/about/</loc>
   </url><url>
     <loc>https://1d8.github.io/writeups/thm/</loc>
+  </url><url>
+    <loc>https://1d8.github.io/publications/pyapi/</loc>
   </url><url>
     <loc>https://1d8.github.io/writeups/thm/thmmemoryforensics/</loc>
   </url><url>
