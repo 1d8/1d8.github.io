@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Common Vulnerabilities &amp; Exposures (CVEs) on Blog</title>
+    <title>Common Vulnerabilities &amp; Exposures (CVEs) on </title>
     <link>https://1d8.github.io/cves/</link>
-    <description>Recent content in Common Vulnerabilities &amp; Exposures (CVEs) on Blog</description>
+    <description>Recent content in Common Vulnerabilities &amp; Exposures (CVEs) on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://1d8.github.io/cves/index.xml" rel="self" type="application/rss+xml" />
     <item>

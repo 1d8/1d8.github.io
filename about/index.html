@@ -6,15 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/writeups/cyberdefenders/grabthephisher/" />
+  <link rel="canonical" href="https://1d8.github.io/about/" />
 
   
     
-    <meta name="description" content="Description: “Investigating a phishing page to learn more about the phisher GrabThePhisher - https://cyberdefenders.org/blueteam-ctf-challenges/95i
-After unzipping the file, we go into the pankewk/ directory and discover various directories which are typical of a web server. But there’s also a metamask/ directory which appears interesting!
-Within this directory, we have 2 files &amp; 1 directory:
- fonts/ index.html metamask.php  Opening up the metamask.php file:
-We see that it contains .php code that captures certain data, then sends it off to a Telegram server, and there’s also an interesting comment that’s signed with the alias j1j1b1s@m3r0">
+    <meta name="description" content="Abouts">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -60,7 +56,7 @@ We see that it contains .php code that captures certain data, then sends it off 
 
   
   
-  <title>Grab the phisher | </title>
+  <title>Abouts | </title>
 </head>
 
   <body>
@@ -242,37 +238,36 @@ We see that it contains .php code that captures certain data, then sends it off 
       <div class="main-and-footer">
         <div>
           
-  <main id="main">
-    <h1>Grab the phisher</h1>
-    <p><strong>Description: &ldquo;Investigating a phishing page to learn more about the phisher</strong>
-GrabThePhisher - <a href="https://cyberdefenders.org/blueteam-ctf-challenges/95i">https://cyberdefenders.org/blueteam-ctf-challenges/95i</a></p>
-<p>After unzipping the file, we go into the <code>pankewk/</code> directory and discover various directories which are typical of a web server. But there&rsquo;s also a <code>metamask/</code> directory which appears interesting!</p>
-<p>Within this directory, we have 2 files &amp; 1 directory:</p>
-<ul>
-<li><code>fonts/</code></li>
-<li><code>index.html</code></li>
-<li><code>metamask.php</code></li>
-</ul>
-<p>Opening up the <code>metamask.php</code> file:</p>
-<p><img src="https://i.imgur.com/TirSrlm.png" alt=""></p>
-<p>We see that it contains <strong>.php</strong> code that captures certain data, then sends it off to a Telegram server, and there&rsquo;s also an interesting comment that&rsquo;s signed with the alias <em>j1j1b1s@m3r0</em></p>
-<p>And if we look at lines 21-26, we see a <code>$message</code> variable being created &amp; populated with: a wallet address, a seed phrase, an IP address, and a user. The wallet address within the variable is labeled as <strong>Metamask</strong> so we can safely assume this is the wallet type being targeted in the phishing attack.</p>
-<p>Looking at lines 3-7 within the <code>metamask.php</code> file, we see that there is a request being made to: <code>http://api.sypexgeo.net/json/</code> &amp; the data that&rsquo;s of interest to the attacker includes the country gelocation, the city, &amp; the date.  <strong>Sypex Geo</strong> is the service of choice for the attacker to acquire data about their victims.</p>
-<p>Examining line 37 of the <code>metamask.php</code> file, we can see that the secret phrase from the wallet is being appended into a file named <code>log.txt</code> which is located within the base <code>pankewk</code> directory, and if we output the content of this file:</p>
-<p><img src="https://i.imgur.com/JQQvW6e.png" alt=""></p>
-<p>We can see that there&rsquo;s <strong>3 seed phrases</strong> that have been captured, with the most recent being: <strong>father also recycle embody balance concert mechanic believe owner pair muffin</strong></p>
-<p>The attacker performs data exfiltration on line 34 of the <code>metamask.php</code> file and uses <strong>Telegram</strong>&rsquo;s API to submit the captured data that was contained within the <code>$message</code> variable. The <strong>token</strong> for the Telegram channel is located within the <code>$token</code> variable on line 33 and the chat ID for the Telegram chat is <strong>5442785564</strong> &amp; is found on line 32.</p>
-<p>We can use both the Telegram token &amp; the chat ID to retrieve data from the Telegram API to dig deeper.</p>
-<p>Since the attacker is using the Telegram API and we have the token and ID for their bot, we can leverage the API to gain more information about the threat actor.</p>
-<p>We can use the <code>getChat</code> API function and perform a GET request to this URL:</p>
-<ul>
-<li><code>https://api.telegram.org/bot5457463144:AAG8t4k7e2ew3tTi0IBShcWbSia0Irvxm10/getChat?chat_id=5442785564</code></li>
-</ul>
-<p>Which will return this data:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{<span style="color:#f92672">&#34;ok&#34;</span>:<span style="color:#66d9ef">true</span>,<span style="color:#f92672">&#34;result&#34;</span>:{<span style="color:#f92672">&#34;id&#34;</span>:<span style="color:#ae81ff">5442785564</span>,<span style="color:#f92672">&#34;first_name&#34;</span>:<span style="color:#e6db74">&#34;Marcus&#34;</span>,<span style="color:#f92672">&#34;last_name&#34;</span>:<span style="color:#e6db74">&#34;Aurelius&#34;</span>,<span style="color:#f92672">&#34;username&#34;</span>:<span style="color:#e6db74">&#34;pumpkinboii&#34;</span>,<span style="color:#f92672">&#34;type&#34;</span>:<span style="color:#e6db74">&#34;private&#34;</span>}}
-</code></pre></div><p>So the first &amp; last name of the threat actor is <strong>Marcus Aurelius</strong> &amp; his username is <strong>pumpkinboii</strong></p>
-
-  </main>
+<main id="main">
+  <h1>Abouts</h1>
+  
+  <input
+    id="search"
+    type="text"
+    placeholder="Search by title..."
+    aria-label="Search by title"
+  />
+  
+  <ul class="patterns-list" id="list">
+    
+    <li>
+      <h2>
+        <a href="/about/about/">
+          <svg
+            class="bookmark"
+            aria-hidden="true"
+            viewBox="0 0 40 50"
+            focusable="false"
+          >
+            <use href="#bookmark"></use>
+          </svg>
+          Test About
+        </a>
+      </h2>
+    </li>
+    
+  </ul>
+</main>
 
           
             <footer role="contentinfo">
