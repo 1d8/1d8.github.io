@@ -6,11 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/writeups/htb/" />
+  <link rel="canonical" href="https://1d8.github.io/writeups/htb/keeper/" />
 
   
     
-    <meta name="description" content="HackTheBox Writeups">
+    <meta name="description" content="Initial Recon Starting off with an initial nmap scan of our target host: nmap -sV -sC 10.10.11.227 -oA keeper:
+We see that there’s 3 open ports:
+ 22 - SSH 80 - HTTP 8000 - HTTP  I wasn’t able to connect to port 8000 and kept receiving an Unable to connect error:
+But connecting to port 80, we find that there’s a hyperlink that’s pointing to a virtual host (vHost) at the tickets.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -60,7 +63,7 @@
 
   
   
-  <title>HackTheBox Writeups | </title>
+  <title>Keeper Writeup | </title>
 </head>
 
   <body>
@@ -255,52 +258,82 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>HackTheBox Writeups</h1>
-  
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
-  
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/writeups/htb/sau/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Sau Writeup
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/writeups/htb/keeper/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Keeper Writeup
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+  <main id="main">
+    <h1>Keeper Writeup</h1>
+    <h1 id="initial-recon">Initial Recon</h1>
+<p>Starting off with an initial <code>nmap</code> scan of our target host: <code>nmap -sV -sC 10.10.11.227 -oA keeper</code>:</p>
+<p><img src="https://i.imgur.com/uQE2cIF.png" alt=""></p>
+<p>We see that there&rsquo;s 3 open ports:</p>
+<ul>
+<li><code>22</code> - SSH</li>
+<li><code>80</code> - HTTP</li>
+<li><code>8000</code> - HTTP</li>
+</ul>
+<p>I wasn&rsquo;t able to connect to port <code>8000</code> and kept receiving an <em>Unable to connect error</em>:</p>
+<p><img src="https://i.imgur.com/mLVlkU4.png" alt=""></p>
+<p>But connecting to port <code>80</code>, we find that there&rsquo;s a hyperlink that&rsquo;s pointing to a virtual host (vHost) at the <code>tickets.keeper.htb/rt/</code> domain:</p>
+<p><img src="https://i.imgur.com/cXC9YkI.png" alt=""></p>
+<p>Let&rsquo;s add this vHost to our <code>/etc/hosts</code> file so that way we can connect to it. Add the following entry into the <code>/etc/hosts</code> file:</p>
+<pre><code class="language-bash">10.10.11.227	keeper.htb tickets.keeper.htb
+</code></pre>
+<p>Attempting to connect to the base domain of <code>keeper.htb</code> leads us to the same page:</p>
+<p><img src="https://i.imgur.com/9ig7qRc.png" alt=""></p>
+<p>But connecting instead to <code>tickets.keeper.htb</code> leads a login page for a service known as <strong>Requests Tracker</strong>:</p>
+<p><img src="https://i.imgur.com/qmiLn3d.png" alt=""></p>
+<p>We also get a version number which is <code>4.4.4</code>! The link to the <strong>Requests Tracker</strong> software could be found <a href="https://github.com/bestpractical/rt">here</a> and if you read the configuration settings, within step 7, it states the default credentials to be: <code>root:password</code>!</p>
+<h1 id="initial-access">Initial Access</h1>
+<p>We can login with these default credentials. Looking at the users on the ticket tracker, we see there&rsquo;s only 2 users:</p>
+<p><img src="https://i.imgur.com/2RRMYPv.png" alt=""></p>
+<ol>
+<li><code>root</code></li>
+<li><code>lnorgaard</code></li>
+</ol>
+<p>If we click the <code>lnorgaard</code> user, we&rsquo;ll find that there&rsquo;s a comment that has the default credentials for this user:</p>
+<p><img src="https://i.imgur.com/Vtb9peW.png" alt=""></p>
+<p>Let&rsquo;s use the <code>lnorgaard:Welcome2023!</code> credentials to login via SSH to the target machine:</p>
+<p><img src="https://i.imgur.com/D9YrwdL.png" alt=""></p>
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>Going to the <code>/home/lnorgaard</code> directory &amp; listing all files, we&rsquo;ll find 2 interesting files:</p>
+<ul>
+<li><code>passcodes.kdbx</code></li>
+<li><code>KeePassDumpFull.dmp</code></li>
+</ul>
+<p>These files appear to be KeePass-related files which is a password manager. One of them appears to be a process dump:</p>
+<p><img src="https://i.imgur.com/My3o1FS.png" alt=""></p>
+<p>while the <code>passcodes.kdbx</code> is a KeePass password database file:</p>
+<p><img src="https://i.imgur.com/GMRLmA8.png" alt=""></p>
+<p>These two files lead me to believe that the privilege escalation component of this box may be related to <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-32784">CVE-2023-32784</a> which is a vulnerability in which the master password can be recovered from a KeePass password dump!</p>
+<p>One thing to note is that the vulnerability details state that the first character of the master password isn&rsquo;t recoverable, so we&rsquo;ll likely have to guess this one.</p>
+<p>Searching <code>CVE-2023-32784 exploit Github</code> reveals various results, I chose to use <a href="https://github.com/z-jxy/keepass_dump">this Python one</a>. We can run it via: <code>python3 keepass_dump.py -f KeePassDumpFull.dmp</code>:</p>
+<p><img src="https://i.imgur.com/JdAwdic.png" alt=""></p>
+<p>The extracted master password appears to be: <code>dgrd med flde</code>, though recall that the first character of the master password isn&rsquo;t recoverable. Looking this up as it appears to be a phrase, I came across several articles relating to a Danish pudding:</p>
+<p><img src="https://i.imgur.com/Bfn8vmQ.png" alt=""></p>
+<p>Knowing this, and that the user we gained initial access with was <code>lnorgaard</code>, and that their Language was set to <code>Danish</code> on the Request Tracker system:</p>
+<p><img src="https://i.imgur.com/T0qQFlC.png" alt=""></p>
+<p>I took an educated guess that it&rsquo;s likely that the master password for the KeePass database was indeed the Danish dessert `rødgrød med fløde</p>
+<p>Let&rsquo;s import the <code>passcodes.kdbx</code> file into KeePass and use the discovered master password!</p>
+<p><em>Note: You can install <a href="https://keepass.info/download.html">KeePass here</a>!</em></p>
+<p>After inputting the master password, you&rsquo;ll see 2 inputs within the <strong>Network</strong> passwords:</p>
+<p><img src="https://i.imgur.com/jGTBQ4f.png" alt=""></p>
+<ol>
+<li>A password for the ticketing system for the <code>lnorgaard</code> user</li>
+<li>A Putty SSH key for the <code>root</code> user:
+<ul>
+<li><img src="https://i.imgur.com/eRBlkAd.png" alt=""></li>
+</ul>
+</li>
+</ol>
+<p>This SSH key is in Putty format, but we can copy it &amp; paste it into a file &amp; convert it into OpenSSH format in order to use it to login as the <code>root</code> user:
+First copy the entire key to a file:</p>
+<p><img src="https://i.imgur.com/QwjtUNZ.png" alt=""></p>
+<p>Then we can use <code>puttygen</code> in order to convert the SSH key into OpenSSH format
+<em>NOTE: You may need to install <code>putty-tools</code> in order to convert it!</em></p>
+<p>First, we can convert it &amp; output a private SSH key by running: <code>puttygen &lt;Putty SSH key&gt; -O private-openssh -o rootprivkey.txt</code></p>
+<p>Then we can login to the target by specifying the <code>rootprivkey.txt</code> file with the <code>-i</code> option:</p>
+<p><img src="https://i.imgur.com/XVvYWJY.png" alt=""></p>
+<p>And we&rsquo;ve successfully rooted the box!</p>
+
+  </main>
 
           
             <footer role="contentinfo">
