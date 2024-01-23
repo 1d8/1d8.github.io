@@ -10,7 +10,7 @@
 
   
     
-    <meta name="description" content="Description: This is going to be a compilation of my notes on various Active Directory (AD) attacks. I may dive deeper into some attacks and go over creating a homelab vulnerable to these attacks and dive into tools to execute these attacks as well
+    <meta name="description" content="AD Attack Cheatsheet Description: This is going to be a compilation of my notes on various Active Directory (AD) attacks. I may dive deeper into some attacks and go over creating a homelab vulnerable to these attacks and dive into tools to execute these attacks as well
  ASREPRoastable Accounts - Active Directory user accounts that have the DO NOT REQUIRE KERBEROS PREAUTHENTICATION property enabled. This allows an attacker to request a Kerberos ticket without having to provide a password for preauthentication, just the username and the domain which can be easily found.">
   
 
@@ -258,7 +258,8 @@
           
   <main id="main">
     <h1>Active Directory (AD) Attacks</h1>
-    <p><strong>Description: This is going to be a compilation of my notes on various <em>Active Directory (AD)</em> attacks. I may dive deeper into some attacks and go over creating a homelab vulnerable to these attacks and dive into tools to execute these attacks as well</strong></p>
+    <h1 id="ad-attack-cheatsheet">AD Attack Cheatsheet</h1>
+<p><strong>Description: This is going to be a compilation of my notes on various <em>Active Directory (AD)</em> attacks. I may dive deeper into some attacks and go over creating a homelab vulnerable to these attacks and dive into tools to execute these attacks as well</strong></p>
 <ul>
 <li><a href="https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/asreproast">ASREPRoastable Accounts</a> - Active Directory user accounts that have the <strong>DO NOT REQUIRE KERBEROS PREAUTHENTICATION</strong> property enabled. This allows an attacker to request a Kerberos ticket without having to provide a password for <strong>preauthentication</strong>, just the <em>username</em> and the <em>domain</em> which can be easily found. The attacker can then use this ticket to access resources that the vulnerable account has authorization to access on the network.
 <ul>

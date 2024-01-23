@@ -6,11 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/publications/" />
+  <link rel="canonical" href="https://1d8.github.io/publications/ansibletrix/" />
 
   
     
-    <meta name="description" content="Publications">
+    <meta name="description" content="Description: This post contains a set of Ansible commands that I’ve used recently to explore systems (both Linux &amp; Windows) &amp; enumerate different information about them!
+Setup Ansible Module We can use the setup Ansible module which returns a wealth of information about the machine we’re accessing! We can run it as a one-liner by running: ansible all -i &lt;IP Address&gt;, -m setup -e &#34;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&#34; and this would output:">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -60,7 +61,7 @@
 
   
   
-  <title>Publications | </title>
+  <title>Ansible Trix | </title>
 </head>
 
   <body>
@@ -225,7 +226,7 @@
       
       
       
-      <a href="/publications/" aria-current="page">
+      <a href="/publications/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -255,84 +256,37 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>Publications</h1>
-  
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
-  
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/publications/pyapi/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Windows API Programming with Python
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/dmasoft_cookiestealer/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Dmasoft PrivEsc Exploit
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/llmnrpoisoning/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Diving Into LLMNR Poisoning
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/ansibletrix/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Ansible Trix
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+  <main id="main">
+    <h1>Ansible Trix</h1>
+    <p><strong>Description: This post contains a set of Ansible commands that I&rsquo;ve used recently to explore systems (both Linux &amp; Windows) &amp; enumerate different information about them!</strong></p>
+<h1 id="setup-ansible-module"><code>Setup</code> Ansible Module</h1>
+<p>We can use the <code>setup</code> Ansible module which returns a wealth of information about the machine we&rsquo;re accessing! We can run it as a one-liner by running: <code>ansible all -i &lt;IP Address&gt;, -m setup -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&quot;</code> and this would output:</p>
+<p><img src="https://i.imgur.com/AKwqCMH.png" alt=""></p>
+<p>And a ton more of information that got cut off in the screenshot!</p>
+<p>This module works for both Windows &amp; Linux systems:</p>
+<p><img src="https://i.imgur.com/pmq47y5.png" alt=""><img src="https://i.imgur.com/qpDVEv6.png" alt=""></p>
+<h1 id="running-system-commands-with-raw-module">Running System Commands With <code>raw</code> Module</h1>
+<p>We can also run system commands easily by putting the command within quotes &amp; passing it as an argument &amp; using the <code>raw</code> module: <code>ansible all -i &lt;IP Address&gt;, -m raw -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&quot; -a &quot;whoami&quot;</code>:</p>
+<p><img src="https://i.imgur.com/RNfu9Uv.png" alt=""></p>
+<p>We can quickly execute any system commands to gather more information about a remote system this way!</p>
+<h1 id="enumerating-installed-software-on-remote-system">Enumerating Installed Software On Remote System</h1>
+<p><code>ansible all -i &lt;IP Address&gt;, -m raw -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&quot; -a 'Get-WmiObject -Query &quot;SELECT * FROM Win32_Product&quot; | Select-Object Name, Version, Vendor'</code>:</p>
+<p><img src="https://i.imgur.com/hC8jzVA.png" alt=""></p>
+<h1 id="enumerating-running-services-on-linux-systems">Enumerating Running Services On Linux Systems</h1>
+<p>We can use the <code>service_facts</code> module to get information about installed services on a Linux system by running: <code>ansible all -i &lt;IP Address&gt;, -m service_facts -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=sh ansible_connection=ssh&quot;</code>:</p>
+<p><img src="https://i.imgur.com/2pHbIlh.png" alt=""></p>
+<p>But this also gives us information about services that aren&rsquo;t actively running, we can narrow down on only <em>running</em> services by piping the output into <code>grep</code> &amp; grepping for the keyword <em>running</em>:</p>
+<p><img src="https://i.imgur.com/1Urf4JD.png" alt=""></p>
+<p>But this will only return the keyword <em>running</em> without any other information about the service. We can utilize the <code>-B 3</code> arguments within <code>grep</code> which will output 3 lines before the actual keyword match, which will give us the <em>service name</em> and the <em>source</em> in addition to the <em>state</em> of the service:</p>
+<p><img src="https://i.imgur.com/vwiHmib.png" alt=""></p>
+<p>We could exclude the <em>source</em> as well by using <code>grep -v source</code> to exclude it if we only wanted the <em>service name</em> &amp; the <em>service state</em> by running <code>ansible all -i &lt;IP Address&gt;, -m service_facts -e &quot;ansible_user=&lt;username ansible_password=&lt;password&gt; ansible_shell_type=sh ansible_connection=ssh&quot; | grep -i running -B 2 | grep -v source</code>:</p>
+<p><img src="https://i.imgur.com/vHWeGiW.png" alt=""></p>
+<h1 id="enumerating-running-services-on-windows-systems">Enumerating Running Services On Windows Systems</h1>
+<p>If we wanted to do the same on Windows, we can use the <code>ansible.windows.win_service_info</code> module. But it&rsquo;s a bit more difficult as the amount of information returned by this module is exponentially more when compared to its Linux counterpart.</p>
+<p>Running <code>ansible all -i &lt;IP Address&gt;, -m ansible.windows.win_service_info -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh&quot; | more</code>:</p>
+<p><img src="https://i.imgur.com/9J4uMz8.png" alt=""></p>
+
+  </main>
 
           
             <footer role="contentinfo">

@@ -12,7 +12,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://1d8.github.io/cheatsheets/adattacks/</guid>
-      <description>Description: This is going to be a compilation of my notes on various Active Directory (AD) attacks. I may dive deeper into some attacks and go over creating a homelab vulnerable to these attacks and dive into tools to execute these attacks as well
+      <description>AD Attack Cheatsheet Description: This is going to be a compilation of my notes on various Active Directory (AD) attacks. I may dive deeper into some attacks and go over creating a homelab vulnerable to these attacks and dive into tools to execute these attacks as well
  ASREPRoastable Accounts - Active Directory user accounts that have the DO NOT REQUIRE KERBEROS PREAUTHENTICATION property enabled. This allows an attacker to request a Kerberos ticket without having to provide a password for preauthentication, just the username and the domain which can be easily found.</description>
     </item>
     
@@ -25,6 +25,16 @@
       <description>Description: Notes taken from the TryHackMe room AD Basics. Will likely add to this as I progress in my AD adventure
 Overview  What AD is? What an AD domain is? What components go into an AD domain Forests &amp;amp; Domain trusts etc  Windows Domains Windows Domains is a group of users &amp;amp; computers under the administration of a given business
  The main idea/goal is centralizing the administration of those components of a Windows network into a single repository called Active Directory (AD)  The server running the AD services is called the Domain Controller (DC)</description>
+    </item>
+    
+    <item>
+      <title>Ansible Trix</title>
+      <link>https://1d8.github.io/publications/ansibletrix/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/publications/ansibletrix/</guid>
+      <description>Description: This post contains a set of Ansible commands that I&amp;rsquo;ve used recently to explore systems (both Linux &amp;amp; Windows) &amp;amp; enumerate different information about them!
+Setup Ansible Module We can use the setup Ansible module which returns a wealth of information about the machine we&amp;rsquo;re accessing! We can run it as a one-liner by running: ansible all -i &amp;lt;IP Address&amp;gt;, -m setup -e &amp;quot;ansible_user=&amp;lt;username&amp;gt; ansible_password=&amp;lt;password&amp;gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&amp;quot; and this would output:</description>
     </item>
     
     <item>
