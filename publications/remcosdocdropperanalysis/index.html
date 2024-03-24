@@ -6,12 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/publications/ansibletrix/" />
+  <link rel="canonical" href="https://1d8.github.io/publications/remcosdocdropperanalysis/" />
 
   
     
-    <meta name="description" content="Description: This post contains a set of Ansible commands that I’ve used recently to explore systems (both Linux &amp; Windows) &amp; enumerate different information about them!
-Setup Ansible Module We can use the setup Ansible module which returns a wealth of information about the machine we’re accessing! We can run it as a one-liner by running: ansible all -i &lt;IP Address&gt;, -m setup -e &#34;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&#34; and this would output:">
+    <meta name="description" content="Description: This post dives into a malicious document file that drops the Remcos RAT malware
+Overview  Sample &amp; more info Password to the zip file is infected First seen: May 27, 2020 url no longer up File type: docm Sha256 hash: 202d979d74f0478de0fbea103e2585a84fdab5646ad19437f5e4c4ba0cda7b90 url used was: hxxp://185.205.209.166/dkkp/qlyzbsuu.a12.exe &amp; shortened via tinyurl Macros used  Analysis Once opened, the document looks like this:
+In my opinion, not much work was put into crafting the actual document, but who am I to judge?">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -61,7 +62,7 @@ Setup Ansible Module We can use the setup Ansible module which returns a wealth 
 
   
   
-  <title>Ansible Trix | </title>
+  <title>Malware Analysis of Maldoc For Remcos RAT | </title>
 </head>
 
   <body>
@@ -257,64 +258,44 @@ Setup Ansible Module We can use the setup Ansible module which returns a wealth 
         <div>
           
   <main id="main">
-    <h1>Ansible Trix</h1>
-    <p><strong>Description: This post contains a set of Ansible commands that I&rsquo;ve used recently to explore systems (both Linux &amp; Windows) &amp; enumerate different information about them!</strong></p>
-<h1 id="setup-ansible-module"><code>Setup</code> Ansible Module</h1>
-<p>We can use the <code>setup</code> Ansible module which returns a wealth of information about the machine we&rsquo;re accessing! We can run it as a one-liner by running: <code>ansible all -i &lt;IP Address&gt;, -m setup -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&quot;</code> and this would output:</p>
-<p><img src="https://i.imgur.com/AKwqCMH.png" alt=""></p>
-<p>And a ton more of information that got cut off in the screenshot!</p>
-<p>This module works for both Windows &amp; Linux systems:</p>
-<p><img src="https://i.imgur.com/pmq47y5.png" alt=""><img src="https://i.imgur.com/qpDVEv6.png" alt=""></p>
-<h1 id="running-system-commands-with-raw-module">Running System Commands With <code>raw</code> Module</h1>
-<p>We can also run system commands easily by putting the command within quotes &amp; passing it as an argument &amp; using the <code>raw</code> module: <code>ansible all -i &lt;IP Address&gt;, -m raw -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&quot; -a &quot;whoami&quot;</code>:</p>
-<p><img src="https://i.imgur.com/RNfu9Uv.png" alt=""></p>
-<p>We can quickly execute any system commands to gather more information about a remote system this way!</p>
-<h1 id="enumerating-installed-software-on-remote-system">Enumerating Installed Software On Remote System</h1>
-<p><code>ansible all -i &lt;IP Address&gt;, -m raw -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&quot; -a 'Get-WmiObject -Query &quot;SELECT * FROM Win32_Product&quot; | Select-Object Name, Version, Vendor'</code>:</p>
-<p><img src="https://i.imgur.com/hC8jzVA.png" alt=""></p>
-<h1 id="enumerating-running-services-on-linux-systems">Enumerating Running Services On Linux Systems</h1>
-<p>We can use the <code>service_facts</code> module to get information about installed services on a Linux system by running: <code>ansible all -i &lt;IP Address&gt;, -m service_facts -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=sh ansible_connection=ssh&quot;</code>:</p>
-<p><img src="https://i.imgur.com/2pHbIlh.png" alt=""></p>
-<p>But this also gives us information about services that aren&rsquo;t actively running, we can narrow down on only <em>running</em> services by piping the output into <code>grep</code> &amp; grepping for the keyword <em>running</em>:</p>
-<p><img src="https://i.imgur.com/1Urf4JD.png" alt=""></p>
-<p>But this will only return the keyword <em>running</em> without any other information about the service. We can utilize the <code>-B 3</code> arguments within <code>grep</code> which will output 3 lines before the actual keyword match, which will give us the <em>service name</em> and the <em>source</em> in addition to the <em>state</em> of the service:</p>
-<p><img src="https://i.imgur.com/vwiHmib.png" alt=""></p>
-<p>We could exclude the <em>source</em> as well by using <code>grep -v source</code> to exclude it if we only wanted the <em>service name</em> &amp; the <em>service state</em> by running <code>ansible all -i &lt;IP Address&gt;, -m service_facts -e &quot;ansible_user=&lt;username ansible_password=&lt;password&gt; ansible_shell_type=sh ansible_connection=ssh&quot; | grep -i running -B 2 | grep -v source</code>:</p>
-<p><img src="https://i.imgur.com/vHWeGiW.png" alt=""></p>
-<h1 id="enumerating-running-services-on-windows-systems">Enumerating Running Services On Windows Systems</h1>
-<p>If we wanted to do the same on Windows, we can use the <code>ansible.windows.win_service_info</code> module. But it&rsquo;s a bit more difficult as the amount of information returned by this module is exponentially more when compared to its Linux counterpart.</p>
-<p>Running <code>ansible all -i &lt;IP Address&gt;, -m ansible.windows.win_service_info -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh&quot; | more</code>:</p>
-<p><img src="https://i.imgur.com/9J4uMz8.png" alt=""></p>
-<p>Or, instead of using this module, you could create your own Ansible module which is what I decided to do!</p>
-<p><em>NOTE: The module that I created provides far less information than the <code>win_service_info</code> module. I just created it for the fun and learning experience that comes with creating a custom module</em></p>
-<p>When creating a custom module in Ansible, you have to keep in mind the target operating system that the module will be designed to be used in. For example, if you develop a module written in <code>Python</code>, the target system must have a <code>Python</code> interpreter installed in order for the module to run.</p>
-<p><em>You might be able to compile the Python executable so it can run as a .<code>exe</code> on a Windows host without the need for an interpreter but I haven&rsquo;t tested this yet (:</em></p>
-<p>I wanted to develop a custom module for Windows, so my option for it to run natively on Windows systems without the need to install anything extra is <code>Powershell</code>!</p>
-<p>You can access my custom Ansible module <a href="https://github.com/1d8/ansible-mods/tree/main/service_enum">here</a>!</p>
-<p>This module can take 1 of 2 possible arguments that would be passed to the <code>desired_state</code> argument which correlates to the type of service to return:</p>
+    <h1>Malware Analysis of Maldoc For Remcos RAT</h1>
+    <p><strong>Description: This post dives into a malicious document file that drops the Remcos RAT malware</strong></p>
+<h2 id="overview">Overview</h2>
 <ul>
-<li><code>running</code> services</li>
-<li><code>stopped</code> services</li>
+<li><a href="https://bazaar.abuse.ch/sample/202d979d74f0478de0fbea103e2585a84fdab5646ad19437f5e4c4ba0cda7b90/">Sample &amp; more info</a></li>
+<li>Password to the zip file is <strong>infected</strong></li>
+<li>First seen: May 27, 2020</li>
+<li>url no longer up</li>
+<li>File type: docm</li>
+<li>Sha256 hash: 202d979d74f0478de0fbea103e2585a84fdab5646ad19437f5e4c4ba0cda7b90</li>
+<li>url used was: hxxp://185.205.209.166/dkkp/qlyzbsuu.a12.exe &amp; shortened via tinyurl</li>
+<li><a href="https://pastebin.com/raw/T9YNjDpD">Macros used</a></li>
 </ul>
-<p>An example playbook that uses this module to enumerate <code>running</code> services would look like this:</p>
-<pre><code class="language-yml">- name: Use service_enum Module
-  hosts: all
-  vars:
-    ansible_shell_type: powershell
-    ansible_shell_executable: powershell.exe
-  tasks:
-    - name: Run custom module
-      service_enum:
-        desired_state: running
-      register: result
-
-
-    - name: Print result
-      debug:
-        var: result.msg
-</code></pre>
-<p>Then we could run it via: <code>ansible-playbook -i &lt;IP Address&gt;, playbook.yml -e &quot;ansible_user=&lt;username&gt; ansible_password=&lt;password&gt; ansible_shell_type=powershell ansible_connection=ssh host_key_checking=false&quot;</code>:</p>
-<p><img src="https://i.imgur.com/c3nQAoP.png" alt=""></p>
+<h2 id="analysis">Analysis</h2>
+<p>Once opened, the document looks like this:</p>
+<p><img src="https://i.imgur.com/j8UzO7n.png" alt=""></p>
+<p>In my opinion, not much work was put into crafting the actual document, but who am I to judge?</p>
+<p>When you enable content, you&rsquo;d get this error message:</p>
+<p><img src="https://i.imgur.com/QhQOR5h.png" alt=""></p>
+<p>This isn&rsquo;t a makeshift error message crafted by the attacker as a social engineering tactic (as I did <a href="https://github.com/1d8/pysock">here ;) </a>) but rather an actual error message since the file they attempt to download &amp; execute (named <strong>Filename.exe</strong>) doesn&rsquo;t actually download.</p>
+<p>After enabling content &amp; letting the macros run, we open Procmon&rsquo;s process tree &amp; we can see that powershell is used to <em>attempt</em> to drop the main malware (ignore all the notepad.exe noise, that was all generated by me):</p>
+<p><img src="https://i.imgur.com/k9ZhDe0.png" alt=""></p>
+<p>The full powershell command used by the macro is here:</p>
+<p><img src="https://i.imgur.com/LiPJhki.png" alt=""></p>
+<p>As we can see, it executes it in a hidden window &amp; uses the <em>bypass</em> flag in order to bypass any protections a user has set up in order to prevent execution of unauthorized scripts (I may be incorrect, but I believe this method only works if the user is running with admin level privileges).</p>
+<p>The powershell also drops the file to disk &amp; saves it in the Temp directory as <strong>Filename.exe</strong> as we seen earlier &amp; then executes it.</p>
+<p>The url used is hxxps://tinyurl.com/ybz4nnyg. Tinyurl is a url shortener which will redirect to the main website. Attempting to navigate to this tinyurl yields no response, which likely means whatever site this malware was hosted as has since been taken down.</p>
+<p>The final payload that would&rsquo;ve been grabbed if the url was still up would be the Remcos RAT</p>
+<p>My claim of the URL no longer being up is backed by the powershell logs:</p>
+<p><img src="https://i.imgur.com/qaJg1v8.png" alt=""></p>
+<p>If you wish to receive the powershell code without actually running it the way the attackers intended, simply edit the code and delete the Shell() command &amp; add in a variable, then print that variable in a message box:</p>
+<p>Before:</p>
+<p><img src="https://i.imgur.com/Cn1XFBi.png" alt=""></p>
+<p>After:</p>
+<p><img src="https://i.imgur.com/MyG9SVM.png" alt=""></p>
+<p>Result after running:</p>
+<p><img src="https://i.imgur.com/vuV2LyL.png" alt=""></p>
+<p><em>NOTE: The reason Shell is called on a variable + a function is because the command passed to Shell is base64 encoded twice &amp; needs to be decoded twice before being ran. So the variable <strong>asdas</strong> contains the command after it&rsquo;s decoded once and then when Shell is called as Shell(sadsad(asdas, True)) is when the command is decoded the second time. Basically the function <strong>sadsad()</strong> is responsible for doing the base64 decoding. I hope this makes sense. Thanks for reading!</em></p>
 
   </main>
 

@@ -303,6 +303,17 @@ Scrolling through the profile, there&amp;rsquo;s only one repository which isn&a
     </item>
     
     <item>
+      <title>Malware Analysis of Maldoc For Remcos RAT</title>
+      <link>https://1d8.github.io/publications/remcosdocdropperanalysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/publications/remcosdocdropperanalysis/</guid>
+      <description>Description: This post dives into a malicious document file that drops the Remcos RAT malware
+Overview  Sample &amp;amp; more info Password to the zip file is infected First seen: May 27, 2020 url no longer up File type: docm Sha256 hash: 202d979d74f0478de0fbea103e2585a84fdab5646ad19437f5e4c4ba0cda7b90 url used was: hxxp://185.205.209.166/dkkp/qlyzbsuu.a12.exe &amp;amp; shortened via tinyurl Macros used  Analysis Once opened, the document looks like this:
+In my opinion, not much work was put into crafting the actual document, but who am I to judge?</description>
+    </item>
+    
+    <item>
       <title>Mr. Phisher Macros</title>
       <link>https://1d8.github.io/writeups/thm/mrphisher/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
