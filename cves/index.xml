@@ -48,6 +48,17 @@ If the file location is highlighted green, we know that the file exists.</descri
     </item>
     
     <item>
+      <title>CVE-2021-45785 - CSRF on TruDesk</title>
+      <link>https://1d8.github.io/cves/cve_2021_45785/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2021_45785/</guid>
+      <description>Description There is a CSRF vulnerability which would allow an attacker to restart the server by simply having a victim with the appropriate privileges visit an attacker&amp;rsquo;s crafted webpage.
+The vulnerability exists when performing a GET request to the /api/v1/admin/restart endpoint
+There is also another CSRF vulnerability which would allow an attacker to disable a victim&amp;rsquo;s 2FA (/api/v1/users/&amp;lt;user ID&amp;gt;/removel2auth). This requires the victim&amp;rsquo;s user ID, but this can easily be obtained by simply deleting a conversation with the victim which is a vulnerability that I described here: https://huntr.</description>
+    </item>
+    
+    <item>
       <title>CVE-2022-0083 - Generation of Error Message Containing Sensitive Information LiveHelperChat</title>
       <link>https://1d8.github.io/cves/cve_2022_0083/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

