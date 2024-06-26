@@ -475,6 +475,16 @@ Browser extensions are typically .zip files that contain the elements that make 
     </item>
     
     <item>
+      <title>Threat Emulation Series - Introduction - Event Triggered Execution</title>
+      <link>https://1d8.github.io/publications/threatactemulation_1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/publications/threatactemulation_1/</guid>
+      <description>Description: This post is an introductory post to a series of blog posts that I&amp;rsquo;ll be diving into which will detail emulating threat actors and their associated TTPs with code.
+In this particular blog post, we&amp;rsquo;ll be diving into the topic of persistence which can be accomplished by manipulating Windows registry key values! Specifically, we&amp;rsquo;ll be examining the Event Trigger Execution Technique in which an attacker modify system mechanisms to gain execution based upon specific events.</description>
+    </item>
+    
+    <item>
       <title>Windows API Programming with Python</title>
       <link>https://1d8.github.io/publications/pyapi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
