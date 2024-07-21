@@ -6,11 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/publications/" />
+  <link rel="canonical" href="https://1d8.github.io/publications/threathunt_1/" />
 
   
     
-    <meta name="description" content="Publications">
+    <meta name="description" content="Description: This is an introductory post to a threat hunting series that I will be doing on my blog post where I will dive into various threat samples (malware, pcaps, etc) in order to discuss methods to discover various threats. In this particular post, I will be diving into a pcap of the Foudre C2 backdoor which can be found in this Github repo and using Pandas.
+Getting Our Data Ready The C2 data that we currently have is in a pcap format, but we can’t throw this file into something like Pandas to analyze it efficiently in this particular format.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -60,7 +61,7 @@
 
   
   
-  <title>Publications | </title>
+  <title>Threat Hunting With Pandas | </title>
 </head>
 
   <body>
@@ -225,7 +226,7 @@
       
       
       
-      <a href="/publications/" aria-current="page">
+      <a href="/publications/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -255,132 +256,132 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>Publications</h1>
-  
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
-  
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/publications/pyapi/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Windows API Programming with Python
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/threathunt_1/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Threat Hunting With Pandas
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/threatactemulation_1/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Threat Emulation Series - Introduction - Event Triggered Execution
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/remcosdocdropperanalysis/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Malware Analysis of Maldoc For Remcos RAT
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/dmasoft_cookiestealer/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Dmasoft PrivEsc Exploit
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/llmnrpoisoning/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Diving Into LLMNR Poisoning
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/ansibletrix/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Ansible Trix
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+  <main id="main">
+    <h1>Threat Hunting With Pandas</h1>
+    <p><strong>Description: This is an introductory post to a threat hunting series that I will be doing on my blog post where I will dive into various threat samples (malware, pcaps, etc) in order to discuss methods to discover various threats. In this particular post, I will be diving into a pcap of the Foudre C2 backdoor which can be found <a href="https://github.com/sbousseaden/PCAP-ATTACK/tree/master/Command%20and%20Control">in this Github repo</a> and using Pandas.</strong></p>
+<h1 id="getting-our-data-ready">Getting Our Data Ready</h1>
+<p>The C2 data that we currently have is in a <code>pcap</code> format, but we can&rsquo;t throw this file into something like Pandas to analyze it efficiently in this particular format.</p>
+<p>To solve this, we can use <code>zeek</code> &amp; use the <code>-e</code> argument to output the log files it generates into a JSON log format which we can then read with Pandas:
+<code>/opt/zeek/bin/zeek -Cr C2_Foudre_Backdoor_DGA.pcapng -e 'redef LogAscii::use_json=T;'</code></p>
+<p>This will output 4 log files:</p>
+<ol>
+<li><code>http.log</code></li>
+<li><code>packet_filter.log</code></li>
+<li><code>files.log</code></li>
+<li><code>conn.log</code></li>
+</ol>
+<p><code>files.log</code> seems pretty interesting so let&rsquo;s transition to Pandas to analyze these files!</p>
+<h1 id="traffic-analysis">Traffic Analysis</h1>
+<p>The <code>files.log</code> file doesn&rsquo;t contain many entries so we can perform some manual analysis
+<img src="https://i.ibb.co/W3hq8z5/2024-07-20-20-12.png" alt=""></p>
+<p>I&rsquo;ll start off by looking at the columns that are available for viewing which can be done by calling the <code>columns</code> method on the dataframe:</p>
+<p><code>print(jsonPD.columns)</code></p>
+<pre><code>ts
+fuid
+uid
+id.orig_h
+id.orig_p
+id.resp_h
+id.resp_p
+source
+depth
+analyzers
+duration
+local_orig
+is_orig
+seen_bytes
+
+missing_bytes
+overflow_bytes
+timedout
+mime_type
+</code></pre>
+<p>Let&rsquo;s take a look at the source, destination, mime type, and destination port of these requests:
+<code>print(jsonPD[[&quot;id.orig_h&quot;, &quot;id.resp_h&quot;, &quot;id.resp_p&quot;, &quot;source&quot;, &quot;mime_type&quot;]])</code></p>
+<pre><code>   id.orig_h       id.resp_h  id.resp_p source   mime_type
+0  10.0.2.15  185.56.137.138         80   HTTP         NaN
+1  10.0.2.15  185.56.137.138         80   HTTP   text/html
+2  10.0.2.15  185.56.137.138         80   HTTP  text/plain
+3  10.0.2.15  185.56.137.138         80   HTTP  text/plain
+</code></pre>
+<p>From this, we can see that <code>10.0.2.15</code> is reaching out to <code>185.56.137.138</code> on port 80 (HTTP) and seems to initially reach out and interact with an HTML file, then after that 2 more requests are sent which deal with plaintext files. This looks to be a possible GET request for a check in to a C2 server to check for commands, then two requests after which may deal with sending any requested data to the C2 server.</p>
+<p>A quick search for the <code>185.56.137.138</code> IP address reveals that this IP address is possibly linked to an Iranian APT group:
+<img src="https://i.ibb.co/xjhpZpd/2024-07-20-20-30.png" alt=""></p>
+<p>Recall that we also have a <code>http.log</code> to further investigate, let&rsquo;s investigate this file next. The columns associated with <code>http.log</code> include:</p>
+<pre><code>ts
+uid
+id.orig_h
+id.orig_p
+id.resp_h
+id.resp_p
+trans_depth
+method
+host
+uri
+version
+user_agent
+request_body_len
+response_body_len
+status_code
+status_msg
+tags
+resp_fuids
+resp_mime_types
+orig_fuids
+orig_mime_types
+</code></pre>
+<p>Let&rsquo;s take a look at the the hosts that are involved in this communication:
+<code>print(jsonPD[[&quot;host&quot;]])</code></p>
+<pre><code>           host
+0  db54a845.top
+1  db54a845.top
+2  db54a845.top
+3  db54a845.top
+</code></pre>
+<p>Cross-referencing this domain with VirusTotal, we see that it is said to be associated with Spyware:
+<img src="https://i.ibb.co/9GB7b9d/2024-07-20-21-09.png" alt=""></p>
+<p>Let&rsquo;s see what URIs of this particular domain the victim host is reaching out to:
+<code>print(jsonPD[[&quot;method&quot;, &quot;uri&quot;]])</code></p>
+<pre><code>  method                                                                                                                            uri
+0    GET                                                                                   /de/?d=2020298&amp;v=00021&amp;t=2020-10-24--7-28-20
+1    GET                                                                                                    /de/db54a845.top2020298.sig
+2    GET  /2014/?c=MSEDGEWIN10&amp;u=IEUser&amp;v=00021&amp;s=TehN002&amp;f=datadir1&amp;mi=747f3d96-68a7-43f1-8cbe-e8d6dadd0358&amp;b=64&amp;t=2020-10-24--7-28-20
+3   POST                                                                                                       /en/?2020-10-24--7-28-20
+</code></pre>
+<p><img src="https://i.ibb.co/sWD4k8V/2024-07-20-21-15.png" alt=""></p>
+<p>We see 3 GET requests and 1 POST request. Let&rsquo;s view the status response message to these requests:
+<code>print(jsonPD[[&quot;status_msg&quot;, &quot;uri&quot;]])</code></p>
+<pre><code>0      Found                                                                                   /de/?d=2020298&amp;v=00021&amp;t=2020-10-24--7-28-20
+1         OK                                                                                                    /de/db54a845.top2020298.sig
+2  Not Found  /2014/?c=MSEDGEWIN10&amp;u=IEUser&amp;v=00021&amp;s=TehN002&amp;f=datadir1&amp;mi=747f3d96-68a7-43f1-8cbe-e8d6dadd0358&amp;b=64&amp;t=2020-10-24--7-28-20
+3         OK                                                                                                       /en/?2020-10-24--7-28-20
+</code></pre>
+<p>So the only request that resulted in an error was the 3rd one sent to: <code>2014/?c=MSEDGEWIN10&amp;u=IEUser&amp;v=00021&amp;s=TehN002&amp;f=datadir1&amp;mi=747f3d96-68a7-43f1-8cbe-e8d6dadd0358&amp;b=64&amp;t=2020-10-24--7-28-20</code>.</p>
+<p>Next, let&rsquo;s look at how close in succession these requests are being made by looking at the timestamp associated with each request. Each timestamp is in a Unix epoch format, but we can quickly convert each one and replace it within the dataframe by using Pandas' <code>to_datetime</code> function:</p>
+<pre><code class="language-python">jsonPD[column] = pd.to_datetime(jsonPD[column], unit=&quot;s&quot;)
+print(jsonPD[column])
+</code></pre>
+<pre><code>0   2020-10-24 14:28:20.219521024
+1   2020-10-24 14:28:20.348509952
+2   2020-10-24 14:28:20.468709888
+3   2020-10-24 14:28:20.662238976
+</code></pre>
+<p>We can see that they appear in close succession, just microseconds apart:
+<code>print(jsonPD[column].dt.microsecond)</code></p>
+<pre><code>0    219521
+1    348509
+2    468709
+3    662238
+</code></pre>
+<p>If we wanted to go through the data frame and replace each timestamp instance with its human-readable format, we can use this:</p>
+<pre><code class="language-python3">for column in jsonPD:
+    if column == &quot;ts&quot;:
+        jsonPD[column] = pd.to_datetime(jsonPD[column], unit=&quot;s&quot;)
+        print(jsonPD[column].dt.microsecond)
+</code></pre>
+<p>From these timestamps being in such close succession, we can likely gauge that our victim host is reaching out quite frequently to a suspicious server via HTTP &amp; making GET &amp; POST requests. Cross-referencing the destination host, we&rsquo;re able to see that it&rsquo;s a C2 server that&rsquo;s potentially associated with an APT group.</p>
+
+  </main>
 
           
             <footer role="contentinfo">

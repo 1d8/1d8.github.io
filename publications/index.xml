@@ -60,6 +60,16 @@ In this particular blog post, we&amp;rsquo;ll be diving into the topic of persis
     </item>
     
     <item>
+      <title>Threat Hunting With Pandas</title>
+      <link>https://1d8.github.io/publications/threathunt_1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/publications/threathunt_1/</guid>
+      <description>Description: This is an introductory post to a threat hunting series that I will be doing on my blog post where I will dive into various threat samples (malware, pcaps, etc) in order to discuss methods to discover various threats. In this particular post, I will be diving into a pcap of the Foudre C2 backdoor which can be found in this Github repo and using Pandas.
+Getting Our Data Ready The C2 data that we currently have is in a pcap format, but we can&amp;rsquo;t throw this file into something like Pandas to analyze it efficiently in this particular format.</description>
+    </item>
+    
+    <item>
       <title>Windows API Programming with Python</title>
       <link>https://1d8.github.io/publications/pyapi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
