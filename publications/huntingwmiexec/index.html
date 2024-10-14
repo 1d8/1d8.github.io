@@ -6,11 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/publications/" />
+  <link rel="canonical" href="https://1d8.github.io/publications/huntingwmiexec/" />
 
   
     
-    <meta name="description" content="Publications">
+    <meta name="description" content="Description: Hunting for the presence of Impacket’s WmiExec commands on a host by calculating &amp; graphing entropy
+This blog post will dive into calculating and graphing the entropy of Powershell commands in an attempt to discover the use of impacket’s wmiexec.py tool. The data set we’ll be using is in a CSV format and is exported from SysInternals&#39; Process Monitor (ProcMon) tool. I generated this data by running benign commands, then using wmiexec to remotely log into a system &amp; running some commands as well.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -60,7 +61,7 @@
 
   
   
-  <title>Publications | </title>
+  <title>Hunting for Impacket&#39;s WmiExec Using Entropy &amp; Graphs | </title>
 </head>
 
   <body>
@@ -225,7 +226,7 @@
       
       
       
-      <a href="/publications/" aria-current="page">
+      <a href="/publications/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -255,148 +256,43 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>Publications</h1>
-  
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
-  
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/publications/pyapi/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Windows API Programming with Python
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/threathunt_1/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Threat Hunting With Pandas
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/threatactemulation_1/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Threat Emulation Series - Introduction - Event Triggered Execution
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/remcosdocdropperanalysis/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Malware Analysis of Maldoc For Remcos RAT
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/huntingwmiexec/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Hunting for Impacket&#39;s WmiExec Using Entropy &amp; Graphs
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/dmasoft_cookiestealer/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Dmasoft PrivEsc Exploit
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/llmnrpoisoning/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Diving Into LLMNR Poisoning
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/ansibletrix/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Ansible Trix
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+  <main id="main">
+    <h1>Hunting for Impacket&#39;s WmiExec Using Entropy &amp; Graphs</h1>
+    <p><strong>Description: Hunting for the presence of Impacket&rsquo;s WmiExec commands on a host by calculating &amp; graphing entropy</strong></p>
+<p>This blog post will dive into calculating and graphing the entropy of Powershell commands in an attempt to discover the use of <a href="https://github.com/fortra/impacket/blob/master/examples/wmiexec.py">impacket&rsquo;s <code>wmiexec.py</code> tool</a>. The data set we&rsquo;ll be using is in a CSV format and is exported from <a href="https://learn.microsoft.com/en-us/sysinternals/downloads/procmon">SysInternals' Process Monitor (ProcMon)</a> tool. I generated this data by running benign commands, then using <code>wmiexec</code> to remotely log into a system &amp; running some commands as well.</p>
+<p>When using <code>wmiexec.py</code>, you can opt to default to use the Powershell shell type by specifying the <code>-shell-type</code> option like so:
+<code>wmiexec.py -shell-type powershell administrator@&lt;IP Address&gt;</code>.</p>
+<p>Let&rsquo;s do this &amp; then run <code>whoami</code> once we get a shell to see what this event would look like within Procmon.</p>
+<p>Viewing this event in Procmon, it&rsquo;d look like this:
+<img src="https://i.ibb.co/tLr3kBC/2024-10-10-16-35.png" alt=""></p>
+<p>Full expanded command: <img src="https://i.ibb.co/99kG8Z5/2024-10-10-16-37.png" alt=""></p>
+<p>My initial assumption when looking at the command line is that there&rsquo;s likely a high entropy associated with it due to the amount of randomness within the encoded base64 command as well as the Unix format timestamp file that the output of the command is sent to.</p>
+<p>Throwing this full command into Cyberchef&rsquo;s Shannon Entropy calculator tells us that the command has an entropy of <code>5.25</code>. If we throw a basic command in there, such as <code>cmd.exe /c whoami</code> shows us that there&rsquo;s an entropy of <code>3.68</code>. The difference isn&rsquo;t that large, but it&rsquo;s definitely noticeable.</p>
+<p>I believe that the difference would be much more visually noticeable when you graph the various entropy values of different benign commands along with malicious commands that <code>wmiexec</code> runs. Let&rsquo;s get to graphing to test this theory out. I&rsquo;ll be using Python to calculate the entropy &amp; visualize the data with Plotly.</p>
+<p><img src="https://i.ibb.co/vkmqSJv/2024-10-13-17-56.png" alt=""></p>
+<p><img src="https://i.ibb.co/WBBrKGN/2024-10-13-17-57.png" alt=""></p>
+<p>The first 4 bars represent benign commands, such as:</p>
+<ul>
+<li><code>powershell.exe /c dir</code></li>
+<li><code>cmd.exe /Q /c powershell.exe /c dir</code></li>
+<li><code>powershell.exe /c whoami</code></li>
+<li><code>cmd.exe /Q /c powershell.exe /c whoami</code></li>
+</ul>
+<p>The remaining 8 bars represent malicious commands ran on a system by <code>wmiexec</code>.</p>
+<p>As you can probably tell, there&rsquo;s a significant visual difference in entropy when comparing benign commands &amp; malicious <code>wmiexec</code> commands.</p>
+<p><img src="https://i.ibb.co/R2xsccv/2024-10-13-17-58.png" alt=""></p>
+<p>There&rsquo;s also a noticeable difference in entropy between the <em>parent</em> command ran (<code>cmd.exe /Q /c powershell.exe -NoP &lt;etc&gt;</code>) &amp; the <em>child</em> command spawned (<code>powershell.exe -NoP &lt;etc&gt;</code>).  For example:</p>
+<p><img src="https://i.ibb.co/S3wp4Bc/2024-10-13-17-59.png" alt=""></p>
+<p><img src="https://i.ibb.co/rM9H6R5/2024-10-13-18-00.png" alt=""></p>
+<p>The above image shows how the <em>parent</em> command has an entropy of <code>5.230266</code> while the spawned <em>child</em> command has a slightly lower entropy of <code>4.730619</code>.</p>
+<p>So the <em>parent</em> command has a higher entropy when compared to the <em>child</em> command it spawns which is visually noticeable. I think what contributes to this is the Unix-format timestamp that the parent command uses to send the output of the command into since it contains a bit of randomness (EX: <code>\\\\127.0.0.1\\ADMIN$\\__1728703906.3910286</code>)</p>
+<p>Let&rsquo;s only graph out the parent command (<code>cmd.exe /Q /c powershell.exe -NoP &lt;etc&gt;</code>) to maximize how visually noticeable the difference is between benign &amp; malicious commands:</p>
+<p><img src="https://i.ibb.co/vd9wq4K/2024-10-13-18-05.png" alt=""></p>
+<p><img src="https://i.ibb.co/CPfxQsV/2024-10-13-18-06.png" alt=""></p>
+<p>As you can see, the first two bars are benign commands while the rest are malicious. There&rsquo;s a noticeable difference visually since the benign commands are both below an entropy of 4 while the malicious commands all have an entropy above 5.</p>
+<p>Overall, using entropy combined with graphing is a a single useful method that can be utilized in order to detect suspicious randomness in commands being ran on a particular system by tools such as <code>wmiexec</code>. This may be a decent indicator of something like base64 being used inside of a command or randomly generated filenames which may be suspicious and require further investigation. I would love to see how scalable this method is in the future so I may look into that next.</p>
+
+  </main>
 
           
             <footer role="contentinfo">

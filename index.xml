@@ -275,6 +275,16 @@ We see that it contains .php code that captures certain data, then sends it off 
     </item>
     
     <item>
+      <title>Hunting for Impacket&#39;s WmiExec Using Entropy &amp; Graphs</title>
+      <link>https://1d8.github.io/publications/huntingwmiexec/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/publications/huntingwmiexec/</guid>
+      <description>Description: Hunting for the presence of Impacket&amp;rsquo;s WmiExec commands on a host by calculating &amp;amp; graphing entropy
+This blog post will dive into calculating and graphing the entropy of Powershell commands in an attempt to discover the use of impacket&amp;rsquo;s wmiexec.py tool. The data set we&amp;rsquo;ll be using is in a CSV format and is exported from SysInternals&#39; Process Monitor (ProcMon) tool. I generated this data by running benign commands, then using wmiexec to remotely log into a system &amp;amp; running some commands as well.</description>
+    </item>
+    
+    <item>
       <title>IceID Malicious Doc Analysis</title>
       <link>https://1d8.github.io/writeups/letsdefend/iceiddocanalysis/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
