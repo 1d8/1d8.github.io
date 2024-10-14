@@ -260,6 +260,7 @@ This blog post will dive into calculating and graphing the entropy of Powershell
     <h1>Hunting for Impacket&#39;s WmiExec Using Entropy &amp; Graphs</h1>
     <p><strong>Description: Hunting for the presence of Impacket&rsquo;s WmiExec commands on a host by calculating &amp; graphing entropy</strong></p>
 <p>This blog post will dive into calculating and graphing the entropy of Powershell commands in an attempt to discover the use of <a href="https://github.com/fortra/impacket/blob/master/examples/wmiexec.py">impacket&rsquo;s <code>wmiexec.py</code> tool</a>. The data set we&rsquo;ll be using is in a CSV format and is exported from <a href="https://learn.microsoft.com/en-us/sysinternals/downloads/procmon">SysInternals' Process Monitor (ProcMon)</a> tool. I generated this data by running benign commands, then using <code>wmiexec</code> to remotely log into a system &amp; running some commands as well.</p>
+<p>You can find the Python code used for this blog post <a href="https://github.com/1d8/ImpacketHunter/tree/main/wmiexec">here</a></p>
 <p>When using <code>wmiexec.py</code>, you can opt to default to use the Powershell shell type by specifying the <code>-shell-type</code> option like so:
 <code>wmiexec.py -shell-type powershell administrator@&lt;IP Address&gt;</code>.</p>
 <p>Let&rsquo;s do this &amp; then run <code>whoami</code> once we get a shell to see what this event would look like within Procmon.</p>
