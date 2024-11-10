@@ -6,11 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.92.2" />
-  <link rel="canonical" href="https://1d8.github.io/publications/" />
+  <link rel="canonical" href="https://1d8.github.io/publications/inotifyabusal/" />
 
   
     
-    <meta name="description" content="Publications">
+    <meta name="description" content="INotify Background Inotify is a Linux utility that allows users to monitor changes that are made to the filesystem and reports on such changes. Inotify comes with an API that can be used programmatically as well as command-line tools that can be used.
+If you wanted to monitor a specific directory or file for changes, you would run inotifywait &lt;directory/file&gt;. Then when an event occurs to the specified directory/file, it’d report on it:">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://1d8.github.io/apple-touch-icon.png">
@@ -60,7 +61,7 @@
 
   
   
-  <title>Publications | </title>
+  <title>Abusing Linux Inotify For Persistence | </title>
 </head>
 
   <body>
@@ -225,7 +226,7 @@
       
       
       
-      <a href="/publications/" aria-current="page">
+      <a href="/publications/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -255,164 +256,32 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>Publications</h1>
-  
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
-  
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/publications/pyapi/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Windows API Programming with Python
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/threathunt_1/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Threat Hunting With Pandas
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/threatactemulation_1/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Threat Emulation Series - Introduction - Event Triggered Execution
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/remcosdocdropperanalysis/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Malware Analysis of Maldoc For Remcos RAT
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/huntingwmiexec/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Hunting for Impacket&#39;s WmiExec Using Entropy &amp; Graphs
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/dmasoft_cookiestealer/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Dmasoft PrivEsc Exploit
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/llmnrpoisoning/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Diving Into LLMNR Poisoning
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/ansibletrix/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Ansible Trix
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/publications/inotifyabusal/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Abusing Linux Inotify For Persistence
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+  <main id="main">
+    <h1>Abusing Linux Inotify For Persistence</h1>
+    <h1 id="inotify-background">INotify Background</h1>
+<p><strong>Inotify</strong> is a Linux utility that allows users to monitor changes that are made to the filesystem and reports on such changes. Inotify comes with an API that can be used programmatically as well as command-line tools that can be used.</p>
+<p>If you wanted to monitor a specific directory or file for changes, you would run <code>inotifywait &lt;directory/file&gt;</code>. Then when an event occurs to the specified directory/file, it&rsquo;d report on it:</p>
+<p><img src="https://i.ibb.co/z6vTgsT/2024-11-09-16-50.png" alt=""></p>
+<p>You can also pass an event to the <code>-e</code> flag to monitor for specific filesystem events. A list of valid events to monitor for can be found <a href="https://linux.die.net/man/1/inotifywait">here under Events</a>.</p>
+<p>You can even use Inotify in <em>monitor</em> mode which will continuously monitor a specified directory/file for events even after a single event occurs. This means you&rsquo;d be able to catch all events that occur until you manually stop it:
+<code>inotifywait -e create -m /tmp</code>:</p>
+<p><img src="https://i.ibb.co/qnW6w9Y/2024-11-09-17-00.png" alt=""></p>
+<h1 id="abusing-inotify-for-persistence">Abusing INotify for Persistence</h1>
+<p>So Inotify seems to be extremely useful for monitoring filesystem activities and reporting on what events occur which is good from a defensive perspective since we can see what files/directories an attacker may be touching. But what about from an offensive perspective? Well, as previously mentioned, Inotify has an API that can be used programmatically that can be used to elevate its usefulness to an adversary.</p>
+<p>For example, we can use the <a href="https://pypi.org/project/inotify/">Python library</a> or <a href="https://www.man7.org/linux/man-pages/man7/inotify.7.html">native C API</a> in order to monitor a specific directory/file of interest, wait for a target to create/modify a file, then read the contents of a file &amp; perform some action, such as data exfiltration. Some examples of files of interest may be private keys, databases, configuration files, sensitive documents. This can be abused for data exfiltration &amp; as a means of persistence.</p>
+<p>To help facilitate this, I&rsquo;ve created a quick Python tool which is available <a href="https://github.com/1d8/offsec/blob/main/event-triggered-execution/Linux-Inotify/main.py">here</a>. All it currently does is place a watch to the user-specified directory/file via the <code>-d/--directory</code> &amp; then will monitor for file creation events &amp; output the contents of newly created files within the monitored directory/file. This could be modified to perform actual data exfiltration to a C2 server as well.</p>
+<h1 id="mitigations">Mitigations</h1>
+<p>You could restrict the limits within <code>inotify</code> by setting each limit to 0 within each file located at <code>/proc/sys/fs/inotify/*</code> though, I&rsquo;ve noticed that many processes utilize <code>inotify</code> and this may negatively affect those normal system processes.</p>
+<h1 id="detection">Detection</h1>
+<p>Now that I&rsquo;ve talked about how Inotify could be used as a means of persistence, let&rsquo;s discuss how to detect this. One way to detect the usage of the Python script I linked earlier is a simple <code>lsof</code> while grepping for <code>inotify</code> &amp; <code>python</code>:</p>
+<p><code>lsof | grep 'inotify' | grep 'python'</code>:</p>
+<pre><code class="language-bash">python3   28528                              username    3r  a_inode               0,16         0       2080 inotify
+</code></pre>
+<p>Or you can run: <code>lsof | grep 'a_inode' | grep inotify</code>:</p>
+<p><img src="https://i.ibb.co/gjbQdqd/2024-11-09-19-52.png" alt=""></p>
+<p>You can also search through <code>/proc</code> &amp; find any processes that are using <code>inotify</code></p>
+
+  </main>
 
           
             <footer role="contentinfo">
