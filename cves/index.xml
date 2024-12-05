@@ -110,5 +110,15 @@ Reproduction Use this payload &amp;amp; save it as image.svg:
 &amp;lt;?xml version=&amp;quot;1.0&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt; &amp;lt;!DOCTYPE svg PUBLIC &amp;quot;-//W3C//DTD SVG 1.1//EN&amp;quot; &amp;quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&amp;quot;&amp;gt; &amp;lt;svg version=&amp;quot;1.1&amp;quot; baseProfile=&amp;quot;full&amp;quot; xmlns=&amp;quot;http://www.</description>
     </item>
     
+    <item>
+      <title>CVE-2024-53442 - Command Injection on Whapa</title>
+      <link>https://1d8.github.io/cves/cve_2024_53442/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://1d8.github.io/cves/cve_2024_53442/</guid>
+      <description>Command Injection - Opening HTML Report Functionality Repository URL: https://github.com/B16f00t/whapa/tree/master Code URL: https://github.com/B16f00t/whapa/blob/master/whapa-gui.py#L787
+def report(self): &amp;quot;&amp;quot;&amp;quot;Open the report&amp;quot;&amp;quot;&amp;quot; self.path = filedialog.askopenfilename(title=&amp;quot;Select file&amp;quot;, filetypes=((&amp;quot;html files&amp;quot;, &amp;quot;*.html&amp;quot;), ), initialdir = &amp;quot;report&amp;quot;) if not self.path: return if system == &amp;quot;Linux&amp;quot;: os.system(&#39;xdg-open &amp;quot;{}&amp;quot;&#39;.format(self.path)) else: os.startfile(self.path)  When opening HTML reports within Whapa, a specially crafted filename could be used to gain command injection on Linux systems due to how the filename is immediately passed to os.</description>
+    </item>
+    
   </channel>
 </rss>
